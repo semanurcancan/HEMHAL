@@ -1,6 +1,5 @@
 <template>
-  <div class="card">
-  hello Sayfası
+  <div>
+    HELLO
   </div>
 </template>
-

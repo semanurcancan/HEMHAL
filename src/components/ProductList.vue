@@ -1,19 +1,49 @@
 <template>
   <div>
-    <strong>ProductList</strong>
-    <v-card>
-      <ul class="listItem" v-for="(pro, i) in getProduct" :key="i">
-        <li >{{ pro.id }}</li>
-        <li>{{ pro.title }}</li>
-        <v-btn @click="isOpen = !isOpen">DETAIL
-        <li v-if="isOpen">{{ pro.description }}</li>
-        </v-btn>
-        <li>{{ pro.price }}</li>
-        <li>{{ pro.category }}</li>
-        <img :src="pro.image" alt="img" height="150" />
-      </ul>
-    </v-card>
-    
+    <strong>PRODUCT LIST</strong>
+
+    <v-col>
+      <v-row>
+        <v-col cols="3" v-for="(pro, i) in getProduct" :key="i">
+        
+  <v-card
+    class="mx-auto"
+    max-width="344"
+  >
+   <v-img :src="pro.image" max-height="86" max-width="113"></v-img>
+    <v-card-title>
+      {{pro.title}}
+    </v-card-title>
+    <v-card-actions>
+      <v-btn
+        color="orange-lighten-2"
+        variant="text"
+      >
+        Explore
+      </v-btn>
+
+      <v-spacer></v-spacer>
+
+      <v-btn
+        :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'"
+        @click="show = !show"
+      ></v-btn>
+    </v-card-actions>
+
+    <v-expand-transition>
+      <div v-show="show">
+        <v-divider></v-divider>
+
+        <v-card-text>
+          {{pro.description}}
+          </v-card-text>
+      </div>
+    </v-expand-transition>
+  </v-card>
+
+        </v-col>
+      </v-row>
+    </v-col>
   </div>
 </template>
 
@@ -28,7 +58,7 @@ export default defineComponent({
     },
   },
   data: () => ({
-    isOpen: false,
+    show: false,
   }),
 
   mounted() {
@@ -37,7 +67,7 @@ export default defineComponent({
 });
 </script>
 <style scoped>
-.listItem{
-    list-style: none;
+.listItem {
+  list-style: none;
 }
 </style>

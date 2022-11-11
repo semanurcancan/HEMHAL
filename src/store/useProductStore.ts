@@ -1,6 +1,6 @@
  import { defineStore } from "pinia"
  import axios from "axios";
- import {ProductModels} from "../models/entities/ProductModels"
+ import type ProductModels from "../models/entities/ProductModels.ts"
 
 
 export const useProductStore = defineStore('product', {
@@ -9,7 +9,7 @@ export const useProductStore = defineStore('product', {
       return {
         count:0,
         name: "sema",
-        product: [] as ProductModels
+        product: [] as Array<ProductModels>
       }},
 
 //actions da içerisine api verileri atanan product ı getters da bir func atadım.computed da cagırdım.
