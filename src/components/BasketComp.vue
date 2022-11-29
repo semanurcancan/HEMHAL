@@ -1,0 +1,98 @@
+<template>
+<v-app>
+   <div class="container">
+    <strong class="container"> SEPET İÇERİĞİ </strong>
+    <div v-if="getBasketGetters.length === 0">
+      <h3>You haven't any items.</h3>
+    </div>
+    <v-app v-else style="z-index: 0 !important">
+      <v-col>
+        <ag-grid-vue
+          style="width: 850px; height: 400px"
+          class="ag-theme-alpine"
+          :columnDefs="columnDefs"
+          :rowData="arrayUnic"
+        >
+        </ag-grid-vue>
+        <v-card-title>sepet tutarı: {{ GetBasketPrice }} </v-card-title>
+      </v-col>
+    </v-app>
+  </div>
+</v-app>
+ 
+</template>
+<script lang="ts">
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
+import { defineComponent } from "vue";
+import { mapState, mapActions } from "pinia";
+import { useProductStore } from "../store/useProductStore";
+import { AgGridVue } from "ag-grid-vue3";
+import type { Product } from "../models/entities/ProductModels";
+import gridImg from "./GridImg.vue";
+export default defineComponent({
+  components: {
+    AgGridVue,
+    gridImg,
+
+  },
+  data() {
+    return {
+      arrayUnic: Array<Product>(),
+      columnDefs: [
+        {
+          headerName: "image",
+          field: "image",
+          cellRenderer: "gridImg",
+          cellRendererParams: {
+            clicked: function (field) {
+              alert(`${field} was clicked`);
+            },
+          },
+        },
+        { headerName: "title", field: "title" },
+        { headerName: "price", field: "price", valueGetter: this.priceQuantity },
+
+        { headerName: "quantity", field: "quantity" },
+      ],
+      rowData: new Array<Product>(),
+      basket: [],
+      productStore: useProductStore(),
+    };
+  },
+  computed: {
+    //pinia da mapgetters yok o yuzden getter verisi olan getProduct ...mapstate ile cagırılıyor.
+    ...mapState(useProductStore, ["getBasketGetters", "GetBasketPrice"]),
+  },
+  mounted() {
+    this.unicPro();
+  },
+  methods: {
+    ...mapActions(useProductStore, ["setDltBasket", "setAddBasket"]),
+    priceQuantity(params:any) {
+      let item = params.data
+      console.log("PARAMSSSS", item);
+      return item.price * item.quantity
+    },
+
+    unicPro() {
+      this.arrayUnic = this.getBasketGetters.filter(
+        (v, i, a) => a.findIndex((t) => t.id === v.id) === i
+      );
+    },
+    add() {
+      this.setAddBasket(this.pro);
+      //pinia içerisindeki actions a parametre olarak pro yollandı.store içerisinde karşılığını buldu.
+    },
+    dlt() {
+      this.setDltBasket(this.pro);
+    },
+  },
+});
+</script>
+
+<style scoped>
+.container{
+  margin-left: 50px;
+}
+</style>

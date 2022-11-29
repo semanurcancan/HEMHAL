@@ -11,7 +11,7 @@ export class Product implements IEntityBase {
         this.image = "";
         this.rating = 0;
         this.status = statusTypeEnum.Active
-
+        this.quantity = 0;
     }
     id: number
     title:string
@@ -21,5 +21,5 @@ export class Product implements IEntityBase {
     image:string
     rating:number
     status:number
-
+    quantity: number;
 }

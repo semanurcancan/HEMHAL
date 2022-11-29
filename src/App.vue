@@ -1,50 +1,31 @@
 <template>
-  <div>
-    <p>app Vue sayfası</p>
-    <product-list :getProduct = "getProductGetters"  />
-    <hello-world />
+<v-app >
+  <div >
+    <navbar-comp ></navbar-comp>
+       <router-view v-slot="{ Component }">
+      <keep-alive>
+        <component :is="Component" />
+      </keep-alive>
+    </router-view>
   </div>
+</v-app>
+  
 </template>
 <script lang="ts">
-import { defineComponent } from "@vue/runtime-core";
+import { defineComponent, inject } from "@vue/runtime-core";
 
 //componentler
-import HelloWorld from "./components/HelloWorld.vue";
-import ProductList from "./components/ProductList.vue";
+import NavbarComp from "./components/NavbarComp.vue";
 
-//map işlemleri
-import {mapActions, mapState} from "pinia"
-
-//store
-import { useProductStore } from "./store/useProductStore";
 
 export default defineComponent({
   components: {
-    HelloWorld,
-    ProductList,
+    NavbarComp,
   },
-
-  computed: {
-    //pinia da mapgetters yok o yuzden getter verisi olan getProduct ...mapstate ile cagırılıyor.
-    ...mapState(useProductStore,  ["getProductGetters"]),
+   provide: {
+    product: "sema",
   },
-
-  methods: {
-    ...mapActions( useProductStore, { get: "getProductAction"}),
-  },
-  //MOUNTED DA CAGIRILDIĞINDA SAYFA RENDER DAN SORNA VERİ GELMEKTE SIKINTISI YASIYOR O YUZDEN CREATED DA GETİR.
-  created(){
-    this.get();
-    
-  },
-  //mounted old.sanal dom olusur.!!
-  mounted(){
-    console.log("aaaaa", this.getProductGetters);
-  }
   
+ 
 });
 </script>
-
-<style scoped></style>
-
- 
