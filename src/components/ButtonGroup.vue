@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject } from "vue";
+import { defineComponent} from "vue";
 //models
 
 import { mapActions, mapState } from "pinia";

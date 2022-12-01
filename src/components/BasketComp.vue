@@ -1,25 +1,24 @@
 <template>
-<v-app>
-   <div class="container">
-    <strong class="container"> SEPET İÇERİĞİ </strong>
-    <div v-if="getBasketGetters.length === 0">
-      <h3>You haven't any items.</h3>
+  <v-app>
+    <div class="container">
+      <strong class="container"> SEPET İÇERİĞİ </strong>
+      <div v-if="getBasketGetters.length === 0">
+        <h3>You haven't any items.</h3>
+      </div>
+      <v-app v-else style="z-index: 0 !important">
+        <v-col>
+          <ag-grid-vue
+            style="width: 850px; height: 400px"
+            class="ag-theme-alpine"
+            :columnDefs="columnDefs"
+            :rowData="arrayUnic"
+          >
+          </ag-grid-vue>
+          <v-card-title>sepet tutarı: {{ GetBasketPrice }} </v-card-title>
+        </v-col>
+      </v-app>
     </div>
-    <v-app v-else style="z-index: 0 !important">
-      <v-col>
-        <ag-grid-vue
-          style="width: 850px; height: 400px"
-          class="ag-theme-alpine"
-          :columnDefs="columnDefs"
-          :rowData="arrayUnic"
-        >
-        </ag-grid-vue>
-        <v-card-title>sepet tutarı: {{ GetBasketPrice }} </v-card-title>
-      </v-col>
-    </v-app>
-  </div>
-</v-app>
- 
+  </v-app>
 </template>
 <script lang="ts">
 import "ag-grid-community/styles/ag-grid.css";
@@ -34,7 +33,6 @@ export default defineComponent({
   components: {
     AgGridVue,
     gridImg,
-
   },
   data() {
     return {
@@ -42,7 +40,7 @@ export default defineComponent({
       columnDefs: [
         {
           headerName: "image",
-          field: "image",
+          field: "images[1]",
           cellRenderer: "gridImg",
           cellRendererParams: {
             clicked: function (field) {
@@ -51,7 +49,11 @@ export default defineComponent({
           },
         },
         { headerName: "title", field: "title" },
-        { headerName: "price", field: "price", valueGetter: this.priceQuantity },
+        {
+          headerName: "price",
+          field: "price",
+          valueGetter: this.priceQuantity,
+        },
 
         { headerName: "quantity", field: "quantity" },
       ],
@@ -69,10 +71,10 @@ export default defineComponent({
   },
   methods: {
     ...mapActions(useProductStore, ["setDltBasket", "setAddBasket"]),
-    priceQuantity(params:any) {
-      let item = params.data
+    priceQuantity(params: any) {
+      let item = params.data;
       console.log("PARAMSSSS", item);
-      return item.price * item.quantity
+      return item.price * item.quantity;
     },
 
     unicPro() {
@@ -92,7 +94,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.container{
-  margin-left: 50px;
+.container {
+  margin-left: 60px;
 }
 </style>

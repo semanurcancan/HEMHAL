@@ -12,7 +12,7 @@
   
 </template>
 <script lang="ts">
-import { defineComponent, inject } from "@vue/runtime-core";
+import { defineComponent } from "@vue/runtime-core";
 
 //componentler
 import NavbarComp from "./components/NavbarComp.vue";
@@ -22,10 +22,10 @@ export default defineComponent({
   components: {
     NavbarComp,
   },
-   provide: {
-    product: "sema",
-  },
   
  
 });
 </script>
+
+
+ 

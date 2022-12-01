@@ -12,7 +12,7 @@
         <v-col>{{ item.title}} </v-col>
         <v-col> {{item.description}} </v-col>
         <v-col>
-          <v-img :src="item.image" max-height="65" max-width="88"></v-img>  
+          <v-img :src="item.images[1]" max-height="65" max-width="88"></v-img>  
         </v-col>
       </v-row>
     </v-col>

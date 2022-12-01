@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="ml-11">
     <v-col>
       <v-row>
         <v-col>
@@ -12,7 +12,7 @@
                 >
                   <v-card class="cardClass">
                     <v-img
-                      @dblclick="
+                      @click="
                         this.$router.push({
                           name: 'Detail',
                           params: { id: item.id },
@@ -21,7 +21,7 @@
                       class="align-end text-white"
                       height="200"
                       width="250"
-                      :src="item.image"
+                      :src="item.images[1]"
                       cover
                     >
                       <v-card-title>{{ item.title.slice(0, 10) }}</v-card-title>
@@ -41,10 +41,10 @@
                 
             </v-col>
 
-            <v-col v-else v-for="(pro, i) in getProduct" :key="i">
+            <v-col v-else v-for="(pro, i) in getProduct" :key="i" >
               <v-card class="cardClass" max-width="350">
                 <v-img
-                  @dblclick="
+                  @click="
                     this.$router.push({
                       name: 'Detail',
                       params: { id: pro.id },
@@ -53,7 +53,7 @@
                   class="align-end text-white"
                   height="200"
                   width="250"
-                  :src="pro.image"
+                  :src="pro.images[1]"
                   cover
                 >
                   <v-card-title>{{ pro.title.slice(0, 10) }}</v-card-title>
@@ -63,7 +63,7 @@
                 <v-card-text>
                   <!-- <div class="text-purple">Product Description</div> -->
 
-                  <div>{{ pro.description.slice(0, 40) }}</div>
+                  <div>{{ pro.description.slice(0, 30) }}</div>
                 </v-card-text>
 
                 <v-card-actions>

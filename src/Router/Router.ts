@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from "vue-router";
 const routes = [
   {
     name: "ProductListView",
-    path: "/d", 
+    path: "/", 
     component: () => import("../views/ProductView.vue"),
     children:[
       {
