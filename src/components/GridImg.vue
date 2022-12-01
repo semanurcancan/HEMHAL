@@ -1,9 +1,9 @@
 <template>
 <div>
  <v-img
-      height="40"
-      width="30"
-      :src="this.params.value"
+      height="50"
+      width="50"
+      :src="this.params.data.images[1]"
       cover
     >
     </v-img>
@@ -16,8 +16,9 @@ export default {
 	props: {
 		params: Object()
 	},
-    // created (){
-    //     console.log(this.params.value)
-    // }
+    mounted (){
+        console.log(this.params.data.images[1])
+    }
+   
 }
 </script>

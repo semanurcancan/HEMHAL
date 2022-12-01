@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card theme="dark" class=" w-50 mt-5 ml-15" >
+    <v-card class=" w-100 mt-5 ml-15 elevation-3" >
         <v-col v-for="(item,index) in idData" :key="index">
       <v-row class="mb-2 text-center">
         <v-col>PRODUCT </v-col>
@@ -11,7 +11,7 @@
       <v-row>
         <v-col>{{ item.title}} </v-col>
         <v-col> {{item.description}} </v-col>
-        <v-col>
+        <v-col class="resmmm">
           <v-img :src="item.images[1]" max-height="65" max-width="88"></v-img>  
         </v-col>
       </v-row>
@@ -43,7 +43,11 @@ export default defineComponent({
       this.idData = this.products.filter(
         (x) => x.id === Number(this.$route.params.id)
       );},},
-
-
 });
 </script>
+
+<style scoped>
+.resmmm{
+  text-align: -webkit-center;
+}
+</style>

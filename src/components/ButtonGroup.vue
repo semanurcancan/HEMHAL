@@ -2,7 +2,11 @@
   <v-col>
     <v-row>
       <v-col>
-        <v-row class="btnGroup  ">
+        <v-row v-if="open && pro.quantity == 0 ">
+          <v-btn  @click.stop="open = !open">sepete ekle</v-btn>
+        </v-row>
+        
+        <v-row v-else class="btnGroup  ">
           <v-btn
           icon="mdi-plus"
           color=" bg-grey-lighten-3 text-green-lighten-2" @click.prevent="add()"
@@ -29,6 +33,9 @@ export default defineComponent({
     return {
       basket: [],
       productStore: useProductStore(),
+      open:true,
+    
+   
     };
   },
   computed: {

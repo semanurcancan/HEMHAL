@@ -3,19 +3,21 @@
     <v-toolbar elevation="24" height="40" class="ml-14">
       <strong class="kayanyazi">
         <span>
-          Black Friday sales have started!!  20% discount on all products...  Black Friday sales have started. 20% discount on all products..    
+          Black Friday sales have started!! 20% discount on all products...
+          Black Friday sales have started. 20% discount on all products.. Black
+          Friday sales have started. 20% discount on all products..
         </span>
       </strong>
     </v-toolbar>
 
-    <v-toolbar elevation="5" class="toolBar" app  height="100" >
+    <v-toolbar elevation="3" class="toolBar" app height="100">
       <v-toolbar-title class="text-h5">
-        <span class="BlaBla" >BLA BLA </span>
+        <span class="BlaBla">BLA BLA </span>
         <span class="">SHOP</span>
       </v-toolbar-title>
       <v-spacer> </v-spacer>
-      
-        <router-link class="route" active-class="routeChildren" to="/">
+
+      <router-link class="route" active-class="routeChildren" to="/">
         <p>PRODUCT LIST</p>
       </router-link>
       <router-link class="route" active-class="routeChildren" to="/hello">
@@ -30,7 +32,6 @@
       ></v-app-bar-nav-icon> -->
     </v-toolbar>
 
-   
     <v-navigation-drawer
       app
       v-model="drawer"
@@ -40,8 +41,11 @@
       permanent
       rail
     >
-      <h1 class="mt-10 text-center">
-        <v-icon class="dashboardİcon">mdi-monitor-dashboard</v-icon>
+      <h1 class="mt-15 text-center">
+        <v-img
+          src="https://media.istockphoto.com/id/1144720196/tr/vekt%C3%B6r/b-harfi.jpg?s=612x612&w=is&k=20&c=mw8jt9aN5f5RTju7V3kZLGR5JC6vp3_vqOQvQWGNDYQ="
+          max-height="60"
+        ></v-img>
       </h1>
       <v-divider class="mt-5 mb-5"></v-divider>
 
@@ -74,10 +78,10 @@ export default defineComponent({
       filterItem: [
         { name: "All Product", icon: "mdi-map" },
         { name: "Electronics", icon: "mdi-tablet" },
-        { name: "Furniture", icon: "mdi-tag-heart-outline" },
-        { name: "Clothes", icon: "mdi-gift-outline" },
-        { name: "Shoes", icon: "mdi-golf-tee" },
-        { name: "Others", icon: "mdi-golf-tee" },
+        { name: "Furniture", icon: "mdi-table-furniture" },
+        { name: "Clothes", icon: "mdi-tshirt-crew-outline" },
+        { name: "Shoes", icon: "mdi-shoe-heel" },
+        { name: "Others", icon: "mdi-gift-outline" },
       ],
       basketGetters: this.getBasketGetters,
     };
@@ -97,38 +101,41 @@ export default defineComponent({
 </script>
 
 <style scoped>
-
-  @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&display=swap');
-
-  .kayanyazi {
-    width: 100%;
-    margin: 0 auto;
-    white-space: nowrap;
-    overflow: hidden;
-    box-sizing: border-box;
+.BlaBla {
+  font-family: "Inconsolata", monospace;
 }
- 
+.kayanyazi {
+  width: 100%;
+  margin: 0 auto;
+  white-space: nowrap;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
 .kayanyazi span {
-    display: inline-block;
-    padding-left: 100%;
-    text-indent: 0;
-    animation: marquee 15s linear infinite;
+  display: inline-block;
+  padding-left: 100%;
+  text-indent: 0;
+  animation: marquee 24s linear infinite;
 }
 .kayanyazi span:hover {
-    animation-play-state: paused
+  animation-play-state: paused;
 }
 @keyframes marquee {
-    0%   { transform: translate(0, 0); }
-    100% { transform: translate(-100%, 0); }
-
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(-100%, 0);
+  }
 }
 
 .toolBar {
   background-color: #f9f9f9;
   margin-left: 50px;
-  box-shadow: 5px 10px solid ;
+  box-shadow: 5px 10px solid;
 }
-.lefBar{
+.lefBar {
   text-align: center;
 }
 .navigation-list-item {
@@ -151,12 +158,11 @@ export default defineComponent({
   display: inline-block;
 }
 .quantity {
-  font-size: 26px;
+  font-size: 32px;
 }
 
 .dashboardİcon {
   animation: color-change 3s infinite;
-  
 }
 .title {
   animation: color-change 3s infinite;

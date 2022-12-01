@@ -8,7 +8,7 @@
       <v-app v-else style="z-index: 0 !important">
         <v-col>
           <ag-grid-vue
-            style="width: 850px; height: 400px"
+            style="width: 1010px ; height: 300px"
             class="ag-theme-alpine"
             :columnDefs="columnDefs"
             :rowData="arrayUnic"
@@ -56,6 +56,11 @@ export default defineComponent({
         },
 
         { headerName: "quantity", field: "quantity" },
+        {
+          headerName: "category",
+          field: "category",
+          valueGetter: this.categoryWiev,
+        },
       ],
       rowData: new Array<Product>(),
       basket: [],
@@ -71,10 +76,15 @@ export default defineComponent({
   },
   methods: {
     ...mapActions(useProductStore, ["setDltBasket", "setAddBasket"]),
+
     priceQuantity(params: any) {
       let item = params.data;
       console.log("PARAMSSSS", item);
       return item.price * item.quantity;
+    },
+    categoryWiev(params: any) {
+      let categoriList = params.data;
+      return categoriList.category.name;
     },
 
     unicPro() {
