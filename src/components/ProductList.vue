@@ -153,6 +153,26 @@ export default defineComponent({
 });
 </script>
 <style scoped>
+
+@media screen and (max-width: 1080px) {
+  body .new{
+    width: 600px;
+  height: 300px;
+  position: relative;
+  margin: auto;
+  }
+}
+
+
+@media screen and (max-width: 600px) {
+  body .new{
+    width: 350px;
+  height: 270px;
+  position: relative;
+  margin: auto;
+  }
+}
+
 .new {
   width: 1100px;
   height: 300px;
@@ -173,7 +193,7 @@ export default defineComponent({
 }
 
 .v-card:not(.on-hover) {
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
 .show-btns {
