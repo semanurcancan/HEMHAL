@@ -1,33 +1,32 @@
 <template>
   <v-app class="ml-11">
     <div>
-      <template>
-        <v-hover v-slot="{ isHovering, props }">
-          <v-card
-            class="mx-auto"
-            color="grey-lighten-4"
-            max-width="600"
-            v-bind="props"
+      <v-hover v-slot="{ isHovering, props }">
+        <v-card
+          class="new"
+          color="grey-lighten-4"
+          max-width="auto"
+          v-bind="props"
+        >
+          <v-img
+            :aspect-ratio="16 / 13"
+            cover
+            src="https://api.lorem.space/image/fashion?w=640&h=480&r=6453"
           >
-            <v-img
-              :aspect-ratio="16 / 9"
-              cover
-              src="https://cdn.vuetifyjs.com/images/cards/kitchen.png"
-            >
-              <v-expand-transition>
-                <div
-                  v-if="isHovering"
-                  class="d-flex transition-fast-in-fast-out bg-orange-darken-2 v-card--reveal text-h2"
-                  style="height: 100%"
-                >
-                  $14.99
-                </div>
-              </v-expand-transition>
-            </v-img>
-          </v-card>
-        </v-hover>
-      </template>
+            <v-expand-transition>
+              <div
+                v-if="isHovering"
+                class="d-flex transition-fast-in-fast-out bg-pink-lighten-4 v-card--reveal text-h2"
+                style="height: 100%"
+              >
+                NEW COLLECTİON
+              </div>
+            </v-expand-transition>
+          </v-img>
+        </v-card>
+      </v-hover>
     </div>
+
     <v-col>
       <v-row>
         <v-col v-if="getFilterCategory.length > 0" class="container">
@@ -154,6 +153,13 @@ export default defineComponent({
 });
 </script>
 <style scoped>
+.new {
+  width: 1100px;
+  height: 300px;
+  position: relative;
+  margin: auto;
+}
+
 .v-card--reveal {
   align-items: center;
   bottom: 0;
