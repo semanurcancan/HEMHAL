@@ -51,6 +51,7 @@ export default defineComponent({
 
     add() {
       this.setAddBasket(this.pro);
+      console.log("EKLE", this.getBasketGetters)
       //pinia içerisindeki actions a parametre olarak pro yollandı.store içerisinde karşılığını buldu.
     },
     dlt() {

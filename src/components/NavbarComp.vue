@@ -1,6 +1,6 @@
 <template>
-  <nav>
-    <v-toolbar elevation="24" height="40" class="ml-14">
+  <nav >
+    <v-toolbar  elevation="24" height="40" class="ml-14">
       <strong class="kayanyazi">
         <span>
           Black Friday sales have started!! 20% discount on all products...
@@ -26,10 +26,7 @@
       <v-btn class="quantity"
         ><strong>{{ getBasketGetters.length }}</strong></v-btn
       >
-      <!-- <v-app-bar-nav-icon
-        class="text-grey"
-        @click="drawer = !drawer"
-      ></v-app-bar-nav-icon> -->
+    
     </v-toolbar>
 
     <v-navigation-drawer
@@ -49,16 +46,18 @@
       </h1>
       <v-divider class="mt-5 mb-5"></v-divider>
 
-      <v-list density="compact" nav>
+      <v-list nav>
         <v-list-item
           v-for="(categori, index) in filterItem"
+          to="/"
           :key="index"
           @click="filterClouds(categori.name)"
           :prepend-icon="categori.icon"
-          value="home"
+        
           class="navigation-list-item"
         >
           <li>{{ categori.name }}</li>
+          <v-divider></v-divider>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -88,13 +87,16 @@ export default defineComponent({
   },
   computed: {
     ...mapState(useProductStore, ["getBasketGetters", "getProductGetters"]),
+    
   },
   methods: {
     ...mapActions(useProductStore, ["setfilter"]),
 
     filterClouds(catName: any) {
+      this.$router.push({name: 'ProductList', path: "/"})
       console.log("click =>", catName);
       this.setfilter(catName);
+     
     },
   },
 });
@@ -105,6 +107,10 @@ export default defineComponent({
   font-family: "Inconsolata", monospace;
 }
 .kayanyazi {
+  background-color: black;
+  color: white;
+  height: 35px;
+  padding-top: 4px;
   width: 100%;
   margin: 0 auto;
   white-space: nowrap;
@@ -131,14 +137,14 @@ export default defineComponent({
 }
 
 .toolBar {
-  background-color: #f9f9f9;
+  background-color: whitesmoke;
   margin-left: 50px;
-  box-shadow: 5px 10px solid;
 }
 .lefBar {
   text-align: center;
 }
 .navigation-list-item {
+  background-color: white;
   padding-left: 8px;
   list-style: none;
   text-align: center;
@@ -149,12 +155,10 @@ export default defineComponent({
   color: black;
   display: flex;
   display: inline-block;
-  /* align-items: flex-start;
-  justify-content: space-between; */
 }
 .routeChildren {
   text-decoration: none;
-  font-size: 20px;
+  font-size: 22px;
   display: inline-block;
 }
 .quantity {

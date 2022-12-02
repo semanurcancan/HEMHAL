@@ -8,7 +8,7 @@
       <v-app v-else style="z-index: 0 !important">
         <v-col>
           <ag-grid-vue
-            style="width: 1010px ; height: 300px"
+            style="width: 1010px; height: 300px"
             class="ag-theme-alpine"
             :columnDefs="columnDefs"
             :rowData="arrayUnic"
@@ -36,7 +36,7 @@ export default defineComponent({
   },
   data() {
     return {
-      arrayUnic: Array<Product>(),
+      basketNew: JSON.parse(localStorage.getItem(JSON.stringify("basket"))),
       columnDefs: [
         {
           headerName: "image",
@@ -70,9 +70,18 @@ export default defineComponent({
   computed: {
     //pinia da mapgetters yok o yuzden getter verisi olan getProduct ...mapstate ile cagırılıyor.
     ...mapState(useProductStore, ["getBasketGetters", "GetBasketPrice"]),
+    arrayUnic(): Product[] {
+      return this.getBasketGetters.filter(
+        (v, i, a) => a.findIndex((t) => t.id == v.id) === i
+      );
+    },
+  },
+  updated() {
+    this.getBasketGetters;
   },
   mounted() {
     this.unicPro();
+    console.log("QQQQ", this.basketNew);
   },
   methods: {
     ...mapActions(useProductStore, ["setDltBasket", "setAddBasket"]),
@@ -88,9 +97,10 @@ export default defineComponent({
     },
 
     unicPro() {
-      this.arrayUnic = this.getBasketGetters.filter(
-        (v, i, a) => a.findIndex((t) => t.id === v.id) === i
-      );
+      this.arrayUnic = this.getBasketGetters;
+      // .filter(
+      //   (v, i, a) => a.findIndex((t) => t.id == v.id) === i
+      // );
     },
     add() {
       this.setAddBasket(this.pro);

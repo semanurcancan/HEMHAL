@@ -5,11 +5,8 @@
         <v-col>
           <v-row>
             <v-col v-if="getFilterCategory.length > 0">
-              <v-row >
-                <v-col
-                  v-for="(pro, index) in getFilterCategory"
-                  :key="index"
-                >
+              <v-row>
+                <v-col v-for="(pro, index) in getFilterCategory" :key="index">
                   <v-card class="cardClass">
                     <v-img
                       @click="
@@ -36,19 +33,18 @@
                       <div>{{ pro.description.slice(0, 40) }}</div>
                     </v-card-text>
                     <v-card-actions>
-                  <button-group
-                    class="mt-5 ml-10 mr-10"
-                    :pro="pro"
-                    :actions="actions"
-                  ></button-group>
-                </v-card-actions>
+                      <button-group
+                        class="mt-5 ml-10 mr-10"
+                        :pro="pro"
+                        :actions="actions"
+                      ></button-group>
+                    </v-card-actions>
                   </v-card>
                 </v-col>
               </v-row>
-                
             </v-col>
 
-            <v-col v-else v-for="(pro, i) in getProduct" :key="i" >
+            <v-col v-else v-for="(pro, i) in getProduct" :key="i">
               <v-card class="cardClass" max-width="350">
                 <v-img
                   @click="
@@ -109,8 +105,11 @@ export default defineComponent({
     products: inject("products"),
     actions: inject("actions"),
   }),
+  mounted() {
+    this.getBasketGetters;
+  },
   computed: {
-    ...mapState(useProductStore, ["getFilterCategory"]),
+    ...mapState(useProductStore, ["getFilterCategory", "getBasketGetters"]),
   },
 });
 </script>

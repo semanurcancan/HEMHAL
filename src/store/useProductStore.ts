@@ -38,13 +38,15 @@ export const useProductStore = defineStore("product", {
   actions: {
     //data apı aul ile cekildi!!!
     async getProductAction() {
-      await axios.get("https://api.escuelajs.co/api/v1/products?offset=0&limit=80").then((product) => {
-        this.product = product.data;
-        //quantity entrübütü yoktu gelen data da ekledim.
-        this.product.forEach((x: any) => {
-          x.quantity = 0;
+      await axios
+        .get("https://api.escuelajs.co/api/v1/products?offset=0&limit=80")
+        .then((product) => {
+          this.product = product.data;
+          //quantity entrübütü yoktu gelen data da ekledim.
+          this.product.forEach((x: any) => {
+            x.quantity = 0;
+          });
         });
-      });
     },
     setfilter(catName: string) {
       this.filterCategory = this.getProductGetters.filter(
@@ -54,7 +56,7 @@ export const useProductStore = defineStore("product", {
     },
     //set addl ile actıons component içine cagırıldığında parametle oalrak "pro" alacak.
     setAddBasket(pro: Product) {
-      this.basket.push(pro);
+      this.basket = [...this.basket, pro];
       this.totalPrice += pro.price;
       pro.quantity++;
     },
