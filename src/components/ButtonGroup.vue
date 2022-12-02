@@ -1,9 +1,9 @@
 <template>
   <v-col>
     <v-row>
-      <v-col>
+      <v-col class="mb-3">
         <v-row v-if="open && pro.quantity == 0 ">
-          <v-btn  @click.stop="open = !open">sepete ekle</v-btn>
+          <v-btn class="sepeteEkle"  @click.stop="open = !open">sepete ekle</v-btn>
         </v-row>
         
         <v-row v-else class="btnGroup  ">
@@ -34,7 +34,6 @@ export default defineComponent({
       basket: [],
       productStore: useProductStore(),
       open:true,
-    
    
     };
   },
@@ -62,6 +61,11 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.sepeteEkle{
+  background-color: #fadde69c;
+  /* background-color: #daf8a277; */
+}
+
 .btnGroup{
   display: flex;
     justify-content: space-evenly;

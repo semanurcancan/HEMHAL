@@ -39,7 +39,7 @@ export const useProductStore = defineStore("product", {
     //data apı aul ile cekildi!!!
     async getProductAction() {
       await axios
-        .get("https://api.escuelajs.co/api/v1/products?offset=0&limit=80")
+        .get("https://api.escuelajs.co/api/v1/products?offset=0&limit=70")
         .then((product) => {
           this.product = product.data;
           //quantity entrübütü yoktu gelen data da ekledim.

@@ -7,14 +7,21 @@
       </div>
       <v-app v-else style="z-index: 0 !important">
         <v-col>
-          <ag-grid-vue
-            style="width: 1010px; height: 300px"
+          <v-row>
+            <v-col>
+              <ag-grid-vue
+            style="width: 1010px; height:500px "
             class="ag-theme-alpine"
             :columnDefs="columnDefs"
             :rowData="arrayUnic"
           >
           </ag-grid-vue>
-          <v-card-title>sepet tutarı: {{ GetBasketPrice }} </v-card-title>
+            </v-col>
+            <v-col>
+              <v-card-title>sepet tutarı: {{ GetBasketPrice }} </v-card-title>
+              <v-btn class="ml-3 mt-3"  to="/" >back</v-btn>
+            </v-col>
+          </v-row>
         </v-col>
       </v-app>
     </div>
@@ -36,7 +43,6 @@ export default defineComponent({
   },
   data() {
     return {
-      basketNew: JSON.parse(localStorage.getItem(JSON.stringify("basket"))),
       columnDefs: [
         {
           headerName: "image",

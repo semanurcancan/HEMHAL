@@ -31,6 +31,7 @@
 
     <v-navigation-drawer
       app
+      flat
       v-model="drawer"
       class="lefBar"
       expand-on-hover
@@ -48,15 +49,15 @@
 
       <v-list nav>
         <v-list-item
+        :active="false"
           v-for="(categori, index) in filterItem"
           to="/"
           :key="index"
           @click="filterClouds(categori.name)"
           :prepend-icon="categori.icon"
-        
           class="navigation-list-item"
         >
-          <li>{{ categori.name }}</li>
+          <li class=" text-deep-purple">{{ categori.name }}</li>
           <v-divider></v-divider>
         </v-list-item>
       </v-list>

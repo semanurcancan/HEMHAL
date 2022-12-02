@@ -1,6 +1,7 @@
 <template>
   <div>
     <v-card class="w-100 mt-5 ml-15 elevation-3">
+      <v-btn class="ml-3 mt-3" to="/">back</v-btn>
       <v-col v-for="(item, index) in idData" :key="index">
         <v-row class="mb-2 text-center">
           <v-col>PRODUCT </v-col>
@@ -8,11 +9,15 @@
           <v-col>IMAGE</v-col>
         </v-row>
         <v-divider class="mb-5"></v-divider>
-        <v-row>
+        <v-row class="mb-2 text-center">
           <v-col>{{ item.title }} </v-col>
           <v-col> {{ item.description }} </v-col>
           <v-col class="resmmm">
-            <v-img :src="item.images[1]" max-height="100" max-width="100"></v-img>
+            <v-img
+              :src="item.images[1]"
+              max-height="100"
+              max-width="100"
+            ></v-img>
           </v-col>
         </v-row>
       </v-col>
@@ -32,14 +37,14 @@ export default defineComponent({
       products: inject<Product>("products"),
     };
   },
-computed: {
-  getProductById():Object {
-    return this.idData = this.products.filter(
+  computed: {
+    getProductById(): Object {
+      return (this.idData = this.products.filter(
         (x) => x.id === Number(this.$route.params.id)
-      );
+      ));
     },
-},
-  
+  },
+
   methods: {
     getProductById() {
       this.idData = this.products.filter(
