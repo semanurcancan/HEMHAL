@@ -27,9 +27,9 @@
       </v-hover>
     </div>
 
-    <v-col>
+    <v-col class="container">
       <v-row>
-        <v-col v-if="getFilterCategory.length > 0" class="container">
+        <v-col v-if="getFilterCategory.length > 0" >
           <v-row>
             <v-col v-for="(pro, index) in getFilterCategory" :key="index">
               <v-hover v-slot="{ isHovering, props }">
@@ -201,14 +201,14 @@ export default defineComponent({
 }
 
 .container {
-  padding: 20px, 0;
+  padding: 20px;
+  margin-left: 30px;
+  margin-top: 20px;
 }
 .listItem {
   list-style: none;
 }
 .cardClass {
-  margin-top: 15px;
-  margin-left: 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
