@@ -1,7 +1,10 @@
 # Vue 3 + TypeScript + Vite +Pinia
+### BLA BLA GIF
+![blagif](https://github.com/semanurcancan/PiniaVite/blob/main/Animation2deneme.gif)
+
 
 #### APP LINK
-[BLA BLA SHOPPING](https://vermillion-salamander-ddbe80.netlify.app/)
+[BLA BLA SHOPPING](https://pinia-vite-chi.vercel.app/)
 
 
 ## Install
