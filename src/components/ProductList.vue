@@ -29,7 +29,7 @@
 
     <v-col class="container">
       <v-row>
-        <v-col v-if="getFilterCategory.length > 0" >
+        <v-col v-if="getFilterCategory.length > 0">
           <v-row>
             <v-col v-for="(pro, index) in getFilterCategory" :key="index">
               <v-hover v-slot="{ isHovering, props }">
@@ -54,6 +54,9 @@
                   >
                     <v-card-title>{{ pro.title.slice(0, 10) }}</v-card-title>
                   </v-img>
+                  <v-btn icon @click.capture="addFavorite(pro)" variant="plain">
+                <v-icon  :icon="checkFavIcon(pro)" color="pink"></v-icon>
+              </v-btn>
                   <v-card-subtitle class="">
                     {{ pro.price }} TL
                   </v-card-subtitle>
@@ -97,18 +100,25 @@
               >
                 <v-card-title>{{ pro.title.slice(0, 10) }}</v-card-title>
               </v-img>
-              <v-icon
-                v-model="isSelected"
-                :icon="isSelected ? 'mdi-heart' : 'mdi-heart-outline'"
-              ></v-icon>
+
+              <v-btn icon @click.capture="addFavorite(pro)" variant="plain">
+                <v-icon :icon="checkFavIcon(pro)" color="pink"></v-icon>
+              </v-btn>
+
               <v-card-subtitle> {{ pro.price }} TL </v-card-subtitle>
 
               <v-card-text>
                 <!-- <div class="text-purple">Product Description</div> -->
 
-                <div>{{ pro.description.slice(0, 30) }}</div>
+                <div>
+                  {{ pro.description.slice(0, 30) }}
+                  <!-- <v-icon
+                  @click="toggleMarker(pro.id,)"
+                    :icon="marker ? 'mdi-cards-heart-outline' : 'mdi-cards-heart'"
+                    color="red"
+                  ></v-icon> -->
+                </div>
               </v-card-text>
-
               <v-card-actions>
                 <button-group
                   class="mt-5 ml-10 mr-10"
@@ -127,13 +137,20 @@
 <script lang="ts">
 import { defineComponent, inject, PropType } from "vue";
 import ButtonGroup from "./ButtonGroup.vue";
-import { Product } from "../models/entities/ProductModels";
 import { mapState, mapActions } from "pinia";
 import { useProductStore } from "../store/useProductStore";
+
+//types
+import { Product } from "../models/entities/ProductModels";
+import type {
+  FavoriteObjectType,
+  TitleObjectType,
+} from "../models/entities/Icontype";
 
 export default defineComponent({
   components: { ButtonGroup },
   name: "ProductList",
+
   props: {
     getProduct: {
       type: Object as PropType<Product>,
@@ -141,35 +158,65 @@ export default defineComponent({
   },
   data: () => ({
     show: false,
+    marker: true,
     products: inject("products"),
     actions: inject("actions"),
   }),
   mounted() {
     this.getBasketGetters;
   },
+  methods: {
+    addFavorite(pro: FavoriteObjectType) {
+      this.addOrRemoveFavorite(pro);
+    },
+    clickItem(e: any) {
+      console.log(e);
+      this.$router.push({ name: e.name });
+    },
+    checkFavIcon(pro: Product): string {
+      const findIndex = this.getFavoritesState.findIndex(
+        (fav: any) => fav.id === pro.id
+      );
+      if (findIndex == -1) {
+        return "mdi-cards-heart-outline";
+      } else {
+        return "mdi-cards-heart";
+      }
+    },
+    ...mapActions(useProductStore, ["addOrRemoveFavorite"]),
+  },
+
   computed: {
-    ...mapState(useProductStore, ["getFilterCategory", "getBasketGetters"]),
+    ...mapState(useProductStore, [
+      "getFilterCategory",
+      "getBasketGetters",
+      "getFavoritesState",
+    ]),
+  },
+  watch: {
+    getFavoritesState() {
+      console.log("getFavoritesState", this.getFavoritesState);
+    },
   },
 });
 </script>
-<style scoped>
 
+<style scoped>
 @media screen and (max-width: 1080px) {
-  body .new{
+  body .new {
     width: 600px;
-  height: 300px;
-  position: relative;
-  margin: auto;
+    height: 300px;
+    position: relative;
+    margin: auto;
   }
 }
 
-
 @media screen and (max-width: 600px) {
-  body .new{
+  body .new {
     width: 350px;
-  height: 270px;
-  position: relative;
-  margin: auto;
+    height: 270px;
+    position: relative;
+    margin: auto;
   }
 }
 

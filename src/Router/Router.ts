@@ -25,7 +25,13 @@ const routes = [
     props: true,
     component: () => import("../components/BasketComp.vue"), 
   },
-];
+  {
+    name: "Favorite",
+    path: "/favorite", 
+    props: true,
+    component: () => import("../components/UserFavorite.vue"), 
+  },
+]
 const router = createRouter({
   routes: routes,
   // history: createWebHistory(),

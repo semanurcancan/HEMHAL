@@ -3,6 +3,15 @@ import axios from "axios";
 //  import type ProductModels from "../models/entities/ProductModels.ts"
 import { Product } from "../models/entities/ProductModels";
 import { statusTypeEnum } from "../models/enums/statusTypeEnum";
+import { FavoriteObjectType } from "../models/entities/Icontype";
+
+const loadFromStorage = (key: string, defaultValue: any): any => {
+  const item = localStorage.getItem(key);
+  if (item) {
+    return JSON.parse(item);
+  }
+  return defaultValue;
+};
 
 export const useProductStore = defineStore("product", {
   //burada içi boş verisi olamayan  ama type tanımlanan product var bunu için product model belirledim.api den gelecke olan verilerin type ı bu model içeriisnde belirlendi.
@@ -13,6 +22,9 @@ export const useProductStore = defineStore("product", {
       basket: [] as Array<Product>,
       basketLength: 0,
       filterCategory: [] as Array<Product>,
+      favorites:loadFromStorage(
+        "userFavorites", [] as Array<Product>),
+      loading: false,
     };
   },
 
@@ -32,6 +44,9 @@ export const useProductStore = defineStore("product", {
     },
     getFilterCategory: (state) => {
       return state.filterCategory;
+    },
+    getFavoritesState(state) {
+      return state.favorites;
     },
   },
   //actions da api verilerini cektim.state de içi boş ve type ı tanımlanan product a attım içerisindeki bilgileri api den gelen.methods da cagırıdm!!!
@@ -71,6 +86,21 @@ export const useProductStore = defineStore("product", {
       } else {
         return this.totalPrice;
       }
+    },
+
+    addOrRemoveFavorite(pro: Product) {
+      const findedIndex = this.favorites.findIndex(
+        (fav: any) => fav.id === pro.id
+      );
+      if (findedIndex === -1) {
+        this.favorites = [...this.favorites, pro];
+      } else {
+        this.favorites = this.favorites.filter((fav: any) => fav.id !== pro.id);
+      }
+      localStorage.setItem("userFavorites", JSON.stringify(this.favorites));
+    },
+    setLoadingState(state: boolean) {
+      this.loading = state;
     },
   },
 });

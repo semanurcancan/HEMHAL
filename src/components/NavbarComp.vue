@@ -20,6 +20,9 @@
       <router-link class="route" active-class="routeChildren" to="/">
         <p>PRODUCT LIST</p>
       </router-link>
+      <router-link class="route" active-class="routeChildren" to="/favorite">
+        <p>FAVORITE LIST</p>
+      </router-link>
       <router-link class="route" active-class="routeChildren" to="/hello">
         <p>BASKET</p></router-link
       >

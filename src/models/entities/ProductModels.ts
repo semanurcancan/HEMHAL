@@ -1,6 +1,27 @@
 import {IEntityBase} from "../IEntity"
 import {statusTypeEnum} from "../enums/statusTypeEnum";
 
+
+export interface TitleObjectType {
+	name: string
+	icon: string
+	inventoryChildren?: TitleObjectType[]
+	children: {
+		name: string
+		icon: string
+		children?: {
+			name: string
+			icon: string
+		}[]
+	}[]
+}
+
+export interface FavoriteObjectType {
+	name: string
+	icon: string
+}
+
+
 export class Product implements IEntityBase {
     constructor(){
         this.id = 0;
@@ -15,6 +36,8 @@ export class Product implements IEntityBase {
         this.rating = 0;
         this.status = statusTypeEnum.Active
         this.quantity = 0;
+        this.icon = ""
+        this.name =""
     }
     id: number
     title:string
@@ -27,5 +50,7 @@ export class Product implements IEntityBase {
     images:string
     rating:number
     status:number
-    quantity: number;
+    quantity: number
+    icon: string
+    name: string
 }
