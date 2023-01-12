@@ -61,7 +61,7 @@
                     {{ pro.price }} TL
                   </v-card-subtitle>
                   <v-card-text>
-                    <div>{{ pro.description.slice(0, 40) }}</div>
+                    <div>{{ pro.description.slice(0, 30) }}</div>
                   </v-card-text>
                   <v-card-actions>
                     <button-group
@@ -98,7 +98,7 @@
                 :src="pro.images[1]"
                 cover
               >
-                <v-card-title>{{ pro.title.slice(0, 10) }}</v-card-title>
+                <v-card-title>{{ pro.title.slice(0, 50) }}</v-card-title>
               </v-img>
 
               <v-btn icon @click.capture="addFavorite(pro)" variant="plain">
@@ -108,20 +108,13 @@
               <v-card-subtitle> {{ pro.price }} TL </v-card-subtitle>
 
               <v-card-text>
-                <!-- <div class="text-purple">Product Description</div> -->
-
                 <div>
-                  {{ pro.description.slice(0, 30) }}
-                  <!-- <v-icon
-                  @click="toggleMarker(pro.id,)"
-                    :icon="marker ? 'mdi-cards-heart-outline' : 'mdi-cards-heart'"
-                    color="red"
-                  ></v-icon> -->
+                  {{ pro.description.slice(0, 10) }}
                 </div>
               </v-card-text>
               <v-card-actions>
                 <button-group
-                  class="mt-5 ml-10 mr-10"
+                  class="mt-5 mx-10"
                   :pro="pro"
                   :actions="actions"
                 ></button-group>
