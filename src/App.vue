@@ -1,7 +1,9 @@
 <template>
 <v-app >
   <div >
-    <navbar-comp ></navbar-comp>
+    
+<kayanyazi></kayanyazi>
+<br>
        <router-view v-slot="{ Component }">
       <keep-alive>
         <component :is="Component" />
@@ -15,13 +17,11 @@
 import { defineComponent } from "@vue/runtime-core";
 
 //componentler
-import NavbarComp from "./components/NavbarComp.vue";
 
+import kayanyazi from "./components/headerComp/kayanYazı.vue";
 
 export default defineComponent({
-  components: {
-    NavbarComp,
-  },
+  components: {kayanyazi },
   
  
 });

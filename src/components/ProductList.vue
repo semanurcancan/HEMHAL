@@ -1,7 +1,20 @@
 <template>
-  <v-app class="ml-11">
+  <v-app class="container">
     <div>
-      <v-hover v-slot="{ isHovering, props }">
+<navbar-comp></navbar-comp>
+    </div>
+    <div>
+      <v-toolbar-title class="text-h5 title">
+      <v-img
+        src="/public/assets/anasayfaIMG.jpeg"
+        alt="HEMHAL"
+        cover
+        width="1250"
+        height="700"
+      >
+      </v-img>
+    </v-toolbar-title>
+      <!-- <v-hover v-slot="{ isHovering, props }">
         <v-card
           class="new"
           color="grey-lighten-4"
@@ -24,10 +37,11 @@
             </v-expand-transition>
           </v-img>
         </v-card>
-      </v-hover>
+      </v-hover> -->
+      
     </div>
 
-    <v-col class="container">
+    <v-col class="containerProduct">
       <v-row>
         <v-col v-if="getFilterCategory.length > 0">
           <v-row>
@@ -132,6 +146,7 @@ import { defineComponent, inject, PropType } from "vue";
 import ButtonGroup from "./ButtonGroup.vue";
 import { mapState, mapActions } from "pinia";
 import { useProductStore } from "../store/useProductStore";
+import NavbarComp from "../components/headerComp/NavbarComp.vue"
 
 //types
 import { Product } from "../models/entities/ProductModels";
@@ -141,7 +156,7 @@ import type {
 } from "../models/entities/Icontype";
 
 export default defineComponent({
-  components: { ButtonGroup },
+  components: { ButtonGroup, NavbarComp },
   name: "ProductList",
 
   props: {
@@ -200,7 +215,7 @@ export default defineComponent({
     width: 600px;
     height: 300px;
     position: relative;
-    margin: auto;
+    /* margin: auto; */
   }
 }
 
@@ -209,10 +224,27 @@ export default defineComponent({
     width: 350px;
     height: 270px;
     position: relative;
-    margin: auto;
+    /* margin: auto; */
   }
 }
-
+.container{
+  background-color: rgba(192, 174, 150, 0.158);
+  margin-left: 170px;
+  margin-right: 170px;
+}
+.containerProduct {
+  padding: 20px;
+  margin-left: 30px;
+  margin-top: 20px;
+}
+.cardClass {
+  background-color: rgba(192, 174, 150, 0.158);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  height: 410px;
+}
 .new {
   width: 1100px;
   height: 300px;
@@ -220,6 +252,9 @@ export default defineComponent({
   margin: auto;
 }
 
+.title {
+  text-align: -webkit-center;
+}
 .v-card--reveal {
   align-items: center;
   bottom: 0;
@@ -240,22 +275,9 @@ export default defineComponent({
   color: rgba(255, 255, 255, 1) !important;
 }
 
-.container {
-  padding: 20px;
-  margin-left: 30px;
-  margin-top: 20px;
-}
+
 .listItem {
   list-style: none;
 }
-.cardClass {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 300px;
-  height: 410px;
-}
-.cardclassactive:hover {
-  box-shadow: 2px 4px green;
-}
+
 </style>
