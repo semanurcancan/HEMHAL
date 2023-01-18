@@ -1,19 +1,16 @@
 <template>
   <v-app class="container">
     <div>
-<navbar-comp></navbar-comp>
-    </div>
-    <div>
-      <v-toolbar-title class="text-h5 title">
-      <v-img
-        src="/public/assets/anasayfaIMG.jpeg"
-        alt="HEMHAL"
-        cover
-        width="1250"
-        height="700"
-      >
-      </v-img>
-    </v-toolbar-title>
+      <!-- <v-toolbar-title class="text-h5 title">
+        <v-img
+          src="/public/assets/anasayfaIMG.jpeg"
+          alt="HEMHAL"
+          cover
+          width="1200"
+          height="700"
+        >
+        </v-img>
+      </v-toolbar-title> -->
       <!-- <v-hover v-slot="{ isHovering, props }">
         <v-card
           class="new"
@@ -38,7 +35,6 @@
           </v-img>
         </v-card>
       </v-hover> -->
-      
     </div>
 
     <v-col class="containerProduct">
@@ -69,8 +65,8 @@
                     <v-card-title>{{ pro.title.slice(0, 10) }}</v-card-title>
                   </v-img>
                   <v-btn icon @click.capture="addFavorite(pro)" variant="plain">
-                <v-icon  :icon="checkFavIcon(pro)" color="pink"></v-icon>
-              </v-btn>
+                    <v-icon :icon="checkFavIcon(pro)" color="pink"></v-icon>
+                  </v-btn>
                   <v-card-subtitle class="">
                     {{ pro.price }} TL
                   </v-card-subtitle>
@@ -90,7 +86,7 @@
           </v-row>
         </v-col>
 
-        <v-col v-else v-for="(pro, i) in getProduct" :key="i">
+        <v-col v-else v-for="(pro, i) in getProductGetters" :key="i">
           <v-hover v-slot="{ isHovering, props }">
             <v-card
               :elevation="isHovering ? 6 : 2"
@@ -146,7 +142,7 @@ import { defineComponent, inject, PropType } from "vue";
 import ButtonGroup from "./ButtonGroup.vue";
 import { mapState, mapActions } from "pinia";
 import { useProductStore } from "../store/useProductStore";
-import NavbarComp from "../components/headerComp/NavbarComp.vue"
+import NavbarComp from "../components/headerComp/NavbarComp.vue";
 
 //types
 import { Product } from "../models/entities/ProductModels";
@@ -160,7 +156,7 @@ export default defineComponent({
   name: "ProductList",
 
   props: {
-    getProduct: {
+    getProductGetters: {
       type: Object as PropType<Product>,
     },
   },
@@ -227,10 +223,9 @@ export default defineComponent({
     /* margin: auto; */
   }
 }
-.container{
-  background-color: rgba(192, 174, 150, 0.158);
-  margin-left: 170px;
-  margin-right: 170px;
+.container {
+  background-color: rgba(192, 150, 150, 0.158);
+  
 }
 .containerProduct {
   padding: 20px;
@@ -275,9 +270,7 @@ export default defineComponent({
   color: rgba(255, 255, 255, 1) !important;
 }
 
-
 .listItem {
   list-style: none;
 }
-
 </style>

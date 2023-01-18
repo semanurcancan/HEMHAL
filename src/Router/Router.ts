@@ -1,9 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
+
   {
-    name: "ProductList",
-    path: "/", 
+    name: "ProductView",
+    path: "/product", 
     component: () => import("../views/ProductView.vue"),
     children:[
       {
@@ -18,6 +19,12 @@ const routes = [
       },
      
     ]
+  },
+  {
+    name: "product",
+    path: "/", 
+    props: true,
+    component: () => import("../components/anasayfa.vue"), 
   },
   {
     name: "Hello",

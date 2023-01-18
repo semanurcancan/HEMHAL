@@ -1,6 +1,6 @@
 <template>
 
-   <v-toolbar height="75" class="kayanKapsayıcı">
+   <v-toolbar height="50" class="kayanKapsayıcı">
         <strong class="kayanyazi">
             <span>
             Black Friday sales have started!! 20% discount on all products...
@@ -31,7 +31,7 @@
   display: inline-block;
   padding-left: 100%;
   text-indent: 0;
-  animation: marquee 24s linear infinite;
+  animation: marquee 35s linear infinite;
 }
 .kayanyazi span:hover {
   animation-play-state: paused;

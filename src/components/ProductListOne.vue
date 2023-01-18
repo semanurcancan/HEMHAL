@@ -1,7 +1,7 @@
 <template>
   <div>
     <router-view></router-view>
-    <product-list :getProduct="getProductGetters" />
+    <product-list :getProductGetters="getProductGetters" />
   </div>
 </template>
 <script lang="ts">

@@ -14,45 +14,82 @@
     <v-col>
       <v-row>
         <v-col>
-        <span class="BlaBla"> <i>loc.</i> <strong>KAZ DAĞLARI</strong> </span>
-        </v-col>
-<v-col>
-  <v-row>
-     <v-col>
-            <router-link class="route" active-class="routeChildren" to="/">
-          <span>PRODUCT LIST</span>
-        </router-link>
-        </v-col>
-
-        <v-col>
-           <router-link class="route" active-class="routeChildren" to="/favorite">
-          <span>FAVORITE LIST</span>
-        </router-link>
+          <span class="BlaBla"> <i>loc.</i> <strong>KAZ DAĞLARI</strong> </span>
         </v-col>
         <v-col>
-          <router-link class="route" active-class="routeChildren" to="/hello">
-          <span>BASKET</span></router-link
-        >
+          <div id="sidemenu" class="navbar">
+            <button
+              class="sidemenu__btn"
+              v-on:click="navOpen = !navOpen"
+              v-bind:class="{ active: navOpen }"
+            >
+              <span class="top"></span>
+              <span class="mid"></span>
+              <span class="bottom"></span>
+            </button>
+            -->
+            <transition name="translateX">
+              <nav v-show="navOpen">
+                <div class="nav-links">
+                  <ul class="sidemenu__list">
+                    <li class="active"><a href="">Top</a></li>
+                    <li class="active"><a href="">About</a></li>
+                    <li class="active"><a href="">Blog</a></li>
+                    <li class="active"><a href="">Work</a></li>
+                    <li class="active"><a href="">Link</a></li>
+                  </ul>
+                </div>
+              </nav>
+            </transition>
+          </div>
+          <img class="menu" src="/public/assets/hamburger.png" />
         </v-col>
-  </v-row>
-</v-col>
-       
       </v-row>
     </v-col>
-      <!-- <v-toolbar-title class="d-flex justify-start"> -->
-    
 
-      <div class="d-flex justify-end" >
-       
-       
-        
-      
-       
-        <!-- <v-btn class="quantity"
+    <!-- <v-row>
+            <v-col>
+              <router-link class="route" active-class="routeChildren" to="/">
+                <span>Hakkımızda</span>
+              </router-link>
+            </v-col>
+            <v-col>
+              <router-link
+                class="route"
+                active-class="routeChildren"
+                to="/product"
+              >
+                <span>Ürünlerimiz</span>
+              </router-link>
+            </v-col>
+
+            <v-col>
+              <router-link
+                class="route"
+                active-class="routeChildren"
+                to="/favorite"
+              >
+                <span>Beğendikleriniz</span>
+              </router-link>
+            </v-col>
+            <v-col>
+              <router-link
+                class="route"
+                active-class="routeChildren"
+                to="/hello"
+              >
+                <span>Sepetim</span></router-link
+              >
+            </v-col>
+          </v-row> -->
+
+    <!-- <v-toolbar-title class="d-flex justify-start"> -->
+
+    <!-- <div class="d-flex justify-end"> -->
+    <!-- <v-btn class="quantity"
           ><strong>{{ getBasketGetters.length }}</strong></v-btn
         > -->
-    
-    </div>
+    <!-- </div> -->
   </div>
   <!-- <lefBar></lefBar> -->
 </template>
@@ -61,17 +98,17 @@
 import { defineComponent } from "vue";
 import { mapActions, mapState } from "pinia";
 import { useProductStore } from "../../store/useProductStore";
-
 //components
 import lefBar from "./leftBar.vue";
 
 export default defineComponent({
   name: "NavbarComp",
   components: { lefBar },
+  el: "#sidemenu",
   data() {
     return {
+      navOpen: true,
       drawer: true,
-
       basketGetters: this.getBasketGetters,
     };
   },
@@ -85,6 +122,56 @@ export default defineComponent({
 </script>
 
 <style scoped>
+@media screen and (max-width: 2500px) {
+  body .ımg {
+    background-color: rgba(234, 18, 18, 0.899);
+    height: 300px;
+    width: 300px;
+  }
+}
+@media screen and (max-width: 2000px) {
+  body .ımg {
+    background-color: rgba(21, 211, 87, 0.784);
+    height: 300px;
+    width: 300px;
+  }
+}
+
+@media screen and (max-width: 1500px) {
+  body .ımg {
+    background-color: rgb(89, 89, 4);
+    height: 300px;
+    width: 300px;
+  }
+}
+@media screen and (max-width: 1300px) {
+  body .ımg {
+    background-color: rgb(89, 89, 4);
+    height: 300px;
+    width: 300px;
+  }
+}
+@media screen and (max-width: 1000px) {
+  body .ımg {
+    background-color: rgba(8, 124, 48, 0.784);
+    height: 300px;
+    width: 300px;
+  }
+}
+@media screen and (max-width: 750px) {
+  body .ımg {
+    background-color: rgb(232, 232, 105);
+    height: 300px;
+    width: 300px;
+  }
+}
+@media screen and (max-width: 500px) {
+  body .ımg {
+    background-color: rgb(128, 109, 233);
+    height: 300px;
+    width: 300px;
+  }
+}
 .BlaBla {
   margin-top: 2px;
   font-family: "Inconsolata", monospace;
@@ -95,7 +182,7 @@ export default defineComponent({
 }
 .toolBar {
   background-color: white;
-  height: 350px;
+  height: 300px;
 }
 .lefBar {
   text-align: center;
