@@ -224,7 +224,6 @@ export default defineComponent({
   }
 }
 .container {
-  background-color: rgba(192, 150, 150, 0.158);
   
 }
 .containerProduct {

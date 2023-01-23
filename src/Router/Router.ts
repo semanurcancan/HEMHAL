@@ -21,7 +21,7 @@ const routes = [
     ]
   },
   {
-    name: "product",
+    name: "anasayfa",
     path: "/", 
     props: true,
     component: () => import("../components/anasayfa.vue"), 
@@ -41,8 +41,20 @@ const routes = [
 ]
 const router = createRouter({
   routes: routes,
-  // history: createWebHistory(),
   history: createWebHistory(),
+  scrollBehavior (to, from, savedPosition){
+    if(to.hash){
+      return {
+        el: to.hash,
+        behavior: 'smooth'
+      }
+    }
+   
+  
+    // return savedPosition || new Promise ((resolve)=> {
+    //   setTimeout (()=> resolve ({top:0, behavior: 'smooth'}), 300)
+    // })
+  }
 });
 
 export default router;

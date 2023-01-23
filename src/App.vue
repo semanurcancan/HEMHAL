@@ -4,10 +4,10 @@
     <v-app class="container">
       <div>
         <NavbarComp></NavbarComp>
-        <br />
+        <br /> 
         <router-view v-slot="{ Component }">
           <keep-alive>
-            <component :is="Component" />
+                <component :is="Component"/>
           </keep-alive>
         </router-view>
       </div>
@@ -27,41 +27,46 @@ export default defineComponent({
 });
 </script>
 
-<style >
+<style lang="css" >
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0,3s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
 @media screen and (max-width: 2500px) {
   body .container {
-    background-color: rgba(234, 18, 18, 0.899);
-    margin-left: 190px;
-    margin-right: 190px;
+    margin-left: 150px;
+    margin-right: 150px;
   
   }
 }
 @media screen and (max-width: 2000px) {
   body .container {
-    background-color: rgba(21, 211, 87, 0.784);
-    margin-left: 190px;
-    margin-right: 190px;
+    margin-left:120px;
+    margin-right:120px;
   
   }
 }
 
 @media screen and (max-width: 1500px) {
   body .container {
-    background-color: rgb(89, 89, 4);
+    /* background-color: rgb(89, 89, 4); */
     margin-left: 150px;
     margin-right: 150px;
   }
 }
 @media screen and (max-width: 1300px) {
   body .container {
-    background-color: rgb(89, 89, 4);
     margin-left: 130px;
     margin-right: 130px;
   }
 }
 @media screen and (max-width: 1000px) {
   body .container {
-    background-color: rgba(8, 124, 48, 0.784);
     margin-left: 110px;
     margin-right: 110px;
   
@@ -69,21 +74,18 @@ export default defineComponent({
 }
 @media screen and (max-width: 750px) {
   body .container {
-    background-color: rgb(232, 232, 105);
     margin-left: 90px;
     margin-right: 90px;
   }
 }
 @media screen and (max-width: 500px) {
   body .container {
-    background-color: rgb(128, 109, 233);
     margin-left: 40px;
     margin-right: 40px;
   }
 }
 .container {
-  background-color: yellow;
-  margin-left: 110px;
-  margin-right: 110px;
+  margin-left: 100px;
+  margin-right: 100px;
 }
 </style>

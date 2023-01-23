@@ -1,17 +1,27 @@
 <template>
-  <div class="toolBar" app>
+  <v-container class="toolBar" app>
     <v-toolbar-title class="text-h5 title">
-      <v-img
-        src="/public/assets/hemhalLOGO2.jpeg"
-        alt="HEMHAL"
-        cover
-        width="600"
-        height="250"
-      >
-      </v-img>
+      <router-link class="route" active-class="routeChildren" to="/">
+        <span>
+          <v-img
+            src="/public/assets/hemhalLOGO2.jpeg"
+            alt="HEMHAL"
+            cover
+            width="600"
+            height="200"
+          >
+          </v-img>
+        </span>
+      </router-link>
     </v-toolbar-title>
-
     <v-col>
+      <span class="d-flex justify-center">
+        <i>loc.</i> <strong>KAZ DAĞLARI</strong>
+      </span>
+    </v-col>
+    <v-divider></v-divider>
+
+    <!-- <v-col>
       <v-row>
         <v-col>
           <span class="BlaBla"> <i>loc.</i> <strong>KAZ DAĞLARI</strong> </span>
@@ -27,7 +37,7 @@
               <span class="mid"></span>
               <span class="bottom"></span>
             </button>
-            -->
+           
             <transition name="translateX">
               <nav v-show="navOpen">
                 <div class="nav-links">
@@ -45,52 +55,43 @@
           <img class="menu" src="/public/assets/hamburger.png" />
         </v-col>
       </v-row>
-    </v-col>
+    </v-col> -->
+    <v-container class="my-2">
+      <v-row>
+        <v-col cols="6">
+          <router-link class="route" active-class="routeChildren" to="/">
+            <span>ANASAYFA</span>
+          </router-link>
+          <router-link
+            class="route"
+            :to="{ path: '/', hash: '#hakkimizda' }" >
+            <span>HAKKIMIZDA</span>
+          </router-link>
+          <router-link
+            class="route"
+            :to="{ path: '/', hash: '#iletisim' }">
+            <span>İLETİŞİM</span>
+          </router-link>
+        </v-col>
 
-    <!-- <v-row>
-            <v-col>
-              <router-link class="route" active-class="routeChildren" to="/">
-                <span>Hakkımızda</span>
-              </router-link>
-            </v-col>
-            <v-col>
-              <router-link
-                class="route"
-                active-class="routeChildren"
-                to="/product"
-              >
-                <span>Ürünlerimiz</span>
-              </router-link>
-            </v-col>
+        <v-col cols="6" class="d-flex justify-end">
+          <router-link class="route" active-class="routeChildren" to="/product">
+            <span>ÜRÜNLER</span>
+          </router-link>
+          <router-link
+            class="route"
+            active-class="routeChildren"
+            to="/favorite">
+            <span>BEĞENDİKLERİNİZ</span>
+          </router-link>
 
-            <v-col>
-              <router-link
-                class="route"
-                active-class="routeChildren"
-                to="/favorite"
-              >
-                <span>Beğendikleriniz</span>
-              </router-link>
-            </v-col>
-            <v-col>
-              <router-link
-                class="route"
-                active-class="routeChildren"
-                to="/hello"
-              >
-                <span>Sepetim</span></router-link
-              >
-            </v-col>
-          </v-row> -->
-
-    <!-- <v-toolbar-title class="d-flex justify-start"> -->
-
-    <!-- <div class="d-flex justify-end"> -->
-    <!-- <v-btn class="quantity"
-          ><strong>{{ getBasketGetters.length }}</strong></v-btn
-        > -->
-    <!-- </div> -->
-  </div>
+          <router-link class="route" active-class="routeChildren" to="/hello">
+            <span>SEPETİM</span></router-link
+          >
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-container>
   <!-- <lefBar></lefBar> -->
 </template>
 
@@ -189,16 +190,19 @@ export default defineComponent({
 }
 
 .route {
-  margin-right: 10px;
+  margin-right: 40px;
   text-decoration: none;
   color: black;
   display: inline-block;
 }
-/* .routeChildren {
-  text-decoration: none;
-  font-size: 22px;
+.route:hover {
+  color: rgb(108, 120, 4);
+}
+
+.routeChildren {
+  font-weight: bold;
   display: inline-block;
-} */
+}
 
 /* .title {
   animation: color-change 3s infinite;
