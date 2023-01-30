@@ -31,18 +31,14 @@
           nesciunt facere! Nulla, iusto! Aut error aperiam, rerum officiis
           eligendi harum. Suscipit et adipisci deserunt nihil eveniet placeat
           expedita quia, fugiat perferendis, numquam, cumque fugit ipsum
-          obcaecati rem ea illum quae earum repellendus dolore. Maiores
-          blanditiis ipsa mollitia beatae necessitatibus iste, animi a odio
-          laborum vero libero placeat distinctio quasi tenetur velit fugit
-          cupiditate quibusdam minima aliquam, eaque labore facilis reiciendis
-          provident. Fuga, autem.
+      
         </div>
       </v-row>
     </v-app>
-    <h3 id="iletisim">İLETİŞİM</h3>
+    <h3 id="SECTİON">HEMHAL</h3>
     <v-app>
       <v-row>
-        <div class="containerAna pa-15">
+        <div class="containerAna pa-15 h-0">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus
           aut asperiores inventore porro dicta laborum corporis atque ipsam
           reprehenderit molestias exercitationem, odio ipsa deleniti nisi eaque
@@ -55,12 +51,7 @@
           repudiandae est laudantium praesentium ab atque provident fugiat
           nesciunt facere! Nulla, iusto! Aut error aperiam, rerum officiis
           eligendi harum. Suscipit et adipisci deserunt nihil eveniet placeat
-          expedita quia, fugiat perferendis, numquam, cumque fugit ipsum
-          obcaecati rem ea illum quae earum repellendus dolore. Maiores
-          blanditiis ipsa mollitia beatae necessitatibus iste, animi a odio
-          laborum vero libero placeat distinctio quasi tenetur velit fugit
-          cupiditate quibusdam minima aliquam, eaque labore facilis reiciendis
-          provident. Fuga, autem.
+          
         </div>
       </v-row>
     </v-app>
@@ -74,19 +65,19 @@
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="100"
-          height="100"
+          width="75"
+          height="75"
           viewBox="0 0 24 24"
           fill="none"
           stroke="#4a5568"
           stroke-width="1"
           stroke-linecap="square"
-          stroke-linejoin="bevel"
         >
           <path d="M18 15l-6-6-6 6" />
         </svg>
       </div>
     </transition>
+    <v-divider id="iletişim" class="my-16"></v-divider>
 </template>
 
 <script lang="ts">
@@ -133,44 +124,47 @@ export default defineComponent({
     bottom: 0;
     right: 0;
 }
-/* html {
-  scroll-behavior: smooth;
-} */
-
 @media screen and (max-width: 2500px) {
   body .ımg {
     height: 800px;
+
   }
 }
 @media screen and (max-width: 2000px) {
   body .ımg {
     height: 800px;
+
   }
 }
 
 @media screen and (max-width: 1500px) {
   body .ımg {
     height: 600px;
+
   }
 }
 @media screen and (max-width: 1300px) {
   body .ımg {
     height: 400px;
+
   }
 }
 @media screen and (max-width: 1000px) {
   body .ımg {
     height: 300px;
+
   }
 }
 @media screen and (max-width: 750px) {
   body .ımg {
     height: 200px;
+    z-index: 0;
+
   }
 }
 @media screen and (max-width: 500px) {
   body .ımg {
-    height: 1800;
+    height: 180;
   }
 }
 .containerAna {

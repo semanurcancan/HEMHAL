@@ -27,6 +27,12 @@ const routes = [
     component: () => import("../components/anasayfa.vue"), 
   },
   {
+    name: "footer",
+    path: "/footer", 
+    props: true,
+    component: () => import("../components/footer/footer.vue"), 
+  },
+  {
     name: "Hello",
     path: "/hello", 
     props: true,
@@ -49,11 +55,6 @@ const router = createRouter({
         behavior: 'smooth'
       }
     }
-   
-  
-    // return savedPosition || new Promise ((resolve)=> {
-    //   setTimeout (()=> resolve ({top:0, behavior: 'smooth'}), 300)
-    // })
   }
 });
 

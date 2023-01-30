@@ -1,42 +1,5 @@
 <template>
   <v-app class="container">
-    <div>
-      <!-- <v-toolbar-title class="text-h5 title">
-        <v-img
-          src="/public/assets/anasayfaIMG.jpeg"
-          alt="HEMHAL"
-          cover
-          width="1200"
-          height="700"
-        >
-        </v-img>
-      </v-toolbar-title> -->
-      <!-- <v-hover v-slot="{ isHovering, props }">
-        <v-card
-          class="new"
-          color="grey-lighten-4"
-          max-width="auto"
-          v-bind="props"
-        >
-          <v-img
-            :aspect-ratio="16 / 13"
-            cover
-            src="https://api.lorem.space/image/fashion?w=640&h=480&r=6453"
-          >
-            <v-expand-transition>
-              <div
-                v-if="isHovering"
-                class="d-flex transition-fast-in-fast-out bg-pink-lighten-4 v-card--reveal text-h2"
-                style="height: 100%"
-              >
-                NEW COLLECTİON
-              </div>
-            </v-expand-transition>
-          </v-img>
-        </v-card>
-      </v-hover> -->
-    </div>
-
     <v-col class="containerProduct">
       <v-row>
         <v-col v-if="getFilterCategory.length > 0">
@@ -161,8 +124,6 @@ export default defineComponent({
     },
   },
   data: () => ({
-    show: false,
-    marker: true,
     products: inject("products"),
     actions: inject("actions"),
   }),
@@ -206,69 +167,27 @@ export default defineComponent({
 </script>
 
 <style scoped>
-@media screen and (max-width: 1080px) {
-  body .new {
-    width: 600px;
-    height: 300px;
-    position: relative;
-    /* margin: auto; */
-  }
-}
-
-@media screen and (max-width: 600px) {
-  body .new {
-    width: 350px;
-    height: 270px;
-    position: relative;
-    /* margin: auto; */
-  }
-}
-.container {
-  
-}
 .containerProduct {
   padding: 20px;
   margin-left: 30px;
   margin-top: 20px;
 }
 .cardClass {
-  background-color: rgba(192, 174, 150, 0.158);
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 300px;
   height: 410px;
 }
-.new {
-  width: 1100px;
-  height: 300px;
-  position: relative;
-  margin: auto;
-}
-
-.title {
-  text-align: -webkit-center;
-}
-.v-card--reveal {
-  align-items: center;
-  bottom: 0;
-  justify-content: center;
-  opacity: 0.9;
-  position: absolute;
-  width: 100%;
-}
 .v-card {
   transition: opacity 0.4s ease-in-out;
 }
-
 .v-card:not(.on-hover) {
   opacity: 0.8;
 }
-
 .show-btns {
   color: rgba(255, 255, 255, 1) !important;
 }
-
 .listItem {
   list-style: none;
 }
