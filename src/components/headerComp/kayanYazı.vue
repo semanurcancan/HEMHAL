@@ -1,5 +1,4 @@
 <template>
-
    <v-toolbar height="50" class="kayanKapsayıcı">
         <strong class="kayanyazi">
             <span>

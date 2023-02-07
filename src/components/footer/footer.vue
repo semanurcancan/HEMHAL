@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-col>
     <!-- <v-toolbar-title class="text-h5 title">
         <v-img
           src="/public/assets/anasayfaIMG.jpeg"
@@ -66,7 +66,7 @@
         <v-row cols="2"> <b>DÜKKAN</b> </v-row>
       </v-col>
     </v-row> -->
-  </v-container>
+  </v-col>
   <v-divider class="my-16"></v-divider>
 </template>
 <script lang="ts">
@@ -86,15 +86,18 @@ export default defineComponent({
 @media screen and (max-width: 2000px) {
   body .new {
     height: 350px;
+    width: auto;
   }
 }
 @media screen and (max-width: 1500px) {
   body .new {
+    width: auto;
     height: 300px;
   }
 }
 @media screen and (max-width: 1300px) {
   body .new {
+    width: auto;
     height: 300px;
   }
 }

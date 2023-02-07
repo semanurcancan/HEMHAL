@@ -1,6 +1,6 @@
 <template>
-  <v-container>
-    <v-app>
+  <v-col>
+    <v-col>
       <v-row>
         <v-col class="containerAna">
           <v-img
@@ -13,9 +13,9 @@
           ></v-img>
         </v-col>
       </v-row>
-    </v-app>
+    </v-col>
     <h3 id="hakkimizda">HAKKIMIZDA</h3>
-    <v-app class="containerAna pa-15">
+    <v-col class="containerAna pa-15">
       <v-row>
         <div>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus
@@ -31,14 +31,13 @@
           nesciunt facere! Nulla, iusto! Aut error aperiam, rerum officiis
           eligendi harum. Suscipit et adipisci deserunt nihil eveniet placeat
           expedita quia, fugiat perferendis, numquam, cumque fugit ipsum
-      
         </div>
       </v-row>
-    </v-app>
+    </v-col>
     <h3 id="SECTİON">HEMHAL</h3>
-    <v-app>
+    <v-col>
       <v-row>
-        <div class="containerAna pa-15 h-0">
+        <div class="containerAna pa-15 my-5">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus
           aut asperiores inventore porro dicta laborum corporis atque ipsam
           reprehenderit molestias exercitationem, odio ipsa deleniti nisi eaque
@@ -51,33 +50,29 @@
           repudiandae est laudantium praesentium ab atque provident fugiat
           nesciunt facere! Nulla, iusto! Aut error aperiam, rerum officiis
           eligendi harum. Suscipit et adipisci deserunt nihil eveniet placeat
-          
         </div>
       </v-row>
-    </v-app>
-  </v-container>
+    </v-col>
+  </v-col>
   <v-spacer></v-spacer>
-    <transition name="fade" class="aaa">
-      <div
-        id="pagetop"
-        v-show="scY > 500"
-        @click="toTop"
+  <!-- en başa scrool iconu -->
+  <transition name="fade" class="aaa">
+    <div id="pagetop" v-show="scY > 500" @click="toTop">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="75"
+        height="75"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#4a5568"
+        stroke-width="1"
+        stroke-linecap="square"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="75"
-          height="75"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#4a5568"
-          stroke-width="1"
-          stroke-linecap="square"
-        >
-          <path d="M18 15l-6-6-6 6" />
-        </svg>
-      </div>
-    </transition>
-    <v-divider id="iletişim" class="my-16"></v-divider>
+        <path d="M18 15l-6-6-6 6" />
+      </svg>
+    </div>
+  </transition>
+  <v-divider id="iletişim"></v-divider>
 </template>
 
 <script lang="ts">
@@ -110,56 +105,49 @@ export default defineComponent({
       window.scrollTo({
         top: 0,
         behavior: "smooth",
-      },
-      );
-      this.$router.push({ path: "/" })
+      });
+      this.$router.push({ path: "/" });
     },
   },
 });
 </script>
 
 <style scoped>
-.aaa{
-    position:fixed;
-    bottom: 0;
-    right: 0;
+.aaa {
+  position: fixed;
+  bottom: 0;
+  right: 0;
 }
 @media screen and (max-width: 2500px) {
   body .ımg {
     height: 800px;
-
   }
 }
 @media screen and (max-width: 2000px) {
   body .ımg {
     height: 800px;
-
   }
 }
 
 @media screen and (max-width: 1500px) {
   body .ımg {
     height: 600px;
-
   }
 }
 @media screen and (max-width: 1300px) {
   body .ımg {
     height: 400px;
-
   }
 }
 @media screen and (max-width: 1000px) {
   body .ımg {
     height: 300px;
-
   }
 }
 @media screen and (max-width: 750px) {
   body .ımg {
     height: 200px;
     z-index: 0;
-
   }
 }
 @media screen and (max-width: 500px) {

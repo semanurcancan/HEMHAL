@@ -1,12 +1,10 @@
 <template>
-  <v-app>
     <div class="container">
       <strong class="container"> SEPET İÇERİĞİ </strong>
-      <div v-if="getBasketGetters.length === 0">
+      <v-col v-if="getBasketGetters.length === 0">
         <h3>You haven't any items.</h3>
-      </div>
-      <v-app v-else style="z-index: 0 !important">
-        <v-col>
+      </v-col>
+        <v-col v-else style="z-index: 0 !important">
           <v-row>
             <v-col>
               <ag-grid-vue
@@ -23,9 +21,7 @@
             </v-col>
           </v-row>
         </v-col>
-      </v-app>
     </div>
-  </v-app>
 </template>
 <script lang="ts">
 import "ag-grid-community/styles/ag-grid.css";

@@ -1,107 +1,56 @@
 <template>
-  <v-container class="toolBar" app>
-    <div class="d-flex justify-center">
-      <router-link to="/">
-        <v-img
-          class="ımg d-flex justify-center"
-          src="/public/assets/hemhalLOGO2.jpeg"
-          alt="HEMHAL"
-          cover
-        >
-        </v-img>
-      </router-link>
-    </div>
-    <v-col>
-      <span class="d-flex justify-center">
-        <i>loc.</i> <strong>KAZ DAĞLARI</strong>
-      </span>
-    </v-col>
-    <v-divider></v-divider>
-    <v-container class="my-2" >
-      <v-row>
-        <v-col xs="6" sm="6" md="6" lg="6" xl="6">
-          <router-link class="route" :to="{ path: '/', hash: '#hakkimizda' }">
-            <span>HAKKIMIZDA</span>
+  <v-col class="toolBar" app>
+        <v-row class="d-flex justify-center">
+          <router-link to="/">
+            <v-img
+              class="ımg d-flex justify-center"
+              src="/public/assets/hemhalLOGO2.jpeg"
+              alt="HEMHAL"
+              cover
+            >
+            </v-img>
           </router-link>
-          <router-link class="route" :to="{ path: '/', hash: '#SECTİON' }">
-            <span>HEMHAL</span>
-          </router-link>
-          <router-link class="route" :to="{ path: '/', hash: '#iletişim' }">
-            <span>İLETİŞİM</span>
-          </router-link>
-        </v-col>
-        <v-col else class="d-none d-lg-flex">
-          <!-- filtreleme işlemi -->
-          <router-link class="route" active-class="routeChildren" to="/product">
-            <div class="text-center">
-              <v-menu open-on-hover>
-                <template v-slot:activator="{ props }">
-                  <span variant="plain" v-bind="props"> ÜRÜNLERİMİZ </span>
-                </template>
-                <v-list>
-                  <v-list-item
-                    :active="false"
-                    v-for="(categori, index) in filterItem"
-                    to="/product"
-                    :key="index"
-                    @click="filterClouds(categori.name)"
-                  >
-                    <v-list-item-title>{{ categori.name }}</v-list-item-title>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
-            </div>
-          </router-link>
+        </v-row>
+    <v-row class="d-flex justify-center py-2">
+      <span> <i>loc.</i> <strong>KAZ DAĞLARI</strong> </span>
+    </v-row>
+    <hr class="mt-3" />
+    <v-row class="my-1">
+            <v-col xs="6" sm="5" md="5" lg="6" xl="5">
+              <v-row>
+                <v-col>
+                  <router-link class="route" :to="{ path: '/', hash: '#hakkimizda' }">
+                    <span>HAKKIMIZDA</span>
+                  </router-link>
+                </v-col>
+                <v-col>
+                  <router-link class="route" :to="{ path: '/', hash: '#SECTİON' }">
+                    <span>HEMHAL</span>
+                  </router-link>
+                </v-col>
+                <v-col>
+                  <router-link class="route" :to="{ path: '/', hash: '#iletişim' }">
+                    <span>İLETİŞİM</span>
+                  </router-link>
+                </v-col>
+              </v-row>
+            </v-col>
 
-          <router-link
-            class="route"
-            active-class="routeChildren"
-            to="/favorite"
-          >
-            BEĞENDİKLERİNİZ
-          </router-link>
-          <router-link class="route" active-class="routeChildren" to="/hello">
-            SEPETİM</router-link
-          >
-        </v-col>
+            <v-spacer></v-spacer>
 
-        <v-col cols="6" class="d-flex justify-end">
-          <v-app-bar-nav-icon
-            class="Menuİcon"
-            variant="text"
-            @click.stop="drawer = !drawer"
-          >
-          </v-app-bar-nav-icon>
-        </v-col>
-      </v-row>
-    </v-container>
-    <v-container >
-      <v-row>
-        <v-layout>
-          <v-navigation-drawer
-            v-model="drawer"
-            temporary
-            app
-            flat
-            class="lefBar"
-            expand-on-hover
-            fixed
-          >
-            <h1 class="text-center">HEMHAL</h1>
-            <v-divider></v-divider>
-            <v-list density="compact" nav>
-              <v-list-item>
+          <v-col class="d-none d-lg-flex" lg="6" xl="5">
+            <!-- filtreleme işlemi -->
+            <v-row>
+              <v-col>
                 <router-link
-                  class="route"
+                  class="route  d-lg-flex justify-end"
                   active-class="routeChildren"
                   to="/product"
                 >
                   <div class="text-center">
                     <v-menu open-on-hover>
                       <template v-slot:activator="{ props }">
-                        <span variant="plain" v-bind="props">
-                          ÜRÜNLERİMİZ
-                        </span>
+                        <span variant="plain" v-bind="props"> ÜRÜNLERİMİZ </span>
                       </template>
                       <v-list>
                         <v-list-item
@@ -111,50 +60,35 @@
                           :key="index"
                           @click="filterClouds(categori.name)"
                         >
-                          <v-list-item-title>{{
-                            categori.name
-                          }}</v-list-item-title>
+                          <v-list-item-title>{{ categori.name }}</v-list-item-title>
                         </v-list-item>
                       </v-list>
                     </v-menu>
                   </div>
                 </router-link>
-              </v-list-item>
-              <v-list-item>
+              </v-col>
+
+              <v-col>
                 <router-link
-                  class="route"
+                  class="route  d-lg-flex justify-end"
                   active-class="routeChildren"
                   to="/favorite"
                 >
-                  BEĞENDİKLERİNİZ
+                  <span>BEĞENDİKLERİNİZ</span>
                 </router-link>
-              </v-list-item>
-              <v-list-item>
-                <router-link
-                  class="route"
-                  active-class="routeChildren"
-                  to="/hello"
-                >
-                  SEPETİM</router-link
-                >
-              </v-list-item>
-            </v-list>
-          </v-navigation-drawer>
-          <v-spacer></v-spacer>
-        <!-- left navigation içi main tarafı -->
-          <v-main style="height: auto">
-            <router-view v-slot="{ Component }">
-              <keep-alive>
-                <component :is="Component" />
-              </keep-alive>
-            </router-view>
-          </v-main>
-        </v-layout>
-
-        
-      </v-row>
-    </v-container>
-  </v-container>
+              </v-col>
+              <v-col>
+                <router-link class="route  d-lg-flex justify-end" active-class="routeChildren" to="/hello">
+                  <span>SEPETİM</span>
+                </router-link>
+              </v-col>
+            </v-row>
+          </v-col>
+      <v-spacer class="d-flex d-lg-none"></v-spacer>
+      <left-bar-vue class="d-flex d-lg-none"></left-bar-vue>
+    </v-row>
+    <hr />
+  </v-col>
 </template>
 
 <script lang="ts">
@@ -172,15 +106,18 @@ export default defineComponent({
 
   data() {
     return {
+      item: false,
+      navOpen: false,
+      drawer: true,
       filterItem: [
+        { name: "Tüm Ürünler", icon: "mdi-map" },
         { name: "Cilt Bakım", icon: "mdi-map" },
         { name: "Saç Bakım", icon: "mdi-tablet" },
         { name: "Tütsü", icon: "mdi-table-furniture" },
         { name: "Doğal Taşlar", icon: "mdi-tshirt-crew-outline" },
       ],
       // open: false,
-      navOpen: false,
-      drawer: true,
+
       basketGetters: this.getBasketGetters,
     };
   },
@@ -199,10 +136,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.BlaBla {
-  margin-top: 2px;
-  font-family: "Inconsolata", monospace;
-}
 .toolBar {
   background-color: white;
   height: 300px;
@@ -277,7 +210,7 @@ export default defineComponent({
 }
 
 .route {
-  margin-right: 40px;
+ 
   text-decoration: none;
   color: black;
   display: inline-block;

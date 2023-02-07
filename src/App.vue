@@ -1,19 +1,25 @@
 <template>
-<kayanyazi class="w-100"></kayanyazi>
-<NavbarComp></NavbarComp>
-  <v-app class="container">
+  <kayanyazi class="w-100"></kayanyazi>
   <v-layout class="container">
-    <leftBarVue></leftBarVue> 
+    <v-col>
+      <v-row> </v-row>
+      <v-row>
+        <v-main style="height: auto">
+          <NavbarComp />
+          <router-view v-slot="{ Component }">
+            <keep-alive>
+              <component :is="Component" />
+            </keep-alive>
+          </router-view>
+          <footerr></footerr>
+        </v-main>
+      </v-row>
+      <v-row>
+        <h3>main DIŞI</h3>
+      </v-row>
+    </v-col>
   </v-layout>
   <br />
-  <!-- <router-view v-slot="{ Component }">
-    <keep-alive>
-      <component :is="Component" />
-    </keep-alive>
-  </router-view> -->
- </v-app>
-<footerr></footerr>
-
 </template>
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
@@ -25,7 +31,6 @@ import footer from "./components/footer/footer.vue";
 import footerr from "./components/footer/footer.vue";
 import leftBarVue from "./components/headerComp/leftBar.vue";
 import burgerMenu from "./components/headerComp/burgerMenu.vue";
-
 export default defineComponent({
   components: {
     kayanyazi,
@@ -78,14 +83,14 @@ export default defineComponent({
 @media screen and (max-width: 1500px) {
   body .container {
     /* background-color: rgb(89, 89, 4); */
-    margin-left: 150px;
-    margin-right: 150px;
+    margin-left: 100px;
+    margin-right: 100px;
   }
 }
 @media screen and (max-width: 1300px) {
   body .container {
-    margin-left: 130px;
-    margin-right: 130px;
+    margin-left: 100px;
+    margin-right: 100px;
   }
 }
 @media screen and (max-width: 1000px) {
@@ -109,5 +114,6 @@ export default defineComponent({
 .container {
   margin-left: 100px;
   margin-right: 100px;
+  overflow: auto;
 }
 </style>

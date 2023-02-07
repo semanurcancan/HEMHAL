@@ -1,83 +1,93 @@
 <template>
-<v-container >
-      <v-row>
-        <v-layout>
-          <v-navigation-drawer
-            v-model="drawer"
-            temporary
-            app
-            flat
-            class="lefBar"
-            expand-on-hover
-            fixed
-          >
-            <h1 class="text-center">HEMHAL</h1>
-            <v-divider></v-divider>
-            <v-list density="compact" nav>
-              <v-list-item>
-                <router-link
-                  class="route"
-                  active-class="routeChildren"
-                  to="/product"
-                >
-                  <div class="text-center">
-                    <v-menu open-on-hover>
-                      <template v-slot:activator="{ props }">
-                        <span variant="plain" v-bind="props">
-                          ÜRÜNLERİMİZ
-                        </span>
-                      </template>
-                      <v-list>
-                        <v-list-item
-                          :active="false"
-                          v-for="(categori, index) in filterItem"
-                          to="/product"
-                          :key="index"
-                          @click="filterClouds(categori.name)"
-                        >
-                          <v-list-item-title>{{
-                            categori.name
-                          }}</v-list-item-title>
-                        </v-list-item>
-                      </v-list>
-                    </v-menu>
-                  </div>
-                </router-link>
-              </v-list-item>
-              <v-list-item>
-                <router-link
-                  class="route"
-                  active-class="routeChildren"
-                  to="/favorite"
-                >
-                  BEĞENDİKLERİNİZ
-                </router-link>
-              </v-list-item>
-              <v-list-item>
-                <router-link
-                  class="route"
-                  active-class="routeChildren"
-                  to="/hello"
-                >
-                  SEPETİM</router-link
-                >
-              </v-list-item>
-            </v-list>
-          </v-navigation-drawer>
-          <v-spacer></v-spacer>
-        <!-- left navigation içi main tarafı -->
-          <v-main style="height: auto">
-            <router-view v-slot="{ Component }">
-              <keep-alive>
-                <component :is="Component" />
-              </keep-alive>
-            </router-view>
-          </v-main>
-        </v-layout>
-
-        
+  <v-row>
+    <v-col cols="12" class="d-flex justify-end d-flex d-lg-none">
+        <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer">
+        </v-app-bar-nav-icon>
+      </v-col>
+    <v-row>
+      <v-navigation-drawer
+      elevation="0"
+        v-model="drawer"
+        width="200"
+        temporary
+        app
+        flat
+        fixed
+        class="leftBar bg-gray-1"
+      >
+      <v-row class="my-2">
+        <v-col cols="8"> <h1 class="text-center">HEMHAL</h1></v-col>
+        <v-col><v-icon icon="mdi-close"  @click.stop="drawer = !drawer"></v-icon></v-col>
       </v-row>
-    </v-container>
+       
+        <v-divider></v-divider>
+        <v-list density="compact" nav>
+          <v-list-item
+            class="route"
+            active-class="routeChildren"
+            @click.stop="item = !item"
+          >
+            ÜRÜNLER
+          </v-list-item>
+          <v-list-item
+            v-if="item"
+            :active="false"
+            v-for="(categori, index) in filterItem"
+            to="/product"
+            :key="index"
+            @click="filterClouds(categori.name)"
+          >
+            <v-list-item-title>{{ categori.name }}</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <router-link
+              class="route"
+              active-class="routeChildren"
+              to="/product"
+            >
+              <div class="text-center">
+                <v-menu open-on-hover>
+                  <template v-slot:activator="{ props }">
+                    <span @click="item = !item" variant="plain" v-bind="props">
+                      ÜRÜNLERİMİZ
+                    </span>
+                  </template>
+
+                  <v-list>
+                    <v-list-item
+                      :active="false"
+                      v-for="(categori, index) in filterItem"
+                      to="/product"
+                      :key="index"
+                      @click="filterClouds(categori.name)"
+                    >
+                      <v-list-item-title>{{ categori.name }}</v-list-item-title>
+                    </v-list-item>
+                  </v-list>
+                </v-menu>
+              </div>
+            </router-link>
+          </v-list-item>
+          <v-list-item>
+            <router-link
+              class="route"
+              active-class="routeChildren"
+              to="/favorite"
+            >
+              BEĞENDİKLERİNİZ
+            </router-link>
+          </v-list-item>
+          <v-list-item>
+            <router-link class="route" active-class="routeChildren" to="/hello">
+              SEPETİM</router-link
+            >
+          </v-list-item>
+        </v-list>
+      </v-navigation-drawer>
+    </v-row>
+  </v-row>
+  
 </template>
 
 <script lang="ts">
@@ -90,6 +100,8 @@ export default defineComponent({
   data() {
     return {
       drawer: false,
+      navOpen: false,
+      item: false,
       filterItem: [
         { name: "All Product", icon: "mdi-map" },
         { name: "Electronics", icon: "mdi-tablet" },
@@ -108,21 +120,13 @@ export default defineComponent({
       this.$router.push({ name: "ProductList", path: "/" });
       console.log("click =>", catName);
       this.setfilter(catName);
+      this.item = false
     },
   },
 });
 </script>
 
 <style scoped>
-.navCLASS {
-  width: 20px;
-}
-.navigation-list-item {
-  background-color: white;
-  padding-left: 8px;
-  list-style: none;
-  text-align: center;
-}
 .route {
   margin-right: 40px;
   text-decoration: none;
@@ -137,6 +141,7 @@ export default defineComponent({
   font-weight: bold;
   display: inline-block;
 }
+
 @media screen and (max-width: 2500px) {
   body .route {
     font-size: 20px;
@@ -155,18 +160,18 @@ export default defineComponent({
 }
 @media screen and (max-width: 1300px) {
   body .route {
-    font-size: 14px;
+    font-size: 20px;
   }
 }
 
 @media screen and (max-width: 1000px) {
   body .route {
-    font-size: 10px;
+    font-size: 13px;
   }
 }
 @media screen and (max-width: 750px) {
   body .route {
-    font-size: 10px;
+    font-size: 14px;
   }
 }
 @media screen and (max-width: 500px) {

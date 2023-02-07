@@ -27,6 +27,12 @@ const routes = [
     component: () => import("../components/anasayfa.vue"), 
   },
   {
+    name: "loginpage",
+    path: "/loginpage", 
+    props: true,
+    component: () => import("../components/AdminPages/loginPage.vue"), 
+  },
+  {
     name: "footer",
     path: "/footer", 
     props: true,

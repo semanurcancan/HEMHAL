@@ -8,7 +8,6 @@ import 'vue-universal-modal/dist/index.css'
 
 import VueUniversalModal from 'vue-universal-modal'
 
-
 const pinia = createPinia()
 const app = createApp(App)
 

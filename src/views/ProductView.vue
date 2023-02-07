@@ -16,7 +16,7 @@ import { Product } from "../models/entities/ProductModels";
 
 export default defineComponent({
   name: "ProductView",
- 
+
   provide() {
     return {
       products: computed(() => this.getProductGetters),
