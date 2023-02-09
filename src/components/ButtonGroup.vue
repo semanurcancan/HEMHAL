@@ -11,7 +11,7 @@
           icon="mdi-plus"
           color=" bg-grey-lighten-3 text-green-lighten-2" @click.prevent="add()"
         ></v-btn>
-          <v-btn icon="mdi-plus">{{ pro.quantity }}</v-btn>
+          <v-btn icon="mdi-plus">{{ pro.quantity+1 }}</v-btn>
           <v-btn color=" bg-grey-lighten-3 text-red-lighten-2" icon="mdi-minus"  @click.prevent="dlt()"></v-btn>
         </v-row>
       </v-col>

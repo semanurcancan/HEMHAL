@@ -2,7 +2,6 @@
   <kayanyazi class="w-100"></kayanyazi>
   <v-layout class="container">
     <v-col>
-      <v-row> </v-row>
       <v-row>
         <v-main style="height: auto">
           <NavbarComp />
@@ -13,9 +12,6 @@
           </router-view>
           <footerr></footerr>
         </v-main>
-      </v-row>
-      <v-row>
-        <h3>main DIŞI</h3>
       </v-row>
     </v-col>
   </v-layout>
@@ -115,5 +111,9 @@ export default defineComponent({
   margin-left: 100px;
   margin-right: 100px;
   overflow: auto;
+}
+.hemhalcolor{
+  text-decoration-color: rgb(192, 219, 18); ;
+  /* text-decoration: rgb(192, 219, 18); */
 }
 </style>

@@ -82,6 +82,11 @@
                   <span>SEPETİM</span>
                 </router-link>
               </v-col>
+              <v-col>
+                <router-link class="route  d-lg-flex justify-end" active-class="routeChildren" to="/loginpage">
+                  <span>ÜYE OL</span>
+                </router-link>
+              </v-col>
             </v-row>
           </v-col>
       <v-spacer class="d-flex d-lg-none"></v-spacer>
