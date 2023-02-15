@@ -17,19 +17,36 @@ export const useProductStore = defineStore("product", {
   //burada içi boş verisi olamayan  ama type tanımlanan product var bunu için product model belirledim.api den gelecke olan verilerin type ı bu model içeriisnde belirlendi.
   state: () => {
     return {
+      // adminName: "nurselBlt" as string,
+      // adminPassword: "nurselBlt",
+      // adminEmail: "nurselBlt",
       totalPrice: 0,
       product: [] as Array<Product>,
       basket: [] as Array<Product>,
       basketLength: 0,
       filterCategory: [] as Array<Product>,
-      favorites:loadFromStorage(
-        "userFavorites", [] as Array<Product>),
+      favorites: loadFromStorage("userFavorites", [] as Array<Product>),
       loading: false,
+
+      token: "",
+			tokenStatus:false as any,
+			selectedCompanyId: null as null | number | any,
+			fullName: "" as any
     };
   },
 
   //actions da içerisine api verileri atanan product ı getters da bir func atadım.computed da cagırdım.
   getters: {
+    getUserTokenStatus(state) {
+			return  localStorage.getItem("pm2tokenstatus") ?? state.tokenStatus;
+		},
+		getUserToken(state) {
+			return localStorage.getItem("pm2token") ?? state.token;
+		},
+    getUserfullName(state) {
+			return localStorage.getItem("pm2fullName") ?? state.fullName;
+		},
+ 
     getProductGetters: (state) => {
       return state.product;
     },
@@ -51,6 +68,19 @@ export const useProductStore = defineStore("product", {
   },
   //actions da api verilerini cektim.state de içi boş ve type ı tanımlanan product a attım içerisindeki bilgileri api den gelen.methods da cagırıdm!!!
   actions: {
+    setNewTokenStatus(tokenStatus: boolean) {
+			this.tokenStatus = tokenStatus;
+			localStorage.setItem("pm2tokenstatus", this.tokenStatus);
+		},
+		setNewToken(newToken: any) {
+			this.token = newToken;
+			localStorage.setItem("pm2token", this.token);
+		},
+    setNewfullName(newfullName: any) {
+			this.fullName = newfullName;
+			localStorage.setItem("pm2fullName", this.fullName);
+		},
+  
     //data apı aul ile cekildi!!!
     async getProductAction() {
       await axios

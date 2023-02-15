@@ -4,10 +4,12 @@
       <v-card variant="elevated">
         <v-window v-model="step">
           <v-window-item :value="1">
-            <v-row class="fill-height">
-              <v-col cols="12" md="8"  class="bg-brown-lighten-5">
+            <v-row class="fill-height" style="width: 100vh">
+              <v-col cols="12" md="8" class="bg-brown-lighten-5">
                 <v-card-text class="mt-12">
-                  <h1 class="text-center text-brown-lighten-3">SING IN HEMHAL</h1>
+                  <h1 class="text-center text-brown-lighten-3">
+                    SING IN HEMHAL
+                  </h1>
                   <v-col>
                     <v-row class="text-center mt-4">
                       <v-col>
@@ -46,6 +48,7 @@
                   <v-col>
                     <v-form>
                       <v-text-field
+                        v-model="email"
                         label="email"
                         name="email"
                         prepend-icon="mdi-email"
@@ -56,6 +59,7 @@
                       </v-text-field>
 
                       <v-text-field
+                        v-model="password"
                         label="password"
                         id="password"
                         name="password"
@@ -68,17 +72,23 @@
                   </v-col>
 
                   <v-col>
-                    <h3 class="text-center my-4 text-disabled">Forget Your Password</h3>
+                    <h3 class="text-center my-4 text-disabled">
+                      Forget Your Password
+                    </h3>
                   </v-col>
 
                   <v-col>
                     <v-row class="d-flex justify-center">
-                      <v-btn rounded variant="text" type="submit" class="mt-2 bg-lime-darken-1"
+                      <v-btn
+                        rounded
+                        variant="text"
+                        type="submit"
+                        class="mt-2 bg-lime-darken-1"
+                        @click=""
                         >SING IN</v-btn
                       >
                     </v-row>
                   </v-col>
-
                 </v-card-text>
               </v-col>
               <!-- ------sağ taraff------------- -->
@@ -101,17 +111,16 @@
                   </v-row>
                 </v-col>
               </v-col>
-
             </v-row>
           </v-window-item>
 
           <!-- -----------------------pencere 2------------------------ -->
           <v-window-item :value="2">
-            <v-row class="fill-height">
-              <v-col  class="color1">
+            <v-row class="fill-height" style="width: 100vh">
+              <v-col class="color1">
                 <v-card-text class="mt-12 text-center">
                   <h1 class="text-h3">Welcome Back !</h1>
-                  <h5 class="text-center text-h6">
+                  <h5 class="text-center text-h7">
                     To Keep Connected With Us Please Login With Ypur Personnel
                     İnfo
                   </h5>
@@ -192,19 +201,27 @@
                         variant="underlined"
                         class="text-lime-darken-3"
                       ></v-text-field>
+                      <v-text-field
+                        label="passwordcheck"
+                        id="passwordcheck"
+                        name="password"
+                        prepend-icon="mdi-lock"
+                        type="password"
+                        variant="underlined"
+                        class="text-lime-darken-3"
+                      ></v-text-field>
                     </v-form>
                   </v-col>
 
                   <v-col>
                     <v-row class="d-flex justify-center">
-                      <v-btn rounded type="submit" class="mt-2 bg-lime-darken-1"
+                      <v-btn rounded type="submit" class="mt-2 bg-lime-darken-1" @click="registerNewUser"
                         >SING UP</v-btn
                       >
                     </v-row>
                   </v-col>
                 </v-card-text>
               </v-col>
-              
             </v-row>
           </v-window-item>
         </v-window>
@@ -215,26 +232,68 @@
 
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
+import { mapActions, mapState } from "pinia";
+import { useProductStore } from "../../store/useProductStore";
+import firebase from "firebase/compat/app";
 
 export default defineComponent({
   name: "loginpage",
+  props: {
+    source: String,
+  },
   data() {
     return {
       step: 1,
-      email: null,
+      email: null as any,
+      name: null as any,
+      password: null as any,
     };
   },
-  props: {
-    source: String,
+ 
+  methods: {
+    registerNewUser() {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.email, this.password).then((res:any) =>{
+          console.log(res, "RES FİRE BASE");
+          let token:string = res.user.ma;
+          let userId:string = res.user.uid;
+
+          localStorage.setItem('token', token);
+          localStorage.setItem('userId', userId);
+          this.$router.push('/dashboard');
+
+        })
+        .catch(function (error) {
+          const errorcode = error.code;
+          const errormessage = error.message;
+          alert(errormessage)
+        });
+    },
+    // ...mapActions(useProductStore, ["getAdminCheck","getAdminName","getAdminEmail","getAdminPassword"]),
+
+    // submit(){
+    //   this.getAdminCheck(this.name, this.password)
+    //   console.log(this.getAdminName, "STORE NAME")
+    //   console.log(this.name, "NAME")
+    //   if(this.password != this.getAdminPassword && this.name != this.getAdminName){
+    //     this.$router.push({ name: "dashboard", path: "/dashboard" });
+    //     console.log(this.email && this.getAdminName, "WWWWW")
+    //   }
+    // }
+  },
+  computed: {
+    //pinia da mapgetters yok o yuzden getter verisi olan getProduct ...mapstate ile cagırılıyor.
+    //...mapState(useProductStore, ["getAdminName", "getAdminPassword"]),
   },
 });
 </script>
 <style scoped>
-.color5{
+.color5 {
   background-color: #847577;
 }
-.color4{
-  background-color: #E3D5CA;
+.color4 {
+  background-color: #e3d5ca;
 }
 .color3 {
   background-color: #d6ccc2;
@@ -243,7 +302,7 @@ export default defineComponent({
   background-color: rgb(236, 218, 193);
 }
 
-.color1{
+.color1 {
   background-color: rgb(192, 174, 150);
 }
 </style>

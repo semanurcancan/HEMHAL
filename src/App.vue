@@ -12,6 +12,7 @@
           </router-view>
           <footerr></footerr>
         </v-main>
+        <!-- <LoginPage></LoginPage> -->
       </v-row>
     </v-col>
   </v-layout>
@@ -21,12 +22,14 @@
 import { defineComponent } from "@vue/runtime-core";
 
 //componentler
+import loginPage from "./components/AdminPages/loginPage.vue";
 import kayanyazi from "./components/headerComp/kayanYazı.vue";
 import NavbarComp from "./components/headerComp/NavbarComp.vue";
 import footer from "./components/footer/footer.vue";
 import footerr from "./components/footer/footer.vue";
 import leftBarVue from "./components/headerComp/leftBar.vue";
 import burgerMenu from "./components/headerComp/burgerMenu.vue";
+import LoginPage from "./components/AdminPages/loginPage.vue";
 export default defineComponent({
   components: {
     kayanyazi,
@@ -35,7 +38,8 @@ export default defineComponent({
     footer,
     footerr,
     burgerMenu,
-  },
+    LoginPage
+},
   data() {
     return {
       navOpen: false,
