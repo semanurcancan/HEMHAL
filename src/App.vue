@@ -1,9 +1,10 @@
 <template>
-  <kayanyazi class="w-100"></kayanyazi>
+  <!-- <kayanyazi class="w-100"></kayanyazi> -->
   <v-layout class="container">
     <v-col>
       <v-row>
-        <v-main style="height: auto">
+        <LoginPage v-if="$route.name == 'loginpage'"></LoginPage>
+        <v-main v-else="$route.name != 'loginpage'" style="height: auto">
           <NavbarComp />
           <router-view v-slot="{ Component }">
             <keep-alive>
@@ -12,7 +13,7 @@
           </router-view>
           <footerr></footerr>
         </v-main>
-        <!-- <LoginPage></LoginPage> -->
+        
       </v-row>
     </v-col>
   </v-layout>

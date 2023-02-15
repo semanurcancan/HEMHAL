@@ -1,7 +1,6 @@
 <template>
     <div>
         <KeepAlive>
-          
       <button-group :pro="pro"></button-group>
     </KeepAlive>
     </div>

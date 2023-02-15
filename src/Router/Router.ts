@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { useProductStore } from "../store/useProductStore";
+import fb from 'firebase/compat/app';
 
 const routes = [
 
@@ -93,18 +94,16 @@ const router = createRouter({
   
 });
 // router.beforeEach((to, from, next)=>{
-//     const store = useProductStore();
-//     const  tokenstatus = store.getUserTokenStatus;
-//     console.log(tokenstatus, "TOKEN-STATUS");
-//     if(to.matched.some((record) => record.meta.requiresAuth)) {
-//       if (tokenstatus === false){
-//         next ({ name:"loginpage" })
-//       }else{
-//         next();
-//       }
-//     }else{
-//       next();
-//     }
+//     const requiresAuth = to.matched.some(x=>x.meta.requiresAuth)
+//     const currentUser = fb.auth().currentUser
+// if(requiresAuth) {
+//   next('/')
+// }else if(requiresAuth && currentUser?.email == 'admin@example.com') {
+//   next()
+// }else {
+//   next()
+// }
+ 
 // })
 
 export default router;

@@ -1,7 +1,7 @@
 <template>
     <v-container>
-        <v-col class="bg-yellow">
-        dashboard
+        <v-col class="bg-blue">
+        productlist
     </v-col>
     </v-container>
     
@@ -16,7 +16,7 @@ import { useProductStore } from "../../store/useProductStore";
 
 export default defineComponent({
   components: { },
-  name: "dashboard",
+  name: "productlist",
   data: () => ({
     
   }),

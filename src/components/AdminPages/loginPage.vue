@@ -1,6 +1,6 @@
 <template>
-  <v-col cols="12" sm="8" md="8">
-    <v-row align="center" justify="center">
+  <v-col cols="12">
+    <v-row class=" mt-16 " align="center" justify="center">
       <v-card variant="elevated">
         <v-window v-model="step">
           <v-window-item :value="1">
@@ -84,7 +84,7 @@
                         variant="text"
                         type="submit"
                         class="mt-2 bg-lime-darken-1"
-                        @click=""
+                        @click="registerAlreadyUser()" 
                         >SING IN</v-btn
                       >
                     </v-row>
@@ -175,15 +175,6 @@
                   <v-col>
                     <v-form>
                       <v-text-field
-                        label="name"
-                        name="name"
-                        prepend-icon="mdi-human"
-                        type="text"
-                        variant="underlined"
-                        class="text-lime-darken-3"
-                      >
-                      </v-text-field>
-                      <v-text-field
                         label="email"
                         name="email"
                         prepend-icon="mdi-email"
@@ -215,7 +206,8 @@
 
                   <v-col>
                     <v-row class="d-flex justify-center">
-                      <v-btn rounded type="submit" class="mt-2 bg-lime-darken-1" @click="registerNewUser"
+                      <v-btn rounded type="submit" class="mt-2 bg-lime-darken-1"
+                      @click="registerNewUser()"
                         >SING UP</v-btn
                       >
                     </v-row>
@@ -234,6 +226,7 @@
 import { defineComponent } from "@vue/runtime-core";
 import { mapActions, mapState } from "pinia";
 import { useProductStore } from "../../store/useProductStore";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import firebase from "firebase/compat/app";
 
 export default defineComponent({
@@ -247,28 +240,64 @@ export default defineComponent({
       email: null as any,
       name: null as any,
       password: null as any,
+      passwordcheck: null as any
     };
+  },
+  mounted(){
   },
  
   methods: {
+    registerAlreadyUser(){
+      const auth = getAuth();
+      signInWithEmailAndPassword(auth, this.email, this.password).then((res:any) =>{
+        // console.log(res, "RES FİRE BASE");
+        //    let token:string = res.user.ma;
+        //  let userId:string = res.user.uid;
+        //  localStorage.setItem('token', token);
+        //  localStorage.setItem('userId', userId);
+         this.$router.push('/');
+        const user = res.user
+      }).catch((error:any)=> {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert(errorMessage)
+        console.log(errorMessage)
+
+      })
+    },
     registerNewUser() {
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(this.email, this.password).then((res:any) =>{
-          console.log(res, "RES FİRE BASE");
-          let token:string = res.user.ma;
-          let userId:string = res.user.uid;
+      const auth = getAuth();
+      console.log("girdi")
+      createUserWithEmailAndPassword(auth, this.email, this.password).then((res:any) =>{
+        console.log(res, "RES FİRE BASE");
+        //    let token:string = res.user.ma;
+        //  let userId:string = res.user.uid;
+        //  localStorage.setItem('token', token);
+        //  localStorage.setItem('userId', userId);
+         this.$router.push('/dashboard');
+        const user = res.user
+      }).catch((error:any)=> {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert(errorMessage)
+        console.log(errorMessage)
 
-          localStorage.setItem('token', token);
-          localStorage.setItem('userId', userId);
-          this.$router.push('/dashboard');
+      })
+      // firebase.auth.cre(this.email, this.password).then((res:any) =>{
+      //     console.log(res, "RES FİRE BASE");
+      //     let token:string = res.user.ma;
+      //     let userId:string = res.user.uid;
 
-        })
-        .catch(function (error) {
-          const errorcode = error.code;
-          const errormessage = error.message;
-          alert(errormessage)
-        });
+      //     localStorage.setItem('token', token);
+      //     localStorage.setItem('userId', userId);
+      //     this.$router.push('/dashboard');
+
+      //   })
+      //   .catch(function (error) {
+      //     const errorcode = error.code;
+      //     const errormessage = error.message;
+      //     alert(errormessage)
+      //   });
     },
     // ...mapActions(useProductStore, ["getAdminCheck","getAdminName","getAdminEmail","getAdminPassword"]),
 
