@@ -1,5 +1,5 @@
 <template>
-  <!-- <kayanyazi class="w-100"></kayanyazi> -->
+  <kayanyazi class="w-100"></kayanyazi>
   <v-layout class="container">
     <v-col>
       <v-row>

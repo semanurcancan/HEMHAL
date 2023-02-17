@@ -1,6 +1,6 @@
 <template>
   <v-col cols="12">
-    <v-row class=" mt-16 " align="center" justify="center">
+    <v-row class="mt-16" align="center" justify="center">
       <v-card variant="elevated">
         <v-window v-model="step">
           <v-window-item :value="1">
@@ -48,18 +48,19 @@
                   <v-col>
                     <v-form>
                       <v-text-field
-                        v-model="email"
+                        v-model="user.email"
                         label="email"
                         name="email"
                         prepend-icon="mdi-email"
                         type="text"
                         variant="underlined"
                         class="text-brown-lighten-3 font-weight-light"
+                        :error-messages="errorMessageWrongEmail"
                       >
                       </v-text-field>
 
                       <v-text-field
-                        v-model="password"
+                        v-model="user.password"
                         label="password"
                         id="password"
                         name="password"
@@ -67,6 +68,7 @@
                         type="password"
                         variant="underlined"
                         class="text-brown-lighten-3"
+                        :error-messages="errorMessageWrongPassword"
                       ></v-text-field>
                     </v-form>
                   </v-col>
@@ -82,9 +84,8 @@
                       <v-btn
                         rounded
                         variant="text"
-                        type="submit"
                         class="mt-2 bg-lime-darken-1"
-                        @click="registerAlreadyUser()" 
+                        @click="registerAlreadyUser()"
                         >SING IN</v-btn
                       >
                     </v-row>
@@ -175,15 +176,28 @@
                   <v-col>
                     <v-form>
                       <v-text-field
-                        label="email"
-                        name="email"
-                        prepend-icon="mdi-email"
+                        label="fullName"
+                        name="fullName"
+                        v-model="user.fullName"
+                        prepend-icon="mdi-human"
                         type="text"
                         variant="underlined"
                         class="text-lime-darken-3"
                       >
                       </v-text-field>
                       <v-text-field
+                        label="email"
+                        name="email"
+                        v-model="user.email"
+                        prepend-icon="mdi-email"
+                        type="text"
+                        variant="underlined"
+                        class="text-lime-darken-3"
+                        :error-messages="errorMessageWrongPassword"
+                      >
+                      </v-text-field>
+                      <v-text-field
+                        v-model="user.password"
                         label="password"
                         id="password"
                         name="password"
@@ -194,20 +208,26 @@
                       ></v-text-field>
                       <v-text-field
                         label="passwordcheck"
+                        v-model="user.passwordcheck"
                         id="passwordcheck"
                         name="password"
                         prepend-icon="mdi-lock"
                         type="password"
                         variant="underlined"
                         class="text-lime-darken-3"
+                        :error-messages="errorPasswordCheck"
                       ></v-text-field>
                     </v-form>
                   </v-col>
-
+                  <v-col class="text-red-darken-3 ml-10">
+                    {{ msg }}
+                  </v-col>
                   <v-col>
                     <v-row class="d-flex justify-center">
-                      <v-btn rounded type="submit" class="mt-2 bg-lime-darken-1"
-                      @click="registerNewUser()"
+                      <v-btn
+                        rounded
+                        class="mt-2 bg-lime-darken-1"
+                        @click="registerNewUser()"
                         >SING UP</v-btn
                       >
                     </v-row>
@@ -226,8 +246,25 @@
 import { defineComponent } from "@vue/runtime-core";
 import { mapActions, mapState } from "pinia";
 import { useProductStore } from "../../store/useProductStore";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import firebase from "firebase/compat/app";
+import { Database } from "firebase/database";
+
+import {
+  collection,
+  addDoc,
+  doc,
+  getDoc,
+  query,
+  getDocs,
+} from "firebase/firestore";
+import db from "../../firebase";
+
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  AuthErrorCodes,
+} from "firebase/auth";
 
 export default defineComponent({
   name: "loginpage",
@@ -236,84 +273,99 @@ export default defineComponent({
   },
   data() {
     return {
+      admin: null as any,
+      userList: [] as any,
+      user: [
+        {
+          email: "" as any,
+          fullName: "" as any,
+          password: "" as any,
+          passwordcheck: null as any,
+        },
+      ] as any,
       step: 1,
-      email: null as any,
-      name: null as any,
-      password: null as any,
-      passwordcheck: null as any
+
+      errorPasswordCheck: "" as any,
+      errorMessageWrongEmail: "" as any,
+      errorMessageWrongPassword: "" as any,
+      errorEmailValidate: "" as any,
+      msg: "" as any,
     };
   },
-  mounted(){
+  computed: {
+    ...mapState(useProductStore, [ "getAdminInfo"])
+   
   },
- 
+  created() {
+     this.createUser();
+     this.getAdmin();
+  },
   methods: {
-    registerAlreadyUser(){
-      const auth = getAuth();
-      signInWithEmailAndPassword(auth, this.email, this.password).then((res:any) =>{
-        // console.log(res, "RES FİRE BASE");
-        //    let token:string = res.user.ma;
-        //  let userId:string = res.user.uid;
-        //  localStorage.setItem('token', token);
-        //  localStorage.setItem('userId', userId);
-         this.$router.push('/');
-        const user = res.user
-      }).catch((error:any)=> {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        alert(errorMessage)
-        console.log(errorMessage)
+...mapActions(useProductStore, ['createUser', 'getAdmin']),
 
-      })
+    registerAlreadyUser() {
+      this.admin = this.getAdminInfo 
+      const auth = getAuth();
+      signInWithEmailAndPassword(auth, this.user.email, this.user.password)
+        .then((res: any) => {
+          console.log(res.user.email, "RES");
+          console.log(this.getAdminInfo.fullName, "adminnnnn");
+          //LOCAL STORAGE
+          let token: string = res.user.ma;
+          let userId: string = res.user.uid;
+          let adminInfo:string = this.getAdminInfo.fullName.toLocaleUpperCase();
+          localStorage.setItem("adminInfo", adminInfo)
+          localStorage.setItem("token", token);
+          localStorage.setItem("userId", userId);
+
+          //admin adresini getir:::
+          if (this.getAdminInfo.isAdmin == true) {
+            this.$router.push("/dashboard");
+          } else {
+            this.$router.push("/");
+          }
+        })
+        .catch((error: any) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          if (errorCode == "auth/user-not-found") {
+            this.errorMessageWrongEmail = "Lütfen Mailinizi Kontrol Edin !!";
+          } else if (errorCode == "auth/wrong-password") {
+            this.errorMessageWrongPassword = "Lütfen Şifrenizi Kontrol Edin !!";
+          }
+          console.log(errorCode);
+        });
     },
     registerNewUser() {
       const auth = getAuth();
-      console.log("girdi")
-      createUserWithEmailAndPassword(auth, this.email, this.password).then((res:any) =>{
-        console.log(res, "RES FİRE BASE");
-        //    let token:string = res.user.ma;
-        //  let userId:string = res.user.uid;
-        //  localStorage.setItem('token', token);
-        //  localStorage.setItem('userId', userId);
-         this.$router.push('/dashboard');
-        const user = res.user
-      }).catch((error:any)=> {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        alert(errorMessage)
-        console.log(errorMessage)
-
-      })
-      // firebase.auth.cre(this.email, this.password).then((res:any) =>{
-      //     console.log(res, "RES FİRE BASE");
-      //     let token:string = res.user.ma;
-      //     let userId:string = res.user.uid;
-
-      //     localStorage.setItem('token', token);
-      //     localStorage.setItem('userId', userId);
-      //     this.$router.push('/dashboard');
-
-      //   })
-      //   .catch(function (error) {
-      //     const errorcode = error.code;
-      //     const errormessage = error.message;
-      //     alert(errormessage)
-      //   });
+      if (this.user.password != this.user.passwordcheck) {
+        this.errorPasswordCheck =
+          "Girdiğiniz şifre uyuşmuyor. Lütfen tekrar deneyin !";
+      } else {
+        createUserWithEmailAndPassword(
+          auth,
+          this.user.email,
+          this.user.password
+        ).then((res: any) => {
+            let token: string = res.user.ma;
+            let userId: string = res.user.uid;
+            localStorage.setItem("token", token);
+            localStorage.setItem("userId", userId);
+            this.$router.push("/");
+            const user = res.user;
+          })
+          .catch((error: any) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            if (errorCode === "auth/email-already-in-use") {
+              this.msg = "Bu kullanıcıya ait hesap bulunmakta!";
+            } else if (errorCode == "auth/invalid-email")
+              this.errorMessageWrongPassword =
+                "E-mail Doğru Validasyonda Değil ! ";
+            console.log(errorCode, "CODE");
+          });
+      }
     },
-    // ...mapActions(useProductStore, ["getAdminCheck","getAdminName","getAdminEmail","getAdminPassword"]),
-
-    // submit(){
-    //   this.getAdminCheck(this.name, this.password)
-    //   console.log(this.getAdminName, "STORE NAME")
-    //   console.log(this.name, "NAME")
-    //   if(this.password != this.getAdminPassword && this.name != this.getAdminName){
-    //     this.$router.push({ name: "dashboard", path: "/dashboard" });
-    //     console.log(this.email && this.getAdminName, "WWWWW")
-    //   }
-    // }
-  },
-  computed: {
-    //pinia da mapgetters yok o yuzden getter verisi olan getProduct ...mapstate ile cagırılıyor.
-    //...mapState(useProductStore, ["getAdminName", "getAdminPassword"]),
   },
 });
 </script>

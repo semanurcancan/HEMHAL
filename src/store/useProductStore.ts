@@ -1,9 +1,23 @@
 import { defineStore } from "pinia";
 import axios from "axios";
-//  import type ProductModels from "../models/entities/ProductModels.ts"
 import { Product } from "../models/entities/ProductModels";
-import { statusTypeEnum } from "../models/enums/statusTypeEnum";
-import { FavoriteObjectType } from "../models/entities/Icontype";
+
+import {
+  collection,
+  addDoc,
+  doc,
+  getDoc,
+  query,
+  getDocs,
+} from "firebase/firestore";
+import db from "../firebase";
+
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  AuthErrorCodes,
+} from "firebase/auth";
 
 const loadFromStorage = (key: string, defaultValue: any): any => {
   const item = localStorage.getItem(key);
@@ -17,9 +31,6 @@ export const useProductStore = defineStore("product", {
   //burada içi boş verisi olamayan  ama type tanımlanan product var bunu için product model belirledim.api den gelecke olan verilerin type ı bu model içeriisnde belirlendi.
   state: () => {
     return {
-      // adminName: "nurselBlt" as string,
-      // adminPassword: "nurselBlt",
-      // adminEmail: "nurselBlt",
       totalPrice: 0,
       product: [] as Array<Product>,
       basket: [] as Array<Product>,
@@ -28,25 +39,36 @@ export const useProductStore = defineStore("product", {
       favorites: loadFromStorage("userFavorites", [] as Array<Product>),
       loading: false,
 
-      token: "",
-			tokenStatus:false as any,
-			selectedCompanyId: null as null | number | any,
-			fullName: "" as any
+
+      productHemhal: [] as Array<Product>,
+      admin: {} as any,
+      userList: [] as any,
+      user: [
+        {
+          email: "" as any,
+          fullName: "" as any,
+          password: "" as any,
+          passwordcheck: null as any,
+        },
+      ] as any,
     };
   },
 
   //actions da içerisine api verileri atanan product ı getters da bir func atadım.computed da cagırdım.
   getters: {
-    getUserTokenStatus(state) {
-			return  localStorage.getItem("pm2tokenstatus") ?? state.tokenStatus;
-		},
-		getUserToken(state) {
-			return localStorage.getItem("pm2token") ?? state.token;
-		},
-    getUserfullName(state) {
-			return localStorage.getItem("pm2fullName") ?? state.fullName;
-		},
- 
+    getProductHemhal: (state) => {
+      return state.productHemhal
+    },
+    getAdminInfo: (state) => {
+      console.log(state.admin)
+      return state.admin;
+    },
+    getUserList: (state) => {
+      return state.userList;
+    },
+    getUser: (state) => {
+      return state.user;
+    },
     getProductGetters: (state) => {
       return state.product;
     },
@@ -68,19 +90,42 @@ export const useProductStore = defineStore("product", {
   },
   //actions da api verilerini cektim.state de içi boş ve type ı tanımlanan product a attım içerisindeki bilgileri api den gelen.methods da cagırıdm!!!
   actions: {
-    setNewTokenStatus(tokenStatus: boolean) {
-			this.tokenStatus = tokenStatus;
-			localStorage.setItem("pm2tokenstatus", this.tokenStatus);
-		},
-		setNewToken(newToken: any) {
-			this.token = newToken;
-			localStorage.setItem("pm2token", this.token);
-		},
-    setNewfullName(newfullName: any) {
-			this.fullName = newfullName;
-			localStorage.setItem("pm2fullName", this.fullName);
-		},
-  
+    async setProductHemdal(){
+      const colRef = collection(db, "product");
+      const dataObj = this.productHemhal;
+debugger
+      const docRef = await addDoc(colRef, dataObj);
+      console.log("STORE CREATED USAR ID:", docRef);
+    },
+    async getAdmin() {
+      const docSnap = await getDoc(doc(db, "admin", "27n5F5jC8z9Pf0v59eLw"));
+      //tek collection u cekiyor
+      // if (docSnap.exists()) {
+      //   this.admin = docSnap.data();
+      //   console.log(docSnap.data(), "ADMİN COLLECTİON");
+      // } else {
+      //   console.log("user not found");
+      // }
+      const querySnap = await getDocs(query(collection(db, "users")));
+      querySnap.forEach((doc) => {
+        this.userList.push(doc.data());
+      });
+      console.log(this.userList, "USERLİST");
+        this.admin = this.userList.filter((admin: any) =>  admin.isAdmin == true )[0];
+      console.log(this.admin, "ADMİN");
+      
+    },
+
+    async createUser() {
+      const colRef = collection(db, "users");
+      const dataObj = {
+        fullName: this.user.fullName,
+        email: this.user.email,
+        isAdmin: false,
+      };
+      const docRef = await addDoc(colRef, dataObj);
+      console.log("STORE CREATED USAR ID:", docRef);
+    },
     //data apı aul ile cekildi!!!
     async getProductAction() {
       await axios
