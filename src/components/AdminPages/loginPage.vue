@@ -85,7 +85,7 @@
                         rounded
                         variant="text"
                         class="mt-2 bg-lime-darken-1"
-                        @click="registerAlreadyUser()"
+                        @click="registerAlreadyUser(user)"
                         >SING IN</v-btn
                       >
                     </v-row>
@@ -246,18 +246,25 @@
 import { defineComponent } from "@vue/runtime-core";
 import { mapActions, mapState } from "pinia";
 import { useProductStore } from "../../store/useProductStore";
-import firebase from "firebase/compat/app";
-import { Database } from "firebase/database";
+interface userModel {
+  fullName: string;
+  email: string;
+  password: string;
+  passwordCheck: string;
+  isAdmin: boolean;
+}
+// import firebase from "firebase/compat/app";
+// import { Database } from "firebase/database";
 
-import {
-  collection,
-  addDoc,
-  doc,
-  getDoc,
-  query,
-  getDocs,
-} from "firebase/firestore";
-import db from "../../firebase";
+// import {
+//   collection,
+//   addDoc,
+//   doc,
+//   getDoc,
+//   query,
+//   getDocs,
+// } from "firebase/firestore";
+// import db from "../../firebase";
 
 import {
   getAuth,
@@ -265,6 +272,7 @@ import {
   signInWithEmailAndPassword,
   AuthErrorCodes,
 } from "firebase/auth";
+import { anyTypeAnnotation } from "@babel/types";
 
 export default defineComponent({
   name: "loginpage",
@@ -275,14 +283,8 @@ export default defineComponent({
     return {
       admin: null as any,
       userList: [] as any,
-      user: [
-        {
-          email: "" as any,
-          fullName: "" as any,
-          password: "" as any,
-          passwordcheck: null as any,
-        },
-      ] as any,
+      user: {} as any,
+      currentAdmin: {} as any,
       step: 1,
 
       errorPasswordCheck: "" as any,
@@ -293,42 +295,50 @@ export default defineComponent({
     };
   },
   computed: {
-    ...mapState(useProductStore, [ "getAdminInfo"])
-   
+    ...mapState(useProductStore, ["getAdminInfo"]),
   },
   created() {
-     this.createUser();
-     this.getAdmin();
+    //this.createUser();
+    this.getAdmin();
   },
   methods: {
-...mapActions(useProductStore, ['createUser', 'getAdmin']),
+    ...mapActions(useProductStore, ["createUser", "getAdmin"]),
 
-    registerAlreadyUser() {
-      this.admin = this.getAdminInfo 
+    registerAlreadyUser(user: any) {
+      this.admin = this.getAdminInfo;
+      this.currentAdmin = this.getAdminInfo.filter(
+        (x: any) => x.email == user.email
+      );
       const auth = getAuth();
       signInWithEmailAndPassword(auth, this.user.email, this.user.password)
         .then((res: any) => {
-          console.log(res.user.email, "RES");
-          console.log(this.getAdminInfo.fullName, "adminnnnn");
           //LOCAL STORAGE
           let token: string = res.user.ma;
           let userId: string = res.user.uid;
-          let adminInfo:string = this.getAdminInfo.fullName.toLocaleUpperCase();
-          localStorage.setItem("adminInfo", adminInfo)
+          let adminInfo: string =
+            this.currentAdmin[0].fullName.toLocaleUpperCase();
+            //console.log(adminInfo, "LOCAL")
+          localStorage.setItem("adminInfo", adminInfo);
           localStorage.setItem("token", token);
           localStorage.setItem("userId", userId);
 
           //admin adresini getir:::
-          if (this.getAdminInfo.isAdmin == true) {
-            this.$router.push("/dashboard");
-          } else {
+          if (this.currentAdmin.length === 0) {
             this.$router.push("/");
+          } else if (
+            this.currentAdmin.length != 0 &&
+            this.currentAdmin[0].email == this.user.email
+          ) {
+            this.$router.push("/dashboard");
           }
         })
         .catch((error: any) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          if (errorCode == "auth/user-not-found") {
+          if (
+            errorCode == "auth/user-not-found" &&
+            errorCode == "auth/invalid-email"
+          ) {
             this.errorMessageWrongEmail = "Lütfen Mailinizi Kontrol Edin !!";
           } else if (errorCode == "auth/wrong-password") {
             this.errorMessageWrongPassword = "Lütfen Şifrenizi Kontrol Edin !!";
@@ -346,11 +356,14 @@ export default defineComponent({
           auth,
           this.user.email,
           this.user.password
-        ).then((res: any) => {
+        )
+          .then((res: any) => {
+            console.log(res.user, "NEW USER");
             let token: string = res.user.ma;
             let userId: string = res.user.uid;
             localStorage.setItem("token", token);
             localStorage.setItem("userId", userId);
+            this.createUser(this.user);
             this.$router.push("/");
             const user = res.user;
           })

@@ -41,7 +41,7 @@ export const useProductStore = defineStore("product", {
 
 
       productHemhal: [] as Array<Product>,
-      admin: {} as any,
+      admin:[] as any,
       userList: [] as any,
       user: [
         {
@@ -60,7 +60,6 @@ export const useProductStore = defineStore("product", {
       return state.productHemhal
     },
     getAdminInfo: (state) => {
-      console.log(state.admin)
       return state.admin;
     },
     getUserList: (state) => {
@@ -93,12 +92,11 @@ export const useProductStore = defineStore("product", {
     async setProductHemdal(){
       const colRef = collection(db, "product");
       const dataObj = this.productHemhal;
-debugger
       const docRef = await addDoc(colRef, dataObj);
       console.log("STORE CREATED USAR ID:", docRef);
     },
     async getAdmin() {
-      const docSnap = await getDoc(doc(db, "admin", "27n5F5jC8z9Pf0v59eLw"));
+      //const docSnap = await getDoc(doc(db, "admin", "27n5F5jC8z9Pf0v59eLw"));
       //tek collection u cekiyor
       // if (docSnap.exists()) {
       //   this.admin = docSnap.data();
@@ -111,20 +109,22 @@ debugger
         this.userList.push(doc.data());
       });
       console.log(this.userList, "USERLİST");
-        this.admin = this.userList.filter((admin: any) =>  admin.isAdmin == true )[0];
+        this.admin = this.userList.filter((admin: any) =>  admin.isAdmin == true );
       console.log(this.admin, "ADMİN");
       
     },
 
-    async createUser() {
+//yeni user eklendikten sonra collectiona ekler bu func. conle yazınca calıstı :)
+    async createUser(user:any) {
       const colRef = collection(db, "users");
+      //console.log(user, "STORE USER PROP")
       const dataObj = {
-        fullName: this.user.fullName,
-        email: this.user.email,
+        fullName: user.fullName,
+        email: user.email,
         isAdmin: false,
       };
       const docRef = await addDoc(colRef, dataObj);
-      console.log("STORE CREATED USAR ID:", docRef);
+      //console.log("STORE CREATED USAR ID:", docRef);
     },
     //data apı aul ile cekildi!!!
     async getProductAction() {
