@@ -9,6 +9,7 @@ import {
   getDoc,
   query,
   getDocs,
+  where
 } from "firebase/firestore";
 import db from "../firebase";
 
@@ -39,9 +40,11 @@ export const useProductStore = defineStore("product", {
       favorites: loadFromStorage("userFavorites", [] as Array<Product>),
       loading: false,
 
-
+      token:  localStorage.getItem("pm2token") ?? (false as any),
+      tokenStatus: localStorage.getItem("pm2tokenstatus") ?? (false as any),
       productHemhal: [] as Array<Product>,
       admin:[] as any,
+      currentAdmin: {} as any,
       userList: [] as any,
       user: [
         {
@@ -56,11 +59,20 @@ export const useProductStore = defineStore("product", {
 
   //actions da içerisine api verileri atanan product ı getters da bir func atadım.computed da cagırdım.
   getters: {
+    getUserTokenStatus(state) {
+      return localStorage.getItem("pm2tokenstatus") ?? state.tokenStatus;
+    },
+    getUserToken(state) {
+      return localStorage.getItem("pm2token") ?? state.token;
+    },
     getProductHemhal: (state) => {
       return state.productHemhal
     },
     getAdminInfo: (state) => {
       return state.admin;
+    },
+    getcurrenAdmin: (state) => {
+      return localStorage.getItem("userAdmin")?? state.currentAdmin
     },
     getUserList: (state) => {
       return state.userList;
@@ -89,6 +101,14 @@ export const useProductStore = defineStore("product", {
   },
   //actions da api verilerini cektim.state de içi boş ve type ı tanımlanan product a attım içerisindeki bilgileri api den gelen.methods da cagırıdm!!!
   actions: {
+    setNewTokenStatus(tokenStatus: boolean) {
+      this.tokenStatus = tokenStatus;
+      localStorage.setItem("pm2tokenstatus", this.tokenStatus);
+    },
+    setNewToken(newToken: boolean) {
+      this.token = newToken;
+      localStorage.setItem("pm2token", this.token);
+    },
     async setProductHemdal(){
       const colRef = collection(db, "product");
       const dataObj = this.productHemhal;
@@ -108,10 +128,14 @@ export const useProductStore = defineStore("product", {
       querySnap.forEach((doc) => {
         this.userList.push(doc.data());
       });
-      console.log(this.userList, "USERLİST");
-        this.admin = this.userList.filter((admin: any) =>  admin.isAdmin == true );
-      console.log(this.admin, "ADMİN");
-      
+      //ilki js şkinci filtreleme firebase methodu
+      //   this.admin = this.userList.filter((admin: any) =>  admin.isAdmin == true );
+      // console.log(this.admin, "ADMİN");
+      const filterAdmin = query(collection(db, 'users'), where('isAdmin', '==', 'true'))
+      const querySnapp = await getDocs(filterAdmin)
+      querySnapp.forEach((doc) => {
+        this.admin.push(doc.data())
+      })
     },
 
 //yeni user eklendikten sonra collectiona ekler bu func. conle yazınca calıstı :)

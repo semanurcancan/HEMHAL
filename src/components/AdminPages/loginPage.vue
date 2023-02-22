@@ -244,15 +244,8 @@
 
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
-import { mapActions, mapState } from "pinia";
+import { mapActions, mapState, storeToRefs } from "pinia";
 import { useProductStore } from "../../store/useProductStore";
-interface userModel {
-  fullName: string;
-  email: string;
-  password: string;
-  passwordCheck: string;
-  isAdmin: boolean;
-}
 // import firebase from "firebase/compat/app";
 // import { Database } from "firebase/database";
 
@@ -271,6 +264,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   AuthErrorCodes,
+updateProfile,
+updateEmail,
 } from "firebase/auth";
 import { anyTypeAnnotation } from "@babel/types";
 
@@ -284,7 +279,8 @@ export default defineComponent({
       admin: null as any,
       userList: [] as any,
       user: {} as any,
-      currentAdmin: {} as any,
+      currentUser: [] as any,
+      status: Boolean as any,
       step: 1,
 
       errorPasswordCheck: "" as any,
@@ -295,52 +291,76 @@ export default defineComponent({
     };
   },
   computed: {
-    ...mapState(useProductStore, ["getAdminInfo"]),
+    ...mapState(useProductStore, ["getAdminInfo", "getUserList"]),
   },
   created() {
     //this.createUser();
     this.getAdmin();
   },
+  watch: {
+    getUserList(newVal, oldVal) {
+      console.log(this.getUserList)
+      if (newVal) {
+        console.log(newVal, oldVal, "WATCH");
+        
+      
+      }
+    },
+  },
   methods: {
-    ...mapActions(useProductStore, ["createUser", "getAdmin"]),
-
+    ...mapActions(useProductStore, [
+      "createUser",
+      "getAdmin",
+      "setNewTokenStatus",
+      "setNewToken"
+    ]),
     registerAlreadyUser(user: any) {
       this.admin = this.getAdminInfo;
-      this.currentAdmin = this.getAdminInfo.filter(
+      console.log(this.getUserList, "TÜM KULLANICILAR");
+      this.currentUser = this.getUserList.filter(
         (x: any) => x.email == user.email
       );
+          console.log(this.currentUser, "SUANKİ KULLANICI")
       const auth = getAuth();
       signInWithEmailAndPassword(auth, this.user.email, this.user.password)
         .then((res: any) => {
           //LOCAL STORAGE
           let token: string = res.user.ma;
           let userId: string = res.user.uid;
-          let adminInfo: string =
-            this.currentAdmin[0].fullName.toLocaleUpperCase();
-            //console.log(adminInfo, "LOCAL")
+          //let userAdminStatus: any = this.currentUser;
+          let adminInfo: string =this.currentUser[0].fullName.toLocaleUpperCase();
           localStorage.setItem("adminInfo", adminInfo);
           localStorage.setItem("token", token);
           localStorage.setItem("userId", userId);
+          //localStorage.setItem("userAdminStatus", userAdminStatus);
+          this.setNewTokenStatus(true);
+          this.setNewToken(true);
+          // localStorage.removeItem("pm2tokenstatus");
+          // localStorage.removeItem("pm2token");
 
           //admin adresini getir:::
-          if (this.currentAdmin.length === 0) {
-            this.$router.push("/");
-          } else if (
-            this.currentAdmin.length != 0 &&
-            this.currentAdmin[0].email == this.user.email
-          ) {
+          this.status = true;
+          localStorage.setItem("getUserTokenStatus", this.status); 
+          // console.log(this.currentUser.filter((x:any) => x.isAdmin == true).isAdmin, "CURRENT ADMIN")
+          // console.log(this.currentUser[0].isAdmin, "ALL")
+          // console.log(res, "OOO")
+         
+          if (this.currentUser[0].isAdmin == false) {
+            this.$router.push("/")
+          } else {
             this.$router.push("/dashboard");
           }
         })
         .catch((error: any) => {
           const errorCode = error.code;
-          const errorMessage = error.message;
+          const errorMessage = error.message; 
           if (
             errorCode == "auth/user-not-found" &&
             errorCode == "auth/invalid-email"
           ) {
             this.errorMessageWrongEmail = "Lütfen Mailinizi Kontrol Edin !!";
           } else if (errorCode == "auth/wrong-password") {
+           
             this.errorMessageWrongPassword = "Lütfen Şifrenizi Kontrol Edin !!";
           }
           console.log(errorCode);
@@ -363,6 +383,12 @@ export default defineComponent({
             let userId: string = res.user.uid;
             localStorage.setItem("token", token);
             localStorage.setItem("userId", userId);
+            //update 'display name'
+            // updateProfile(auth.currentUser, {
+            //   displayName: this.user.fullName
+            // }).then(() => {
+            //   console.log(auth.currentUser?.displayName)
+            // })
             this.createUser(this.user);
             this.$router.push("/");
             const user = res.user;
