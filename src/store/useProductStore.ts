@@ -9,6 +9,7 @@ import {
   getDoc,
   query,
   getDocs,
+  where
 } from "firebase/firestore";
 import db from "../firebase";
 
@@ -39,9 +40,11 @@ export const useProductStore = defineStore("product", {
       favorites: loadFromStorage("userFavorites", [] as Array<Product>),
       loading: false,
 
-
+      token:  localStorage.getItem("pm2token") ?? (false as any),
+      tokenStatus: localStorage.getItem("pm2tokenstatus") ?? (false as any),
       productHemhal: [] as Array<Product>,
-      admin: {} as any,
+      admin:[] as any,
+      currentAdmin: {} as any,
       userList: [] as any,
       user: [
         {
@@ -56,12 +59,20 @@ export const useProductStore = defineStore("product", {
 
   //actions da içerisine api verileri atanan product ı getters da bir func atadım.computed da cagırdım.
   getters: {
+    getUserTokenStatus(state) {
+      return localStorage.getItem("pm2tokenstatus") ?? state.tokenStatus;
+    },
+    getUserToken(state) {
+      return localStorage.getItem("pm2token") ?? state.token;
+    },
     getProductHemhal: (state) => {
       return state.productHemhal
     },
     getAdminInfo: (state) => {
-      console.log(state.admin)
       return state.admin;
+    },
+    getcurrenAdmin: (state) => {
+      return localStorage.getItem("userAdmin")?? state.currentAdmin
     },
     getUserList: (state) => {
       return state.userList;
@@ -90,15 +101,22 @@ export const useProductStore = defineStore("product", {
   },
   //actions da api verilerini cektim.state de içi boş ve type ı tanımlanan product a attım içerisindeki bilgileri api den gelen.methods da cagırıdm!!!
   actions: {
+    setNewTokenStatus(tokenStatus: boolean) {
+      this.tokenStatus = tokenStatus;
+      localStorage.setItem("pm2tokenstatus", this.tokenStatus);
+    },
+    setNewToken(newToken: boolean) {
+      this.token = newToken;
+      localStorage.setItem("pm2token", this.token);
+    },
     async setProductHemdal(){
       const colRef = collection(db, "product");
       const dataObj = this.productHemhal;
-debugger
       const docRef = await addDoc(colRef, dataObj);
       console.log("STORE CREATED USAR ID:", docRef);
     },
     async getAdmin() {
-      const docSnap = await getDoc(doc(db, "admin", "27n5F5jC8z9Pf0v59eLw"));
+      //const docSnap = await getDoc(doc(db, "admin", "27n5F5jC8z9Pf0v59eLw"));
       //tek collection u cekiyor
       // if (docSnap.exists()) {
       //   this.admin = docSnap.data();
@@ -110,21 +128,27 @@ debugger
       querySnap.forEach((doc) => {
         this.userList.push(doc.data());
       });
-      console.log(this.userList, "USERLİST");
-        this.admin = this.userList.filter((admin: any) =>  admin.isAdmin == true )[0];
-      console.log(this.admin, "ADMİN");
-      
+      //ilki js şkinci filtreleme firebase methodu
+      //   this.admin = this.userList.filter((admin: any) =>  admin.isAdmin == true );
+      // console.log(this.admin, "ADMİN");
+      const filterAdmin = query(collection(db, 'users'), where('isAdmin', '==', 'true'))
+      const querySnapp = await getDocs(filterAdmin)
+      querySnapp.forEach((doc) => {
+        this.admin.push(doc.data())
+      })
     },
 
-    async createUser() {
+//yeni user eklendikten sonra collectiona ekler bu func. conle yazınca calıstı :)
+    async createUser(user:any) {
       const colRef = collection(db, "users");
+      //console.log(user, "STORE USER PROP")
       const dataObj = {
-        fullName: this.user.fullName,
-        email: this.user.email,
+        fullName: user.fullName,
+        email: user.email,
         isAdmin: false,
       };
       const docRef = await addDoc(colRef, dataObj);
-      console.log("STORE CREATED USAR ID:", docRef);
+      //console.log("STORE CREATED USAR ID:", docRef);
     },
     //data apı aul ile cekildi!!!
     async getProductAction() {

@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <v-col class="bg-red">
-        admin navigation
+       USERS PAGE
     </v-col>
     </v-container>
     
@@ -16,7 +16,7 @@ import { useProductStore } from "../../store/useProductStore";
 
 export default defineComponent({
   components: { },
-  name: "adminnavigation",
+  name: "userspage",
   data: () => ({
     
   }),

@@ -1,19 +1,18 @@
 <template>
   <kayanyazi class="w-100"></kayanyazi>
   <v-layout class="container">
-    <v-col>
+    <v-col >
       <v-row>
         <LoginPage v-if="$route.name == 'loginpage'"></LoginPage>
         <v-main v-else="$route.name != 'loginpage'" style="height: auto">
-          <NavbarComp />
-          <router-view v-slot="{ Component }">
+          <NavbarComp/>
+          <router-view v-slot="{ Component }" >
             <keep-alive>
               <component :is="Component" />
             </keep-alive>
           </router-view>
           <footerr></footerr>
         </v-main>
-        
       </v-row>
     </v-col>
   </v-layout>
@@ -26,6 +25,7 @@ import { defineComponent } from "@vue/runtime-core";
 import loginPage from "./components/AdminPages/loginPage.vue";
 import kayanyazi from "./components/headerComp/kayanYazı.vue";
 import NavbarComp from "./components/headerComp/NavbarComp.vue";
+import dashboard from "./components/AdminPages/dashboard.vue";
 import footer from "./components/footer/footer.vue";
 import footerr from "./components/footer/footer.vue";
 import leftBarVue from "./components/headerComp/leftBar.vue";
@@ -39,8 +39,9 @@ export default defineComponent({
     footer,
     footerr,
     burgerMenu,
-    LoginPage
-},
+    LoginPage,
+    dashboard,
+  },
   data() {
     return {
       navOpen: false,
@@ -117,8 +118,8 @@ export default defineComponent({
   margin-right: 100px;
   overflow: auto;
 }
-.hemhalcolor{
-  text-decoration-color: rgb(192, 219, 18); ;
+.hemhalcolor {
+  text-decoration-color: rgb(192, 219, 18);
   /* text-decoration: rgb(192, 219, 18); */
 }
 </style>

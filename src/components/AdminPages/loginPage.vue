@@ -86,7 +86,7 @@
                         rounded
                         variant="text"
                         class="mt-2 bg-lime-darken-1"
-                        @click="registerAlreadyUser()"
+                        @click="registerAlreadyUser(user)"
                         >SING IN</v-btn
                       >
                     </v-row>
@@ -248,27 +248,30 @@
 
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
-import { mapActions, mapState } from "pinia";
+import { mapActions, mapState, storeToRefs } from "pinia";
 import { useProductStore } from "../../store/useProductStore";
-import firebase from "firebase/compat/app";
-import { Database } from "firebase/database";
+// import firebase from "firebase/compat/app";
+// import { Database } from "firebase/database";
 
-import {
-  collection,
-  addDoc,
-  doc,
-  getDoc,
-  query,
-  getDocs,
-} from "firebase/firestore";
-import db from "../../firebase";
+// import {
+//   collection,
+//   addDoc,
+//   doc,
+//   getDoc,
+//   query,
+//   getDocs,
+// } from "firebase/firestore";
+// import db from "../../firebase";
 
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   AuthErrorCodes,
+updateProfile,
+updateEmail,
 } from "firebase/auth";
+import { anyTypeAnnotation } from "@babel/types";
 
 export default defineComponent({
   name: "loginpage",
@@ -279,14 +282,9 @@ export default defineComponent({
     return {
       admin: null as any,
       userList: [] as any,
-      user: [
-        {
-          email: "" as any,
-          fullName: "" as any,
-          password: "" as any,
-          passwordcheck: null as any,
-        },
-      ] as any,
+      user: {} as any,
+      currentUser: [] as any,
+      status: Boolean as any,
       step: 1,
       errorPasswordCheck: "" as any,
       errorMessageWrongEmail: "" as any,
@@ -296,44 +294,76 @@ export default defineComponent({
     };
   },
   computed: {
-    ...mapState(useProductStore, [ "getAdminInfo"])
-   
+    ...mapState(useProductStore, ["getAdminInfo", "getUserList"]),
   },
   created() {
-     this.createUser();
-     this.getAdmin();
+    //this.createUser();
+    this.getAdmin();
+  },
+  watch: {
+    getUserList(newVal, oldVal) {
+      console.log(this.getUserList)
+      if (newVal) {
+        console.log(newVal, oldVal, "WATCH");
+        
+      
+      }
+    },
   },
   methods: {
-...mapActions(useProductStore, ['createUser', 'getAdmin']),
-
-    registerAlreadyUser() {
-      this.admin = this.getAdminInfo 
+    ...mapActions(useProductStore, [
+      "createUser",
+      "getAdmin",
+      "setNewTokenStatus",
+      "setNewToken"
+    ]),
+    registerAlreadyUser(user: any) {
+      this.admin = this.getAdminInfo;
+      console.log(this.getUserList, "TÜM KULLANICILAR");
+      this.currentUser = this.getUserList.filter(
+        (x: any) => x.email == user.email
+      );
+          console.log(this.currentUser, "SUANKİ KULLANICI")
       const auth = getAuth();
       signInWithEmailAndPassword(auth, this.user.email, this.user.password)
         .then((res: any) => {
-          console.log(res.user.email, "RES");
-          console.log(this.getAdminInfo.fullName, "adminnnnn");
           //LOCAL STORAGE
           let token: string = res.user.ma;
           let userId: string = res.user.uid;
-          let adminInfo:string = this.getAdminInfo.fullName.toLocaleUpperCase();
-          localStorage.setItem("adminInfo", adminInfo)
+          //let userAdminStatus: any = this.currentUser;
+          let adminInfo: string =this.currentUser[0].fullName.toLocaleUpperCase();
+          localStorage.setItem("adminInfo", adminInfo);
           localStorage.setItem("token", token);
           localStorage.setItem("userId", userId);
+          //localStorage.setItem("userAdminStatus", userAdminStatus);
+          this.setNewTokenStatus(true);
+          this.setNewToken(true);
+          // localStorage.removeItem("pm2tokenstatus");
+          // localStorage.removeItem("pm2token");
 
           //admin adresini getir:::
-          if (this.getAdminInfo.isAdmin == true) {
-            this.$router.push("/dashboard");
+          this.status = true;
+          localStorage.setItem("getUserTokenStatus", this.status); 
+          // console.log(this.currentUser.filter((x:any) => x.isAdmin == true).isAdmin, "CURRENT ADMIN")
+          // console.log(this.currentUser[0].isAdmin, "ALL")
+          // console.log(res, "OOO")
+         
+          if (this.currentUser[0].isAdmin == false) {
+            this.$router.push("/")
           } else {
-            this.$router.push("/");
+            this.$router.push("/dashboard");
           }
         })
         .catch((error: any) => {
           const errorCode = error.code;
-          const errorMessage = error.message;
-          if (errorCode == "auth/user-not-found") {
+          const errorMessage = error.message; 
+          if (
+            errorCode == "auth/user-not-found" &&
+            errorCode == "auth/invalid-email"
+          ) {
             this.errorMessageWrongEmail = "Lütfen Mailinizi Kontrol Edin !!";
           } else if (errorCode == "auth/wrong-password") {
+           
             this.errorMessageWrongPassword = "Lütfen Şifrenizi Kontrol Edin !!";
           }
           console.log(errorCode);
@@ -349,11 +379,20 @@ export default defineComponent({
           auth,
           this.user.email,
           this.user.password
-        ).then((res: any) => {
+        )
+          .then((res: any) => {
+            console.log(res.user, "NEW USER");
             let token: string = res.user.ma;
             let userId: string = res.user.uid;
             localStorage.setItem("token", token);
             localStorage.setItem("userId", userId);
+            //update 'display name'
+            // updateProfile(auth.currentUser, {
+            //   displayName: this.user.fullName
+            // }).then(() => {
+            //   console.log(auth.currentUser?.displayName)
+            // })
+            this.createUser(this.user);
             this.$router.push("/");
             const user = res.user;
           })
