@@ -1,8 +1,8 @@
 <template>
   <v-col cols="12">
     <v-row class="mt-16" align="center" justify="center">
-      <v-card variant="elevated">
-        <v-window v-model="step">
+      <v-card  class="fill-height"  variant="elevated">
+        <v-window  v-model="step">
           <v-window-item :value="1">
             <v-row class="fill-height" style="width: 100vh">
               <v-col cols="12" md="8" class="bg-brown-lighten-5">
@@ -48,6 +48,7 @@
                   <v-col>
                     <v-form>
                       <v-text-field
+                      autofocus="true"
                         v-model="user.email"
                         label="email"
                         name="email"
@@ -117,11 +118,11 @@
 
           <!-- -----------------------pencere 2------------------------ -->
           <v-window-item :value="2">
-            <v-row class="fill-height" style="width: 100vh">
-              <v-col class="color1">
+            <v-row class="" style="width: 100vh">
+              <v-col cols="5" class="color1">
                 <v-card-text class="mt-12 text-center">
                   <h1 class="text-h3">Welcome Back !</h1>
-                  <h5 class="text-center text-h7">
+                  <h5 class="text-center text-h7 ml-4">
                     To Keep Connected With Us Please Login With Ypur Personnel
                     İnfo
                   </h5>
@@ -135,16 +136,16 @@
                 </v-col>
               </v-col>
 
-              <v-col cols="12" md="8" class="bg-lime-lighten-5">
+              <v-col cols="7" class="bg-lime-lighten-5">
                 <v-card-text class="mt-12">
                   <h1 class="text-center text-lime-darken-3">CREATE ACCOUNT</h1>
-                  <v-col>
+                  <v-col cols="12">
                     <v-row class="text-center mt-4">
                       <v-col>
                         <v-img
                           src="/public/assets/icons8-facebook.svg"
                           alt="HEMHAL"
-                          height="60"
+                          height="50"
                         >
                         </v-img>
                       </v-col>
@@ -152,7 +153,7 @@
                         <v-img
                           src="/public/assets/icons8-google-plus.svg"
                           alt="HEMHAL"
-                          height="60"
+                          height="50"
                         >
                         </v-img>
                       </v-col>
@@ -160,7 +161,7 @@
                         <v-img
                           src="/public/assets/icons8-linkedin.svg"
                           alt="HEMHAL"
-                          height="60"
+                          height="50"
                         >
                         </v-img>
                       </v-col>
@@ -174,8 +175,9 @@
                   </v-col>
 
                   <v-col>
-                    <v-form>
                       <v-text-field
+                      density="compact"
+                      autofocus="true"
                         label="fullName"
                         name="fullName"
                         v-model="user.fullName"
@@ -186,6 +188,7 @@
                       >
                       </v-text-field>
                       <v-text-field
+                      density="compact"
                         label="email"
                         name="email"
                         v-model="user.email"
@@ -197,6 +200,7 @@
                       >
                       </v-text-field>
                       <v-text-field
+                      density="compact"
                         v-model="user.password"
                         label="password"
                         id="password"
@@ -207,6 +211,7 @@
                         class="text-lime-darken-3"
                       ></v-text-field>
                       <v-text-field
+                      density="compact"
                         label="passwordcheck"
                         v-model="user.passwordcheck"
                         id="passwordcheck"
@@ -217,7 +222,6 @@
                         class="text-lime-darken-3"
                         :error-messages="errorPasswordCheck"
                       ></v-text-field>
-                    </v-form>
                   </v-col>
                   <v-col class="text-red-darken-3 ml-10">
                     {{ msg }}
@@ -284,7 +288,6 @@ export default defineComponent({
         },
       ] as any,
       step: 1,
-
       errorPasswordCheck: "" as any,
       errorMessageWrongEmail: "" as any,
       errorMessageWrongPassword: "" as any,
