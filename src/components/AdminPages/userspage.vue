@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <v-col class="bg-red">
+        <v-col class=" color2">
        USERS PAGE
     </v-col>
     </v-container>
@@ -23,3 +23,24 @@ export default defineComponent({
   
 });
 </script>
+<style scoped>
+.color5 {
+  background-color: #847577;
+}
+
+.color4 {
+  background-color: #e3d5ca;
+}
+
+.color3 {
+  background-color: #d6ccc2;
+}
+
+.color2 {
+  background-color: rgb(236, 218, 193);
+}
+
+.color1 {
+  background-color: rgb(192, 174, 150);
+}
+</style>

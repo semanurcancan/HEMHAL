@@ -1,8 +1,8 @@
 <template>
   <v-col cols="12">
     <v-row class="mt-16" align="center" justify="center">
-      <v-card  class="fill-height"  variant="elevated">
-        <v-window  v-model="step">
+      <v-card class="fill-height" variant="elevated">
+        <v-window v-model="step">
           <v-window-item :value="1">
             <v-row class="fill-height" style="width: 100vh">
               <v-col cols="12" md="8" class="bg-brown-lighten-5">
@@ -13,27 +13,15 @@
                   <v-col>
                     <v-row class="text-center mt-4">
                       <v-col>
-                        <v-img
-                          src="/public/assets/icons8-facebook.svg"
-                          alt="HEMHAL"
-                          height="60"
-                        >
+                        <v-img src="/public/assets/icons8-facebook.svg" alt="HEMHAL" height="60">
                         </v-img>
                       </v-col>
                       <v-col>
-                        <v-img
-                          src="/public/assets/icons8-google-plus.svg"
-                          alt="HEMHAL"
-                          height="60"
-                        >
+                        <v-img src="/public/assets/icons8-google-plus.svg" alt="HEMHAL" height="60">
                         </v-img>
                       </v-col>
                       <v-col>
-                        <v-img
-                          src="/public/assets/icons8-linkedin.svg"
-                          alt="HEMHAL"
-                          height="60"
-                        >
+                        <v-img src="/public/assets/icons8-linkedin.svg" alt="HEMHAL" height="60">
                         </v-img>
                       </v-col>
                     </v-row>
@@ -47,30 +35,14 @@
 
                   <v-col>
                     <v-form>
-                      <v-text-field
-                      autofocus="true"
-                        v-model="user.email"
-                        label="email"
-                        name="email"
-                        prepend-icon="mdi-email"
-                        type="text"
-                        variant="underlined"
-                        class="text-brown-lighten-3 font-weight-light"
-                        :error-messages="errorMessageWrongEmail"
-                      >
+                      <v-text-field :autofocus="true" v-model="user.email" label="email" name="email"
+                        prepend-icon="mdi-email" type="text" variant="underlined"
+                        class="text-brown-lighten-3 font-weight-light" :error-messages="errorMessageWrongEmail">
                       </v-text-field>
 
-                      <v-text-field
-                        v-model="user.password"
-                        label="password"
-                        id="password"
-                        name="password"
-                        prepend-icon="mdi-lock"
-                        type="password"
-                        variant="underlined"
-                        class="text-brown-lighten-3"
-                        :error-messages="errorMessageWrongPassword"
-                      ></v-text-field>
+                      <v-text-field v-model="user.password" label="password" id="password" name="password"
+                        prepend-icon="mdi-lock" type="password" variant="underlined" class="text-brown-lighten-3"
+                        :error-messages="errorMessageWrongPassword"></v-text-field>
                     </v-form>
                   </v-col>
 
@@ -82,13 +54,8 @@
 
                   <v-col>
                     <v-row class="d-flex justify-center">
-                      <v-btn
-                        rounded
-                        variant="text"
-                        class="mt-2 bg-lime-darken-1"
-                        @click="registerAlreadyUser(user)"
-                        >SING IN</v-btn
-                      >
+                      <v-btn rounded variant="text" class="mt-2 bg-lime-darken-1" @click="registerAlreadyUser(user)">SING
+                        IN</v-btn>
                     </v-row>
                   </v-col>
                 </v-card-text>
@@ -103,13 +70,7 @@
                 </v-card-text>
                 <v-col>
                   <v-row class="d-flex justify-center">
-                    <v-btn
-                      rounded
-                      variant="text"
-                      @click="step++"
-                      class="ma-6 bg-lime-darken-1"
-                      >SING UP</v-btn
-                    >
+                    <v-btn rounded variant="text" @click="step++" class="ma-6 bg-lime-darken-1">SING UP</v-btn>
                   </v-row>
                 </v-col>
               </v-col>
@@ -129,9 +90,7 @@
                 </v-card-text>
                 <v-col>
                   <v-row class="d-flex justify-center">
-                    <v-btn rounded @click="step--" class="color2"
-                      >SING IN</v-btn
-                    >
+                    <v-btn rounded @click="step--" class="color2">SING IN</v-btn>
                   </v-row>
                 </v-col>
               </v-col>
@@ -142,27 +101,15 @@
                   <v-col cols="12">
                     <v-row class="text-center mt-4">
                       <v-col>
-                        <v-img
-                          src="/public/assets/icons8-facebook.svg"
-                          alt="HEMHAL"
-                          height="50"
-                        >
+                        <v-img src="/public/assets/icons8-facebook.svg" alt="HEMHAL" height="50">
                         </v-img>
                       </v-col>
                       <v-col>
-                        <v-img
-                          src="/public/assets/icons8-google-plus.svg"
-                          alt="HEMHAL"
-                          height="50"
-                        >
+                        <v-img src="/public/assets/icons8-google-plus.svg" alt="HEMHAL" height="50">
                         </v-img>
                       </v-col>
                       <v-col>
-                        <v-img
-                          src="/public/assets/icons8-linkedin.svg"
-                          alt="HEMHAL"
-                          height="50"
-                        >
+                        <v-img src="/public/assets/icons8-linkedin.svg" alt="HEMHAL" height="50">
                         </v-img>
                       </v-col>
                     </v-row>
@@ -175,65 +122,27 @@
                   </v-col>
 
                   <v-col>
-                      <v-text-field
-                      density="compact"
-                      autofocus="true"
-                        label="fullName"
-                        name="fullName"
-                        v-model="user.fullName"
-                        prepend-icon="mdi-human"
-                        type="text"
-                        variant="underlined"
-                        class="text-lime-darken-3"
-                      >
-                      </v-text-field>
-                      <v-text-field
-                      density="compact"
-                        label="email"
-                        name="email"
-                        v-model="user.email"
-                        prepend-icon="mdi-email"
-                        type="text"
-                        variant="underlined"
-                        class="text-lime-darken-3"
-                        :error-messages="errorMessageWrongPassword"
-                      >
-                      </v-text-field>
-                      <v-text-field
-                      density="compact"
-                        v-model="user.password"
-                        label="password"
-                        id="password"
-                        name="password"
-                        prepend-icon="mdi-lock"
-                        type="password"
-                        variant="underlined"
-                        class="text-lime-darken-3"
-                      ></v-text-field>
-                      <v-text-field
-                      density="compact"
-                        label="passwordcheck"
-                        v-model="user.passwordcheck"
-                        id="passwordcheck"
-                        name="password"
-                        prepend-icon="mdi-lock"
-                        type="password"
-                        variant="underlined"
-                        class="text-lime-darken-3"
-                        :error-messages="errorPasswordCheck"
-                      ></v-text-field>
+                    <v-text-field density="compact" :autofocus="true" label="fullName" name="fullName"
+                      v-model="user.fullName" prepend-icon="mdi-human" type="text" variant="underlined"
+                      class="text-lime-darken-3">
+                    </v-text-field>
+                    <v-text-field density="compact" label="email" name="email" v-model="user.email"
+                      prepend-icon="mdi-email" type="text" variant="underlined" class="text-lime-darken-3"
+                      :error-messages="errorMessageWrongPassword">
+                    </v-text-field>
+                    <v-text-field density="compact" v-model="user.password" label="password" id="password" name="password"
+                      prepend-icon="mdi-lock" type="password" variant="underlined"
+                      class="text-lime-darken-3"></v-text-field>
+                    <v-text-field density="compact" label="passwordcheck" v-model="user.passwordcheck" id="passwordcheck"
+                      name="password" prepend-icon="mdi-lock" type="password" variant="underlined"
+                      class="text-lime-darken-3" :error-messages="errorPasswordCheck"></v-text-field>
                   </v-col>
                   <v-col class="text-red-darken-3 ml-10">
                     {{ msg }}
                   </v-col>
                   <v-col>
                     <v-row class="d-flex justify-center">
-                      <v-btn
-                        rounded
-                        class="mt-2 bg-lime-darken-1"
-                        @click="registerNewUser()"
-                        >SING UP</v-btn
-                      >
+                      <v-btn rounded class="mt-2 bg-lime-darken-1" @click="registerNewUser()">SING UP</v-btn>
                     </v-row>
                   </v-col>
                 </v-card-text>
@@ -268,8 +177,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   AuthErrorCodes,
-updateProfile,
-updateEmail,
+  updateProfile,
+  updateEmail,
 } from "firebase/auth";
 import { anyTypeAnnotation } from "@babel/types";
 
@@ -305,8 +214,8 @@ export default defineComponent({
       console.log(this.getUserList)
       if (newVal) {
         console.log(newVal, oldVal, "WATCH");
-        
-      
+
+
       }
     },
   },
@@ -323,7 +232,7 @@ export default defineComponent({
       this.currentUser = this.getUserList.filter(
         (x: any) => x.email == user.email
       );
-          console.log(this.currentUser, "SUANKİ KULLANICI")
+      console.log(this.currentUser, "SUANKİ KULLANICI")
       const auth = getAuth();
       signInWithEmailAndPassword(auth, this.user.email, this.user.password)
         .then((res: any) => {
@@ -331,39 +240,40 @@ export default defineComponent({
           let token: string = res.user.ma;
           let userId: string = res.user.uid;
           //let userAdminStatus: any = this.currentUser;
-          let adminInfo: string =this.currentUser[0].fullName.toLocaleUpperCase();
+          let adminInfo: string = this.currentUser[0].fullName.toLocaleUpperCase();
           localStorage.setItem("adminInfo", adminInfo);
           localStorage.setItem("token", token);
           localStorage.setItem("userId", userId);
           //localStorage.setItem("userAdminStatus", userAdminStatus);
-          this.setNewTokenStatus(true);
-          this.setNewToken(true);
+          // this.setNewTokenStatus(true);
+          // this.setNewToken(true);
           // localStorage.removeItem("pm2tokenstatus");
           // localStorage.removeItem("pm2token");
 
           //admin adresini getir:::
-          this.status = true;
-          localStorage.setItem("getUserTokenStatus", this.status); 
+
           // console.log(this.currentUser.filter((x:any) => x.isAdmin == true).isAdmin, "CURRENT ADMIN")
           // console.log(this.currentUser[0].isAdmin, "ALL")
           // console.log(res, "OOO")
-         
+
           if (this.currentUser[0].isAdmin == false) {
             this.$router.push("/")
           } else {
+            this.status = true;
+            localStorage.setItem("getUserTokenStatus", this.status);
             this.$router.push("/dashboard");
           }
         })
         .catch((error: any) => {
           const errorCode = error.code;
-          const errorMessage = error.message; 
+          const errorMessage = error.message;
           if (
             errorCode == "auth/user-not-found" &&
             errorCode == "auth/invalid-email"
           ) {
             this.errorMessageWrongEmail = "Lütfen Mailinizi Kontrol Edin !!";
           } else if (errorCode == "auth/wrong-password") {
-           
+
             this.errorMessageWrongPassword = "Lütfen Şifrenizi Kontrol Edin !!";
           }
           console.log(errorCode);
@@ -415,12 +325,15 @@ export default defineComponent({
 .color5 {
   background-color: #847577;
 }
+
 .color4 {
   background-color: #e3d5ca;
 }
+
 .color3 {
   background-color: #d6ccc2;
 }
+
 .color2 {
   background-color: rgb(236, 218, 193);
 }

@@ -13,6 +13,8 @@ const routes = [
     path: "/product",
     meta: {
       requiresAuth: false,
+      isFooterShow: true,
+      isHeaderShow:true,
     },
     component: () => import("../views/ProductView.vue"),
     children: [
@@ -34,6 +36,8 @@ const routes = [
     props: true,
     meta: {
       requiresAuth: false,
+      isFooterShow: true,
+      isHeaderShow:true,
     },
     component: () => import("../components/anasayfa.vue"),
   },
@@ -43,13 +47,21 @@ const routes = [
     props: true,
     meta: {
       requiresAuth: true,
+      isFooterShow: false,
+      isHeaderShow:false,
     },
     component: () => import("../components/AdminPages/dashboard.vue"),
     children: [
+       
       {
-        name: "adminsidenav",
-        path: "/adminsidenav",
-        component: () => import("../components/AdminPages/adminsidenav.vue"),
+        path: "",
+        name: "dashboardroot",
+        redirect: { name: "hemhallist" }
+      },
+      {
+        path: ":any",
+        name: "dashboardblankroot",
+        redirect: { name: "hemhallist" }
       },
       {
         name: "editproduct",
@@ -57,16 +69,19 @@ const routes = [
         component: () => import("../components/AdminPages/editProduct.vue"),
       },
       {
-        name: "productlist",
-        path: "/productlist",
-        component: () => import("../components/AdminPages/productlist.vue"),
+        name: "hemhallist",
+        path: "/hemhallist",
+        component: () => import("../components/AdminPages/hemhallist.vue"),
       },
       {
         name: "userspage",
         path: "/userspage",
+        meta: {
+          isFooterShow: false,
+          isHeaderShow:false,
+        },
         component: () => import("../components/AdminPages/userspage.vue"),
       },
-      
     ]
   
   },
@@ -76,6 +91,8 @@ const routes = [
     props: true,
     meta: {
       requiresAuth: false,
+      isFooterShow: false,
+      isHeaderShow:false,
     },
     component: () => import("../components/AdminPages/loginPage.vue"),
   },
@@ -85,6 +102,8 @@ const routes = [
     props: true,
     meta: {
       requiresAuth: false,
+      isFooterShow: true,
+      isHeaderShow:true,
     },
     component: () => import("../components/footer/footer.vue"),
   },
@@ -94,6 +113,8 @@ const routes = [
     props: true,
     meta: {
       requiresAuth: false,
+      isFooterShow: true,
+      isHeaderShow:true,
     },
     component: () => import("../components/BasketComp.vue"),
   },
@@ -103,6 +124,8 @@ const routes = [
     props: true,
     meta: {
       requiresAuth: false,
+      isFooterShow: true,
+      isHeaderShow:true,
     },
     component: () => import("../components/UserFavorite.vue"),
   },

@@ -12,13 +12,15 @@ import {
   where
 } from "firebase/firestore";
 import db from "../firebase";
-
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   AuthErrorCodes,
+  updateProfile,
+  updateEmail,
 } from "firebase/auth";
+
 
 const loadFromStorage = (key: string, defaultValue: any): any => {
   const item = localStorage.getItem(key);

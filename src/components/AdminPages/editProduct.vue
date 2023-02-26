@@ -1,10 +1,25 @@
 <template>
-    <v-container>
-        <v-col class="bg-red">
-        edit product
+  <v-col class=" color3">
+    <v-col>
+      <v-row>
+        <v-text-field :autofocus="true" label="name" name="name" type="text" variant="underlined">
+        </v-text-field>
+        <v-text-field label="price" name="price" type="text" variant="underlined">
+        </v-text-field>
+        <v-text-field label="rating" name="rating" type="text" variant="underlined">
+        </v-text-field>
+      </v-row>
+      <v-row>
+        <v-text-field label="name" name="name" type="text" variant="underlined">
+        </v-text-field>
+        <v-text-field label="price" name="price" type="text" variant="underlined">
+        </v-text-field>
+        <v-text-field label="rating" name="rating" type="text" variant="underlined">
+        </v-text-field>
+     </v-row>
+
     </v-col>
-    </v-container>
-    
+  </v-col>
 </template>
 
 
@@ -15,11 +30,11 @@ import { useProductStore } from "../../store/useProductStore";
 
 
 export default defineComponent({
-  components: { },
+  components: {},
   name: "editproduct",
   data: () => ({
-    
+
   }),
-  
+
 });
 </script>

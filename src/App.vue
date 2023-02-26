@@ -1,25 +1,27 @@
 <template>
-  <kayanyazi class="w-100"></kayanyazi>
-  <v-layout class="container">
-    <v-col >
-      <v-row>
-        <LoginPage v-if="$route.name == 'loginpage'"></LoginPage>
-        <v-main v-else="$route.name != 'loginpage'" style="height: auto">
-          <NavbarComp/>
-          <router-view v-slot="{ Component }" >
-            <keep-alive>
+  <router-view v-slot="{ Component }">
+    <kayanyazi  v-if="$route.meta.isHeaderShow"  class="w-100"></kayanyazi>
+    <v-layout v-bind:class="getContainer()">
+      <v-col>
+        <v-row>
+          <v-main style="height: auto">
+            <NavbarComp  v-if="$route.meta.isHeaderShow" />
+            <keep-alive >
               <component :is="Component" />
             </keep-alive>
-          </router-view>
-          <footerr></footerr>
-        </v-main>
-      </v-row>
-    </v-col>
-  </v-layout>
-  <br />
+            <footerr v-if="$route.meta.isFooterShow"></footerr>
+          </v-main>
+        </v-row>
+      </v-col>
+    </v-layout>
+    <br />
+  </router-view>
 </template>
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
+import { useProductStore } from "./store/useProductStore";
+import { mapActions, mapState, } from "pinia";
+
 
 //componentler
 import loginPage from "./components/AdminPages/loginPage.vue";
@@ -31,6 +33,8 @@ import footerr from "./components/footer/footer.vue";
 import leftBarVue from "./components/headerComp/leftBar.vue";
 import burgerMenu from "./components/headerComp/burgerMenu.vue";
 import LoginPage from "./components/AdminPages/loginPage.vue";
+import AdminSideNav from "./components/AdminPages/adminSideNav.vue";
+
 export default defineComponent({
   components: {
     kayanyazi,
@@ -41,26 +45,55 @@ export default defineComponent({
     burgerMenu,
     LoginPage,
     dashboard,
+    AdminSideNav
   },
   data() {
     return {
       navOpen: false,
       drawer: true,
+      usertoken: this.getUserTokenStatus,
     };
+  },
+  computed: {
+    ...mapState(useProductStore, ["getUserTokenStatus", "getUserList"]),
+  },
+  methods:{
+getContainer(){
+  return  {
+    'container' : this.$route.meta.isHeaderShow,
+    'adminPgaes': !this.$route.meta.isHeaderShow
+  }
+}
+  },
+
+  watch: {
+    getUserTokenStatus(newVal, oldVal) {
+      if (newVal) {
+        console.log(newVal, oldVal);
+      }
+    },
   },
 });
 </script>
+
+
+
+
 
 <style lang="css">
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0, 3s;
 }
+
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
 }
-
+.adminPgaes{
+margin: 0px;
+padding: 0px;
+}
 @media screen and (min-width: 1280px) {
   body .leftBar {
     display: none;
@@ -69,12 +102,14 @@ export default defineComponent({
     padding-top: 60px;
   }
 }
+
 @media screen and (max-width: 2500px) {
   body .container {
     margin-left: 150px;
     margin-right: 150px;
   }
 }
+
 @media screen and (max-width: 2000px) {
   body .container {
     margin-left: 120px;
@@ -89,35 +124,41 @@ export default defineComponent({
     margin-right: 100px;
   }
 }
+
 @media screen and (max-width: 1300px) {
   body .container {
     margin-left: 100px;
     margin-right: 100px;
   }
 }
+
 @media screen and (max-width: 1000px) {
   body .container {
     margin-left: 110px;
     margin-right: 110px;
   }
 }
+
 @media screen and (max-width: 750px) {
   body .container {
     margin-left: 90px;
     margin-right: 90px;
   }
 }
+
 @media screen and (max-width: 500px) {
   body .container {
     margin-left: 40px;
     margin-right: 40px;
   }
 }
+
 .container {
   margin-left: 100px;
   margin-right: 100px;
   overflow: auto;
 }
+
 .hemhalcolor {
   text-decoration-color: rgb(192, 219, 18);
   /* text-decoration: rgb(192, 219, 18); */

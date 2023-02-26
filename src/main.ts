@@ -18,6 +18,7 @@ const firebaseConfig = {
   measurementId: "G-NRHYZ6GQNC"
 };
 
+
 firebase.initializeApp(firebaseConfig);
 const pinia = createPinia()
 const app = createApp(App)
@@ -26,6 +27,7 @@ app.use(VueUniversalModal, {
     teleportTarget: '#my-modals',
     modalComponent: 'MyModal',
   })
+  
 app.use(pinia)
 app.use(vuetify)
 app.use(router)

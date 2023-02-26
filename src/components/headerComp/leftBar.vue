@@ -9,7 +9,7 @@
       elevation="0"
         v-model="drawer"
         width="200"
-        temporary
+        permanent
         app
         flat
         fixed
