@@ -44,6 +44,7 @@ export const useProductStore = defineStore("product", {
 
       token:  localStorage.getItem("pm2token") ?? (false as any),
       tokenStatus: localStorage.getItem("pm2tokenstatus") ?? (false as any),
+      hemhalPorductDENEME: [] as Array<Product>,
       productHemhal: [] as Array<Product>,
       admin:[] as any,
       currentAdmin: {} as any,
@@ -111,11 +112,32 @@ export const useProductStore = defineStore("product", {
       this.token = newToken;
       localStorage.setItem("pm2token", this.token);
     },
-    async setProductHemdal(){
+    async setProductHemdal(hemhalProduct:Product){
+      // const colRef = collection(db, "product");
+      // const dataObj = this.productHemhal;
+      // const docRef = await addDoc(colRef, dataObj);
+      // console.log("STORE CREATED USAR ID:", docRef);
+      /////////////////
+      // const querySnap = await getDocs(query(collection(db, "product")));
+      // querySnap.forEach((doc) => {
+      //   this.productHemhal.push(doc.data());
+      //   console.log(this.productHemhal, "HEMHAL LİSTE")
+      // });
+      console.log(hemhalProduct, "ne geldi stora")
       const colRef = collection(db, "product");
-      const dataObj = this.productHemhal;
+      //console.log(user, "STORE USER PROP")
+      const dataObj = {
+        name: hemhalProduct.name,
+        price: hemhalProduct.price,
+        title: hemhalProduct.title,
+        category: hemhalProduct.category,  
+        quantity: hemhalProduct.quantity,
+        rating: hemhalProduct.rating,
+        images: hemhalProduct.images
+      
+      };
       const docRef = await addDoc(colRef, dataObj);
-      console.log("STORE CREATED USAR ID:", docRef);
+      console.log("STORE CREATED USAR ID:", docRef.id);
     },
     async getAdmin() {
       //const docSnap = await getDoc(doc(db, "admin", "27n5F5jC8z9Pf0v59eLw"));
@@ -150,7 +172,7 @@ export const useProductStore = defineStore("product", {
         isAdmin: false,
       };
       const docRef = await addDoc(colRef, dataObj);
-      //console.log("STORE CREATED USAR ID:", docRef);
+      //console.log("STORE CREATED USAR ID:", docRef.id);
     },
     //data apı aul ile cekildi!!!
     async getProductAction() {

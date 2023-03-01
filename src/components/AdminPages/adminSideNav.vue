@@ -15,43 +15,7 @@
             @click="$router.push(item.name)"></v-list-item>
         </v-list>
       </v-navigation-drawer>
-      <!-- <v-main class="bg-lime-darken-4" :style="{height: 1000}">
-            <v-row>
-              <v-col cols="3" style="height: 20vh">
-                <v-img class="ımg d-flex justify-center" src="/public/assets/hemhalLOGO2.jpeg" alt="HEMHAL" cover>
-                </v-img>
-              </v-col>
-              <v-spacer></v-spacer>
-              <v-col cols="4">
-                <v-card-text class="mt-4 text-center">
-                  <v-row>
-                    <v-col cols="12">
-                      <h1 class="text-h3">Welcome Back !</h1>
-                    </v-col>
-                  </v-row>
-                  <v-row>
-                    <v-col cols="6">
-                      <h3 class="text-center text-h7">
-                        <span> {{ admin }} </span>
-                      </h3>
-                    </v-col>
-                    <v-col cols="6">
-                      <v-btn variant="text" class="text-black bg-lime-darken-1" @click="LogOut()">
-                        LogOut</v-btn>
-                    </v-col>
-                  </v-row>
-                </v-card-text>
-              </v-col>
-            </v-row>
-            <v-divider></v-divider>
-            <v-col>
-              <v-row>
-                <v-col>
-                  <router-view></router-view>
-                </v-col>
-              </v-row>
-            </v-col>
-          </v-main> -->
+   
     </v-row>
   </v-col>
 </template>
