@@ -1,7 +1,7 @@
 <template>
   <div>
     <router-view></router-view>
-    <product-list :getProductGetters="getProductGetters" />
+    <product-list :getProductHemhal="getProductHemhal" />
   </div>
 </template>
 <script lang="ts">
@@ -21,7 +21,7 @@ export default defineComponent({
   },
   computed: {
     //pinia da mapgetters yok o yuzden getter verisi olan getProduct ...mapstate ile cagırılıyor.
-    ...mapState(useProductStore, ["getProductGetters"]),
+    ...mapState(useProductStore, ["getProductHemhal"]),
   },
 
   methods: {

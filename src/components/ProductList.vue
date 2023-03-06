@@ -49,7 +49,7 @@
           </v-row>
         </v-col>
 
-        <v-col v-else v-for="(pro, i) in getProductGetters" :key="i">
+        <v-col v-else v-for="(pro, i) in getProductHemhal" :key="i">
           <v-hover v-slot="{ isHovering, props }">
             <v-card
               :elevation="isHovering ? 6 : 2"
@@ -119,7 +119,7 @@ export default defineComponent({
   name: "ProductList",
 
   props: {
-    getProductGetters: {
+    getProductHemhal: {
       type: Object as PropType<Product>,
     },
   },
