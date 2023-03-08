@@ -108,7 +108,6 @@
         <v-spacer></v-spacer>
         <v-btn class="color3" @click="addProduct"> yeni ürün </v-btn>
       </v-row>
-    
     </v-col>
   </v-col>
 </template>
@@ -118,13 +117,13 @@ import { defineComponent } from "vue";
 import { mapState, mapActions } from "pinia";
 import { useProductStore } from "../../store/useProductStore";
 import storage from "../../firebase";
-import { getStorage, ref, uploadBytes,getDownloadURL } from "firebase/storage";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export default defineComponent({
   components: {},
   name: "editproduct",
   data: () => ({
-    url:"",
+    url: "",
     facepaths: Array<String>(),
     file: Array<File>() || undefined,
     imagePath: Array<File>(),
@@ -144,17 +143,11 @@ export default defineComponent({
   },
   methods: {
     ...mapActions(useProductStore, ["setProductHemdal"]),
-   
-  
-      //const storageRef = ref(storage, 'folder/ image.jpeg');
-      // uploadBytes(storageRef, this.$refs.myfile.files[0]).then((snapshot) => {
-      //   console.log("upload")
-      // }) 
-       onFileSelect(file: any) {
+    onFileSelect(file: any) {
       let files = [...file.target.files];
       files.forEach((photo) => {
         this.fileList.push(photo);
-        this.i.push(URL.createObjectURL(photo));
+        this.filePath.push(URL.createObjectURL(photo));
         this.ProfilePhoto = this.filePath[0];
         console.log(this.filePath, "filePath");
         console.log(this.fileList, "fileList");
@@ -168,8 +161,7 @@ export default defineComponent({
       console.log(this.hemhalProduct, "EDİT PAGE PRODUCT");
       this.setProductHemdal(this.hemhalProduct);
     },
-    },
- 
+  },
 });
 </script>
 
