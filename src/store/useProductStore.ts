@@ -45,7 +45,7 @@ export const useProductStore = defineStore("product", {
       token:  localStorage.getItem("pm2token") ?? (false as any),
       tokenStatus: localStorage.getItem("pm2tokenstatus") ?? (false as any),
       hemhalPorductDENEME: [] as Array<Product>,
-      productHemhal: [] as Array<Product>,
+      productHemhal: [] as any,
       admin:[] as any,
       currentAdmin: {} as any,
       userList: [] as any,
@@ -112,6 +112,26 @@ export const useProductStore = defineStore("product", {
       this.token = newToken;
       localStorage.setItem("pm2token", this.token);
     },
+
+    async getProduct(){
+      const querySnap = await getDocs(query(collection(db, "product")));
+      querySnap.forEach((doc) => {
+        this.productHemhal.push(doc.data());
+      });
+      console.log(this.product, "STORA ÜRÜN LİSTESİ")
+    },
+
+    async getProductAction() {
+      await axios
+        .get("https://api.escuelajs.co/api/v1/products?offset=0&limit=70")
+        .then((product) => {
+          this.product = product.data;
+          //quantity entrübütü yoktu gelen data da ekledim.
+          this.product.forEach((x: any) => {
+            x.quantity = 0;
+          });
+        });
+    },
     async setProductHemdal(hemhalProduct:Product){
       // const colRef = collection(db, "product");
       // const dataObj = this.productHemhal;
@@ -155,13 +175,15 @@ export const useProductStore = defineStore("product", {
         this.userList.push(doc.data());
       });
       //ilki js şkinci filtreleme firebase methodu
-      //   this.admin = this.userList.filter((admin: any) =>  admin.isAdmin == true );
-      // console.log(this.admin, "ADMİN");
-      const filterAdmin = query(collection(db, 'users'), where('isAdmin', '==', 'true'))
-      const querySnapp = await getDocs(filterAdmin)
-      querySnapp.forEach((doc) => {
-        this.admin.push(doc.data())
-      })
+        this.admin = this.userList.filter((admin: any) =>  admin.isAdmin == true );
+      console.log(this.admin, "ADMİN");
+//       const filterAdmin = query(collection(db, 'users'), where('isAdmin', '==', 'true'))
+//       const querySnapp = await getDocs(filterAdmin)
+//       querySnapp.forEach((doc) => {
+//  this.admin.push(doc.data())
+//       })
+//       debugger
+//       console.log(this.admin, "ADMİN STORE DA")
     },
 
 //yeni user eklendikten sonra collectiona ekler bu func. conle yazınca calıstı :)
@@ -177,17 +199,7 @@ export const useProductStore = defineStore("product", {
       //console.log("STORE CREATED USAR ID:", docRef.id);
     },
     //data apı aul ile cekildi!!!
-    async getProductAction() {
-      await axios
-        .get("https://api.escuelajs.co/api/v1/products?offset=0&limit=70")
-        .then((product) => {
-          this.product = product.data;
-          //quantity entrübütü yoktu gelen data da ekledim.
-          this.product.forEach((x: any) => {
-            x.quantity = 0;
-          });
-        });
-    },
+   
     setfilter(catName: string) {
       this.filterCategory = this.getProductGetters.filter(
         (x) => x.category.name == catName

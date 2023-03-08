@@ -33,7 +33,7 @@
       <v-row class="mb-4">
         <v-btn class="color3" @click="onButtonClick"> IMG EKLE </v-btn>
       </v-row>
-
+    
       <v-row>
         <v-col>
           <v-text-field

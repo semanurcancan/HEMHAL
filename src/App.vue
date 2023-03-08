@@ -59,6 +59,7 @@ export default defineComponent({
   },
   created(){
     this.getAdmin();
+    this.getProduct();
   },
   methods:{
 getContainer(){
@@ -70,6 +71,7 @@ getContainer(){
 ...mapActions(useProductStore, [
       "createUser",
       "getAdmin",
+      "getProduct",
       "setNewTokenStatus",
       "setNewToken",
 
