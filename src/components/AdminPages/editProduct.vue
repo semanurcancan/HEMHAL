@@ -12,13 +12,14 @@
           ></v-img>
         </v-col>
       </v-row>
+
       <v-row>
         <v-col class="text-center" cols="1">
           <v-file-input
             class="d-none"
             type="file"
             ref="uploader"
-            accept="image/png, image/jpeg, image/bmp"
+            accept="image/*"
             prepend-inner-icon="mdi-camera"
             label="HEMHEL IMG"
             variant="outlined"
@@ -26,14 +27,13 @@
             hide-details
             @change="onFileSelect"
             density="compact"
-            hide-input
           ></v-file-input>
         </v-col>
       </v-row>
       <v-row class="mb-4">
         <v-btn class="color3" @click="onButtonClick"> IMG EKLE </v-btn>
       </v-row>
-    
+
       <v-row>
         <v-col>
           <v-text-field
@@ -105,6 +105,8 @@
       </v-row>
 
       <v-row>
+        <p>{{ uploadValue.toFixed() + "%" }}</p>
+        <v-progress-linear :value="uploadValue"></v-progress-linear>
         <v-spacer></v-spacer>
         <v-btn class="color3" @click="addProduct"> yeni ürün </v-btn>
       </v-row>
@@ -117,7 +119,14 @@ import { defineComponent } from "vue";
 import { mapState, mapActions } from "pinia";
 import { useProductStore } from "../../store/useProductStore";
 import storage from "../../firebase";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import db from "../../firebase";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  uploadBytes,
+  getDownloadURL,
+} from "firebase/storage";
 
 export default defineComponent({
   components: {},
@@ -137,25 +146,49 @@ export default defineComponent({
       { text: "Aroma Terapi", value: 1 },
       { text: "Saç Bakım", value: 2 },
     ],
+
+    uploadValue: 0,
+    picture: null,
+    imageData: null as any,
   }),
   computed: {
     ...mapState(useProductStore, ["getProductHemhal"]),
   },
   methods: {
     ...mapActions(useProductStore, ["setProductHemdal"]),
+    //     prewievİmage(file: any) {
+    //       this.uploadValue = 0;
+    //       this.picture = null;
+    //       this.imageData = file.target.files[0];
+    //       console.log("girfdi")
+    //     },
+    //     onUpload() {
+    //       const storage = getStorage();
+    //       const storageRef = storage.ref( `${this.imageData.name}`).put(this.imageData);
+    //       storageRef.on('state_changed', (snapshot:any) =>{
+    // this.uploadValue = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
+    //       }, (error:any) => {console.log(error)},
+    //       () => {this.uploadValue = 100;
+    //       storageRef.snapshot.ref.getDownloadURL().then((url:any) => {
+    //         this.picture = url
+    //       })}
+    //       )
+    //       //this.picture = null,
+    //     },
+
+    //onchange metods
     onFileSelect(file: any) {
       let files = [...file.target.files];
       files.forEach((photo) => {
         this.fileList.push(photo);
         this.filePath.push(URL.createObjectURL(photo));
         this.ProfilePhoto = this.filePath[0];
-        console.log(this.filePath, "filePath");
-        console.log(this.fileList, "fileList");
       });
     },
     onButtonClick() {
       (this.$refs.uploader as InstanceType<any>).click();
     },
+    // kaydet butonu
     addProduct() {
       this.hemhalProduct.images = this.filePath;
       console.log(this.hemhalProduct, "EDİT PAGE PRODUCT");

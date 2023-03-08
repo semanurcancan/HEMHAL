@@ -112,7 +112,7 @@ export const useProductStore = defineStore("product", {
       this.token = newToken;
       localStorage.setItem("pm2token", this.token);
     },
-
+//get product
     async getProduct(){
       const querySnap = await getDocs(query(collection(db, "product")));
       querySnap.forEach((doc) => {
@@ -120,18 +120,7 @@ export const useProductStore = defineStore("product", {
       });
       console.log(this.product, "STORA ÜRÜN LİSTESİ")
     },
-
-    async getProductAction() {
-      await axios
-        .get("https://api.escuelajs.co/api/v1/products?offset=0&limit=70")
-        .then((product) => {
-          this.product = product.data;
-          //quantity entrübütü yoktu gelen data da ekledim.
-          this.product.forEach((x: any) => {
-            x.quantity = 0;
-          });
-        });
-    },
+//post Product
     async setProductHemdal(hemhalProduct:Product){
       // const colRef = collection(db, "product");
       // const dataObj = this.productHemhal;
@@ -200,6 +189,18 @@ export const useProductStore = defineStore("product", {
     },
     //data apı aul ile cekildi!!!
    
+    
+    async getProductAction() {
+      await axios
+        .get("https://api.escuelajs.co/api/v1/products?offset=0&limit=70")
+        .then((product) => {
+          this.product = product.data;
+          //quantity entrübütü yoktu gelen data da ekledim.
+          this.product.forEach((x: any) => {
+            x.quantity = 0;
+          });
+        });
+    },
     setfilter(catName: string) {
       this.filterCategory = this.getProductGetters.filter(
         (x) => x.category.name == catName
