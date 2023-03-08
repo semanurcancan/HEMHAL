@@ -34,54 +34,6 @@
         <router-view></router-view>
       </v-col>
     </v-row>
-
-
-
-
-    <!-- <v-row class="ma-4" style="width: 100vh">
-      <v-col class="bg-lime-darken-3">
-        <v-card-text class="mt-12 text-center">
-          <h1 class="text-h3">Welcome Back !</h1>
-          <h5 class="text-center text-h7">
-            <span> {{}} </span>
-          </h5>
-        </v-card-text>
-      </v-col>
-
-      <v-col cols="12" md="8" class="bg-lime-lighten-5">
-        <v-card-text class="mt-12">
-          <v-col>
-            <v-form>
-              <v-text-field
-                label="name"
-                name="name"
-                v-model="product.name"
-                type="text"
-                variant="underlined"
-                class="text-lime-darken-3"
-              >
-              </v-text-field>
-
-              <v-text-field
-                label="quantity"
-                v-model="product.quantity"
-                id="quantity"
-                name="quantity"
-                type="text"
-                variant="underlined"
-                class="text-lime-darken-3"
-              ></v-text-field>
-            </v-form>
-          </v-col>
-
-          <v-col>
-            <v-row class="d-flex justify-center">
-              <v-btn rounded class="mt-2 bg-lime-darken-1">SING UP</v-btn>
-            </v-row>
-          </v-col>
-        </v-card-text>
-      </v-col>
-    </v-row> -->
   </v-col>
 </template>
 

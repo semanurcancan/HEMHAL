@@ -228,7 +228,7 @@ export default defineComponent({
     ]),
     registerAlreadyUser(user: any) {
       this.admin = this.getAdminInfo;
-      console.log(this.getUserList, "TÜM KULLANICILAR");
+      console.log(this.getUserList, "TÜM fgvfgfg");
       this.currentUser = this.getUserList.filter(
         (x: any) => x.email == user.email
       );

@@ -1,26 +1,62 @@
 <template>
-    <v-container>
-        <v-col class=" color2">
-       USERS PAGE
-    </v-col>
-    </v-container>
+  <v-col>
+        <v-table  class=" bg-grey-lighten-3 ">
+    <thead>
+      <tr>
+        <th class="text-left text-h6 text-disabled ">
+          Name
+        </th>
+        <th class="text-left text-disabled text-h6">
+          Email
+        </th>
+        <th class="text-left text-h6 text-disabled">
+          Status
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+      v-for="(item, index) in getUserList" :key="index"
+      >
+        <td>{{ item.fullName }}</td>
+        <td>{{ item.email }}</td>
+        <td>{{ item.isAdmin }}</td>
+      </tr>
+    </tbody>
+  </v-table>
+
     
+  </v-col>
 </template>
 
-
 <script lang="ts">
-import { defineComponent, } from "vue";
+import { defineComponent } from "vue";
 import { mapState, mapActions } from "pinia";
 import { useProductStore } from "../../store/useProductStore";
 
-
 export default defineComponent({
-  components: { },
+  components: {},
   name: "userspage",
   data: () => ({
-    
+    userList: [] as any,
   }),
-  
+  computed: {
+    ...mapState(useProductStore, ["getUserList"]),
+  },
+  mounted() {
+    console.log(this.getUserList, "USERLIST");
+  },
+  methods: {
+    ...mapActions(useProductStore, ["setProductHemdal"]),
+    // userGet(index:any){
+    //   this.userList = this.getUserList[index]
+    // }
+  },
+  watch: {
+    getUserList() {
+      console.log(this.getUserList, "aaa");
+    },
+  },
 });
 </script>
 <style scoped>

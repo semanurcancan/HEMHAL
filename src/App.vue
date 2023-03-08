@@ -57,13 +57,23 @@ export default defineComponent({
   computed: {
     ...mapState(useProductStore, ["getUserTokenStatus", "getUserList"]),
   },
+  created(){
+    this.getAdmin();
+  },
   methods:{
 getContainer(){
   return  {
     'container' : this.$route.meta.isHeaderShow,
-    'adminPgaes': !this.$route.meta.isHeaderShow
+    'adminPages': !this.$route.meta.isHeaderShow
   }
-}
+},
+...mapActions(useProductStore, [
+      "createUser",
+      "getAdmin",
+      "setNewTokenStatus",
+      "setNewToken",
+
+    ]),
   },
 
   watch: {
@@ -90,7 +100,7 @@ getContainer(){
 .fade-leave-to {
   opacity: 0;
 }
-.adminPgaes{
+.adminPages{
 margin: 0px;
 padding: 0px;
 }

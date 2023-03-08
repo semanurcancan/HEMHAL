@@ -1,15 +1,18 @@
 <template>
   <v-col class="bg-grey-lighten-3">
-    <v-col>
+    <v-col class="mt-4 mb-4">
       <v-row>
-        <v-col cols="2">
+        <v-col cols="2" v-for="(image, index) in filePath" :key="index">
           <v-img
             class="bg-white mx-auto my-auto"
             :aspect-ratio="1"
+            width="150"
             cover
-            :src="ProfilePhoto ? ProfilePhoto : '/public/assets/besleyiciMerhem.jpeg'"
+            :src="image"
           ></v-img>
         </v-col>
+      </v-row>
+      <v-row>
         <v-col class="text-center" cols="1">
           <v-file-input
             class="d-none"
@@ -25,14 +28,12 @@
             density="compact"
             hide-input
           ></v-file-input>
-          <v-btn class="bg-lime-darken-1" @click="onButtonClick">
-            IMG EKLE
-          </v-btn>
         </v-col>
-        <!-- <v-col cols="8">
-          <img :src="fileList.name" alt="">
-        </v-col> -->
       </v-row>
+      <v-row class="mb-4">
+        <v-btn class="color3" @click="onButtonClick"> IMG EKLE </v-btn>
+      </v-row>
+
       <v-row>
         <v-col>
           <v-text-field
@@ -102,9 +103,12 @@
           </v-text-field>
         </v-col>
       </v-row>
+
       <v-row>
-        <v-btn class="bg-lime-darken-1" @click="addProduct"> yeni ürün </v-btn>
+        <v-spacer></v-spacer>
+        <v-btn class="color3" @click="addProduct"> yeni ürün </v-btn>
       </v-row>
+    
     </v-col>
   </v-col>
 </template>
@@ -113,11 +117,15 @@
 import { defineComponent } from "vue";
 import { mapState, mapActions } from "pinia";
 import { useProductStore } from "../../store/useProductStore";
+import storage from "../../firebase";
+import { getStorage, ref, uploadBytes,getDownloadURL } from "firebase/storage";
 
 export default defineComponent({
   components: {},
   name: "editproduct",
   data: () => ({
+    url:"",
+    facepaths: Array<String>(),
     file: Array<File>() || undefined,
     imagePath: Array<File>(),
     dataPaths: null as any,
@@ -136,34 +144,53 @@ export default defineComponent({
   },
   methods: {
     ...mapActions(useProductStore, ["setProductHemdal"]),
-
-    onFileSelect(file: any) {
+   
+  
+      //const storageRef = ref(storage, 'folder/ image.jpeg');
+      // uploadBytes(storageRef, this.$refs.myfile.files[0]).then((snapshot) => {
+      //   console.log("upload")
+      // }) 
+       onFileSelect(file: any) {
       let files = [...file.target.files];
       files.forEach((photo) => {
         this.fileList.push(photo);
-        this.filePath.push(URL.createObjectURL(photo));
-        this.imagePath.push(photo);
-        this.ProfilePhoto = this.filePath[0]
-        console.log(this.fileList, "FİLELİST")
-        console.log(this.imagePath, "imagePath")
-        console.log(this.filePath, "filePath")
-        // setTimeout(() => {
-        //   this.isSelecting = false;
-        // }, 750);
+        this.i.push(URL.createObjectURL(photo));
+        this.ProfilePhoto = this.filePath[0];
+        console.log(this.filePath, "filePath");
+        console.log(this.fileList, "fileList");
       });
-      // if (file) {
-      //   console.log(this.filePath, "FİLEPATH")
-      //   this.filePath = URL.createObjectURL(file.target.files[0]);
-      //   this.fileList = file.target.files[0];
-      // }
     },
     onButtonClick() {
       (this.$refs.uploader as InstanceType<any>).click();
     },
     addProduct() {
+      this.hemhalProduct.images = this.filePath;
       console.log(this.hemhalProduct, "EDİT PAGE PRODUCT");
       this.setProductHemdal(this.hemhalProduct);
     },
-  },
+    },
+ 
 });
 </script>
+
+<style scoped>
+.color5 {
+  background-color: #847577;
+}
+
+.color4 {
+  background-color: #e3d5ca;
+}
+
+.color3 {
+  background-color: #d6ccc2;
+}
+
+.color2 {
+  background-color: rgb(236, 218, 193);
+}
+
+.color1 {
+  background-color: rgb(192, 174, 150);
+}
+</style>

@@ -123,7 +123,7 @@ export const useProductStore = defineStore("product", {
       //   this.productHemhal.push(doc.data());
       //   console.log(this.productHemhal, "HEMHAL LİSTE")
       // });
-      console.log(hemhalProduct, "ne geldi stora")
+      console.log(hemhalProduct, "ne geldi STORAAA")
       const colRef = collection(db, "product");
       //console.log(user, "STORE USER PROP")
       const dataObj = {
@@ -139,6 +139,8 @@ export const useProductStore = defineStore("product", {
       const docRef = await addDoc(colRef, dataObj);
       console.log("STORE CREATED USAR ID:", docRef.id);
     },
+
+    //USERR LİSTESİNİ ÇEKER
     async getAdmin() {
       //const docSnap = await getDoc(doc(db, "admin", "27n5F5jC8z9Pf0v59eLw"));
       //tek collection u cekiyor
