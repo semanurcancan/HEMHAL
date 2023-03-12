@@ -94,6 +94,7 @@ export default defineComponent({
       signOut(auth).then(() => {
         console.log("ÇIKIŞ YAP");
         localStorage.clear();
+        this.$router.push("/loginpage");
       });
     },
     // click(){

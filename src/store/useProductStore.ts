@@ -2,7 +2,9 @@ import { defineStore } from "pinia";
 import axios from "axios";
 import { Product } from "../models/entities/ProductModels";
 
+
 import {
+  getFirestore,
   collection,
   addDoc,
   doc,
@@ -44,7 +46,7 @@ export const useProductStore = defineStore("product", {
 
       token:  localStorage.getItem("pm2token") ?? (false as any),
       tokenStatus: localStorage.getItem("pm2tokenstatus") ?? (false as any),
-      hemhalPorductDENEME: [] as Array<Product>,
+
       productHemhal: [] as any,
       admin:[] as any,
       currentAdmin: {} as any,
@@ -133,20 +135,20 @@ export const useProductStore = defineStore("product", {
       //   console.log(this.productHemhal, "HEMHAL LİSTE")
       // });
       console.log(hemhalProduct, "ne geldi STORAAA")
-      const colRef = collection(db, "product");
-      //console.log(user, "STORE USER PROP")
-      const dataObj = {
-        name: hemhalProduct.name,
-        price: hemhalProduct.price,
-        title: hemhalProduct.title,
-        category: hemhalProduct.category,  
-        quantity: hemhalProduct.quantity,
-        rating: hemhalProduct.rating,
-        images: hemhalProduct.images
       
-      };
-      const docRef = await addDoc(colRef, dataObj);
-      console.log("STORE CREATED USAR ID:", docRef.id);
+       const colRef = collection(db, "product");
+       const dataObj = {
+         name: hemhalProduct.name,
+         price: hemhalProduct.price,
+         title: hemhalProduct.title,
+         category: hemhalProduct.category,  
+         quantity: hemhalProduct.quantity,
+         rating: hemhalProduct.rating,
+         images: hemhalProduct.images
+      
+       };
+       const docRef = await addDoc(colRef, dataObj);
+       console.log("STORE CREATED USAR ID:", docRef.id);
     },
 
     //USERR LİSTESİNİ ÇEKER
