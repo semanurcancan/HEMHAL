@@ -124,16 +124,6 @@ export const useProductStore = defineStore("product", {
     },
 //post Product
     async setProductHemdal(hemhalProduct:Product){
-      // const colRef = collection(db, "product");
-      // const dataObj = this.productHemhal;
-      // const docRef = await addDoc(colRef, dataObj);
-      // console.log("STORE CREATED USAR ID:", docRef);
-      /////////////////
-      // const querySnap = await getDocs(query(collection(db, "product")));
-      // querySnap.forEach((doc) => {
-      //   this.productHemhal.push(doc.data());
-      //   console.log(this.productHemhal, "HEMHAL LİSTE")
-      // });
       console.log(hemhalProduct, "ne geldi STORAAA")
       
        const colRef = collection(db, "product");
