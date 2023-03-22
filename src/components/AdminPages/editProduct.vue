@@ -161,10 +161,10 @@ export default defineComponent({
       { name: "Saç Bakım", id: 2 },
       { name: "Onarıcı Merhem", id: 3 },
       { name: "Besleyici Merhem", id: 4 },
-      { name: "Ruj & Allık ", id: 5},
-      { name: "Mum & Tütsü", id: 6},
-      { name: "Masaj Taşı & Tütsü", id: 7},
-      { name: "At Kılı Fırçalar & Fırça", id: 8}
+      { name: "Ruj & Allık ", id: 5 },
+      { name: "Mum & Tütsü", id: 6 },
+      { name: "Masaj Taşı & Tütsü", id: 7 },
+      { name: "At Kılı Fırçalar & Fırça", id: 8 },
     ],
     uploadValue: 0,
     picture: null,
@@ -176,6 +176,45 @@ export default defineComponent({
   },
   methods: {
     ...mapActions(useProductStore, ["setProductHemdal"]),
+    // kaydet butonu
+    addProduct() {
+      let x = this.hemhalProduct.category.id;
+      switch (x) {
+        case 0:
+          this.hemhalProduct.category.name = this.categoryArray[0].name;
+          break;
+        case 1:
+          this.hemhalProduct.category.name = this.categoryArray[1].name;
+          break;
+        case 2:
+          this.hemhalProduct.category.name = this.categoryArray[2].name;
+          break;
+        case 3:
+          this.hemhalProduct.category.name = this.categoryArray[3].name;
+          break;
+        case 4:
+          this.hemhalProduct.category.name = this.categoryArray[4].name;
+          break;
+        case 5:
+          this.hemhalProduct.category.name = this.categoryArray[5].name;
+          break;
+        case 6:
+          this.hemhalProduct.category.name = this.categoryArray[6].name;
+          break;
+        case 7:
+          this.hemhalProduct.category.name = this.categoryArray[7].name;
+          break;
+        case 8:
+          this.hemhalProduct.category.name = this.categoryArray[8].name;
+          break;
+        default:
+          this.hemhalProduct.category.name = "Categori Bulunamadı";
+      }
+
+      (this.hemhalProduct.id = new Date().getUTCMilliseconds()),
+        this.setProductHemdal(this.hemhalProduct);
+    },
+
     onFileSelect(e: any) {
       Promise.all(
         [...e.target.files].map((file: File) =>
@@ -193,49 +232,6 @@ export default defineComponent({
     },
     onButtonClick() {
       (this.$refs.uploader as InstanceType<any>).click();
-    },
-    // kaydet butonu
-    addProduct() {
-      //this.hemhalProduct.images = this.filePath;
-      console.log(this.hemhalProduct, "EDİT PAGE PRODUCT");
-
-      // if (this.hemhalProduct.category.id == 0) {
-      //   this.hemhalProduct.category.name = this.categoryArray[0].text;
-      // }
-      console.log(this.hemhalProduct.category.id , "CATEGORYY")
-      let x = this.hemhalProduct.category.id ;
-      switch (x) {
-        case 0:
-        this.hemhalProduct.category.name = this.categoryArray[0].name;
-          break;
-        case 1:
-        this.hemhalProduct.category.name = this.categoryArray[1].name;
-          break;
-          case 2:
-        this.hemhalProduct.category.name = this.categoryArray[2].name;
-          break;
-          case 3:
-        this.hemhalProduct.category.name = this.categoryArray[3].name;
-          break;
-          case 4:
-        this.hemhalProduct.category.name = this.categoryArray[4].name;
-          break;
-          case 5:
-        this.hemhalProduct.category.name = this.categoryArray[5].name;
-          break;
-          case 6:
-        this.hemhalProduct.category.name = this.categoryArray[6].name;
-          break;
-          case 7:
-        this.hemhalProduct.category.name = this.categoryArray[7].name;
-          break;
-          case 8:
-        this.hemhalProduct.category.name = this.categoryArray[8].name;
-          break;
-        default:
-        this.hemhalProduct.category.name = "Categori Bulunamadı";
-      }
-      this.setProductHemdal(this.hemhalProduct);
     },
     uploadImage(fileName: string, file: Blob): Promise<ProductImage> {
       let that = this;
@@ -295,7 +291,7 @@ export default defineComponent({
       if (val != null) {
       }
     },
-  }
+  },
 });
 </script>
 

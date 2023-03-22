@@ -20,7 +20,6 @@
           <td>{{ pro.price }}</td>
           <td>{{ pro.quantity }}</td>
           <td>{{ pro.rating }}</td>
-          <td>{{ pro.image }}</td>
          <td
           >
           <v-row>
@@ -29,7 +28,7 @@
               <v-img
                 :src="img.url"
                 :lazy-src="img.url"
-                width="10"
+                width="60"
                 aspect-ratio="1"
                 cover
                 class="bg-grey-lighten-2"
@@ -50,6 +49,13 @@
             </v-col>
           </v-row>
           </td>
+          <td>
+            <v-btn class="color3" @click="editProduct">Düzenle</v-btn>
+          </td>
+          <td>
+            <v-btn class="bg-red-lighten-4" @click="deleteProduct(pro)">Sil</v-btn>
+          </td>
+          
         </tr>     
        </tbody>
     </v-table>
@@ -74,6 +80,7 @@ import {
   query,
   getDocs,
   where,
+  deleteDoc
 } from "firebase/firestore";
 
 export default defineComponent({
@@ -81,21 +88,9 @@ export default defineComponent({
   name: "hemhallist",
   data: () => ({
     product: [] as any,
-    categoryArray: [
-      { text: "Cilt bakım", value: 0 },
-      { text: "Aroma Terapi", value: 1 },
-      { text: "Saç Bakım", value: 2 },
-      { name: "Onarıcı Merhem", id: 3 },
-      { name: "Besleyici Merhem", id: 4 },
-      { name: "Ruj & Allık ", id: 5},
-      { name: "Mum & Tütsü", id: 6},
-      { name: "Masaj Taşı & Tütsü", id: 7},
-      { name: "At Kılı Fırçalar & Fırça", id: 8},
-    ],
   }),
   mounted() {
     console.log(this.getAdminInfo, "getAdminInfo");
-   
   },
   created() {
     this.getAdmin();
@@ -113,12 +108,25 @@ export default defineComponent({
       "getAdmin",
       "setNewTokenStatus",
       "setNewToken",
+     "deleteHemhalProduct"
     ]),
     getHEMHAL() {
-      console.log("tıklandı", this.getAdminInfo);
-      console.log(" kullanıcılar", this.getUserList);
       console.log(this.getProductHemhal, "ÜRÜNLER")
     },
+    editProduct(){
+
+    },
+    //  async deleteProduct(doc:any){
+    //   console.log(doc.id, "tık tık")
+    //  //await deleteDoc(doc(db, 'product', doc.id))
+    
+    // }
+    deleteProduct(doc:any){
+     this.deleteHemhalProduct(doc.id)
+      console.log(doc.id, "tık tık")
+    
+    }
+
   },
   watch: {
     getAdminInfo() {
@@ -126,42 +134,30 @@ export default defineComponent({
     },
     getProductHemhal() {
       console.log(this.getProductHemhal, "ürünler");
-      if (this.getProductHemhal.category.id == 0) {
-        this.getProductHemhal.category.name = this.categoryArray[0].text;
-      }
-      let x = this.getProductHemhal.category.id ;
-      switch (x) {
-        case 0:
-        this.getProductHemhal.category.name = this.categoryArray[0].text;
-          break;
-        case 1:
-        this.getProductHemhal.category.name = this.categoryArray[1].text;
-          break;
-          case 2:
-        this.getProductHemhal.category.name = this.categoryArray[2].text;
-          break;
-          case 3:
-        this.getProductHemhal.category.name = this.categoryArray[3].name;
-          break;
-          case 4:
-        this.getProductHemhal.category.name = this.categoryArray[4].name;
-          break;
-          case 5:
-        this.getProductHemhal.category.name = this.categoryArray[5].name;
-          break;
-          case 6:
-        this.getProductHemhal.category.name = this.categoryArray[6].name;
-          break;
-          case 7:
-        this.getProductHemhal.category.name = this.categoryArray[7].name;
-          break;
-          case 8:
-        this.getProductHemhal.category.name = this.categoryArray[8].name;
-          break;
-        default:
-        this.getProductHemhal.category.name = "Categori Bulunamadı";
-      }
     },
   },
 });
 </script>
+
+<style scoped>
+.color5 {
+  background-color: #847577;
+}
+
+.color4 {
+  background-color: #e3d5ca;
+}
+
+.color3 {
+  background-color: #d6ccc2;
+}
+
+.color2 {
+  background-color: rgb(236, 218, 193);
+}
+
+.color1 {
+  background-color: rgb(192, 174, 150);
+}
+</style>
+

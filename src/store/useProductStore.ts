@@ -1,17 +1,19 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import { Product } from "../models/entities/ProductModels";
-
+import { Firestore } from "firebase/firestore";
 
 import {
   getFirestore,
   collection,
   addDoc,
+  deleteDoc,
   doc,
   getDoc,
   query,
   getDocs,
-  where
+  where,
+  //Firestore,
 } from "firebase/firestore";
 import db from "../firebase";
 import {
@@ -22,7 +24,6 @@ import {
   updateProfile,
   updateEmail,
 } from "firebase/auth";
-
 
 const loadFromStorage = (key: string, defaultValue: any): any => {
   const item = localStorage.getItem(key);
@@ -44,11 +45,11 @@ export const useProductStore = defineStore("product", {
       favorites: loadFromStorage("userFavorites", [] as Array<Product>),
       loading: false,
 
-      token:  localStorage.getItem("pm2token") ?? (false as any),
+      token: localStorage.getItem("pm2token") ?? (false as any),
       tokenStatus: localStorage.getItem("pm2tokenstatus") ?? (false as any),
 
       productHemhal: [] as any,
-      admin:[] as any,
+      admin: [] as any,
       currentAdmin: {} as any,
       userList: [] as any,
       user: [
@@ -71,13 +72,13 @@ export const useProductStore = defineStore("product", {
       return localStorage.getItem("pm2token") ?? state.token;
     },
     getProductHemhal: (state) => {
-      return state.productHemhal
+      return state.productHemhal;
     },
     getAdminInfo: (state) => {
       return state.admin;
     },
     getcurrenAdmin: (state) => {
-      return localStorage.getItem("userAdmin")?? state.currentAdmin
+      return localStorage.getItem("userAdmin") ?? state.currentAdmin;
     },
     getUserList: (state) => {
       return state.userList;
@@ -114,31 +115,58 @@ export const useProductStore = defineStore("product", {
       this.token = newToken;
       localStorage.setItem("pm2token", this.token);
     },
-//get product
-    async getProduct(){
+    //get product
+    async getProduct() {
       const querySnap = await getDocs(query(collection(db, "product")));
+      let keys = [] as any;
       querySnap.forEach((doc) => {
+        keys = [...keys, doc.id];
+        console.log(keys, "KEYSSS");
+        for (let x = 0; x < this.productHemhal.length; x++) {
+          // this.productHemhal.map((pro:any, i:any) => {
+          //  console.log(i, "İndex");
+          //  console.log(pro, "product");
+          // })
+        
+        }
+        let index = -1; // -1 normally defined as not found
+        for (let i = 0; i < this.productHemhal.length; i++) {
+          for (let j = 0; j < keys.length; j++) {
+            if (this.productHemhal[i] === keys[j]) {
+              index = i; 
+              console.log(index, "İNDEX ??")
+              console.log(index = j, "AAAA")
+            } 
+          }
+        }
         this.productHemhal.push(doc.data());
       });
-      console.log(this.product, "STORA ÜRÜN LİSTESİ")
+      console.log(this.productHemhal, "STORA ÜRÜN LİSTESİ");
     },
-//post Product
-    async setProductHemdal(hemhalProduct:Product){
-      console.log(hemhalProduct, "ne geldi STORAAA")
-      
-       const colRef = collection(db, "product");
-       const dataObj = {
-         name: hemhalProduct.name,
-         price: hemhalProduct.price,
-         title: hemhalProduct.title,
-         category: hemhalProduct.category,  
-         quantity: hemhalProduct.quantity,
-         rating: hemhalProduct.rating,
-         images: hemhalProduct.images
-      
-       };
-       const docRef = await addDoc(colRef, dataObj);
-       console.log("STORE CREATED USAR ID:", docRef.id);
+
+    //post Product
+    async setProductHemdal(hemhalProduct: Product) {
+      console.log(hemhalProduct, "ne geldi STORAAA");
+      const colRef = collection(db, "product");
+      const dataObj = {
+        name: hemhalProduct.name,
+        price: hemhalProduct.price,
+        title: hemhalProduct.title,
+        category: hemhalProduct.category,
+        quantity: hemhalProduct.quantity,
+        rating: hemhalProduct.rating,
+        images: hemhalProduct.images,
+        id: hemhalProduct.id,
+      };
+      const docRef = await addDoc(colRef, dataObj);
+      console.log("STORE CREATED USAR ID:", docRef.id);
+      console.log(docRef, "DOC REF");
+    },
+
+    async deleteHemhalProduct(item: Product) {
+      console.log(item, "DELETE NE GELDİ STORE");
+      //deleteDoc(doc(db, "product", item));
+      await deleteDoc(doc(db, "product", "IpEOfpl7t96v3vtnTs1a"));
     },
 
     //USERR LİSTESİNİ ÇEKER
@@ -156,19 +184,19 @@ export const useProductStore = defineStore("product", {
         this.userList.push(doc.data());
       });
       //ilki js şkinci filtreleme firebase methodu
-        this.admin = this.userList.filter((admin: any) =>  admin.isAdmin == true );
+      this.admin = this.userList.filter((admin: any) => admin.isAdmin == true);
       console.log(this.admin, "ADMİN");
-//       const filterAdmin = query(collection(db, 'users'), where('isAdmin', '==', 'true'))
-//       const querySnapp = await getDocs(filterAdmin)
-//       querySnapp.forEach((doc) => {
-//  this.admin.push(doc.data())
-//       })
-//       debugger
-//       console.log(this.admin, "ADMİN STORE DA")
+      //       const filterAdmin = query(collection(db, 'users'), where('isAdmin', '==', 'true'))
+      //       const querySnapp = await getDocs(filterAdmin)
+      //       querySnapp.forEach((doc) => {
+      //  this.admin.push(doc.data())
+      //       })
+      //       debugger
+      //       console.log(this.admin, "ADMİN STORE DA")
     },
 
-//yeni user eklendikten sonra collectiona ekler bu func. conle yazınca calıstı :)
-    async createUser(user:any) {
+    //yeni user eklendikten sonra collectiona ekler bu func. conle yazınca calıstı :)
+    async createUser(user: any) {
       const colRef = collection(db, "users");
       //console.log(user, "STORE USER PROP")
       const dataObj = {
@@ -180,8 +208,7 @@ export const useProductStore = defineStore("product", {
       //console.log("STORE CREATED USAR ID:", docRef.id);
     },
     //data apı aul ile cekildi!!!
-   
-    
+
     async getProductAction() {
       await axios
         .get("https://api.escuelajs.co/api/v1/products?offset=0&limit=70")

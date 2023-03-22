@@ -39,7 +39,7 @@ export class Product implements IEntityBase {
         this.icon = ""
         this.name = ""
     }
-    id: number
+    id: number | string
     title: string
     price: number
     description: string
