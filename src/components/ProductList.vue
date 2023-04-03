@@ -2,7 +2,7 @@
   <v-app class="container">
     <v-col class="containerProduct">
       <v-row>
-        <v-col v-if="getFilterCategory.length > 0">
+        <!-- <v-col v-if="getFilterCategory.length > 0">
           <v-row>
             <v-col v-for="(pro, index) in getFilterCategory" :key="index">
               <v-hover v-slot="{ isHovering, props }">
@@ -47,9 +47,9 @@
               </v-hover>
             </v-col>
           </v-row>
-        </v-col>
+        </v-col> -->
 
-        <v-col v-else v-for="(pro, i) in getProductHemhal" :key="i">
+        <!-- <v-col v-else v-for="(pro, i) in getProductHemhal" :key="i">
           <v-hover v-slot="{ isHovering, props }">
             <v-card
               :elevation="isHovering ? 6 : 2"
@@ -94,6 +94,51 @@
               </v-card-actions>
             </v-card>
           </v-hover>
+        </v-col> -->
+
+        <v-col v-for="(pro, i) in getProductHemhal" :key="i">
+          <v-hover v-slot="{ isHovering, props }">
+            <v-card
+              :border="false"
+              :elevation="isHovering ? 6 : 2"
+              :class="{ 'on-hover': isHovering }"
+              v-bind="props"
+              class="cardClass"
+              max-width="350"
+            >
+            <v-card-title>{{ pro.name }}</v-card-title>
+
+              <v-img
+                @click="
+                  this.$router.push({
+                    name: 'Detail',
+                    params: { id: pro.id },
+                  })
+                "
+                class="align-end text-white mt-3"
+                height="200"
+                width="250"
+                :src="pro.images[0].url"
+                cover
+              >
+              </v-img>
+
+              <v-btn icon @click.capture="addFavorite(pro)" variant="plain">
+                <v-icon :icon="checkFavIcon(pro)" color="pink"></v-icon>
+              </v-btn>
+
+              <v-card-subtitle> {{ pro.price }} TL </v-card-subtitle>
+
+              <v-card-text> {{ pro.description}} </v-card-text>
+              <!-- <v-card-actions>
+                <button-group
+                  class="mt-5 mx-10"
+                  :pro="pro"
+                  :actions="actions"
+                ></button-group>
+              </v-card-actions> -->
+            </v-card>
+          </v-hover>
         </v-col>
       </v-row>
     </v-col>
@@ -106,38 +151,34 @@ import ButtonGroup from "./ButtonGroup.vue";
 import { mapState, mapActions } from "pinia";
 import { useProductStore } from "../store/useProductStore";
 import NavbarComp from "../components/headerComp/NavbarComp.vue";
-
-//types
-import { Product } from "../models/entities/ProductModels";
 import type {
   FavoriteObjectType,
   TitleObjectType,
 } from "../models/entities/Icontype";
-
+//types
+import { Product } from "../models/entities/ProductModels";
 export default defineComponent({
   components: { ButtonGroup, NavbarComp },
   name: "ProductList",
-
-  props: {
-    getProductHemhal: {
-      type: Object as PropType<Product>,
-    },
-  },
   data: () => ({
-    products: inject("products"),
-    actions: inject("actions"),
+    // products: inject("products"),
+    // actions: inject("actions"),
   }),
   mounted() {
     this.getBasketGetters;
+    this.getHEMHAL();
   },
   methods: {
     addFavorite(pro: FavoriteObjectType) {
       this.addOrRemoveFavorite(pro);
     },
-    clickItem(e: any) {
-      console.log(e);
-      this.$router.push({ name: e.name });
+    getHEMHAL() {
+      console.log(this.getProductHemhal, "Product List");
     },
+    // clickItem(e: any) {
+    //   console.log(e);
+    //   this.$router.push({ name: e.name });
+    // },
     checkFavIcon(pro: Product): string {
       const findIndex = this.getFavoritesState.findIndex(
         (fav: any) => fav.id === pro.id
@@ -156,6 +197,7 @@ export default defineComponent({
       "getFilterCategory",
       "getBasketGetters",
       "getFavoritesState",
+      "getProductHemhal",
     ]),
   },
   watch: {

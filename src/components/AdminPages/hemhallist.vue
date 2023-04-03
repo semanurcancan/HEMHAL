@@ -23,7 +23,7 @@
          <td
           >
           <v-row>
-            <v-col    v-for="(img, index) in pro.images"
+            <v-col v-for="(img, index) in pro.images"
             :key="index" class="d-flex child-flex" cols="4">
               <v-img
                 :src="img.url"
@@ -123,7 +123,7 @@ export default defineComponent({
     // }
     deleteProduct(doc:any){
      this.deleteHemhalProduct(doc.id)
-      console.log(doc.id, "tık tık")
+      console.log(doc, "tık tık")
     
     }
 

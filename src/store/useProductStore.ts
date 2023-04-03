@@ -120,25 +120,13 @@ export const useProductStore = defineStore("product", {
       const querySnap = await getDocs(query(collection(db, "product")));
       let keys = [] as any;
       querySnap.forEach((doc) => {
-        keys = [...keys, doc.id];
-        console.log(keys, "KEYSSS");
-        for (let x = 0; x < this.productHemhal.length; x++) {
-          // this.productHemhal.map((pro:any, i:any) => {
-          //  console.log(i, "İndex");
-          //  console.log(pro, "product");
-          // })
-        
-        }
-        let index = -1; // -1 normally defined as not found
-        for (let i = 0; i < this.productHemhal.length; i++) {
-          for (let j = 0; j < keys.length; j++) {
-            if (this.productHemhal[i] === keys[j]) {
-              index = i; 
-              console.log(index, "İNDEX ??")
-              console.log(index = j, "AAAA")
-            } 
-          }
-        }
+        // keys = [...keys, doc.id];
+        // console.log(keys, "KEYSSS");
+        //   this.productHemhal.map((pro:any, i:any) => {
+            
+        //      pro.id = keys[i].id
+        //      console.log(this.productHemhal, "ÜRÜN::İİSSDKD")
+        //   })
         this.productHemhal.push(doc.data());
       });
       console.log(this.productHemhal, "STORA ÜRÜN LİSTESİ");

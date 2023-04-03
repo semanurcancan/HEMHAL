@@ -1,34 +1,98 @@
 <template>
-    <v-col> 
-      <v-row  class="container d-none d-md-flex" >
-         <v-card flat class="mt-5">
-          <v-col>
-            <v-row class="mb-2 text-center">
-              <v-col> <strong>PRODUCT</strong></v-col>
-              <v-col> <strong>DETAIL</strong> </v-col>
-              <v-col> <strong>IMAGE</strong></v-col>
-            </v-row>
-            <v-divider class="mb-5"></v-divider>
-            <v-row
-              class="mb-2 text-center"
-              v-for="(pro, index) in getFavoritesState"
-              :key="index"
-            >
-              <v-col>{{ pro.title }} </v-col>
-              <v-col> {{ pro.description }} </v-col>
-              <v-col class="resmmm">
+  <v-col class="mb-16 mt-10">
+    <v-table class="bg-grey-lighten-4">
+      <thead>
+        <tr>
+          <th class="text-left text-h6 text-disabled">Name</th>
+          <th class="text-left text-disabled text-h6">Category</th>
+          <th class="text-left text-h6 text-disabled">Price</th>
+          <th class="text-left text-h6 text-disabled">Rating</th>
+          <th class="text-left text-h6 text-disabled">Image</th>
+          <th class="text-left text-h6 text-disabled"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(pro, index) in getFavoritesState" :key="index">
+          <td>{{ pro.name }}</td>
+          <td>{{ pro.category.name }}</td>
+          <td>{{ pro.price }}</td>
+          <td>{{ pro.rating }}</td>
+          <td>
+            <v-row>
+              <v-col
+                v-for="(img, index) in pro.images"
+                :key="index"
+                class="d-flex child-flex"
+                cols="4"
+              >
                 <v-img
-                  :src="pro.images[1]"
-                  max-height="100"
-                  max-width="100"
-                ></v-img> </v-col
-              ><v-divider></v-divider>
+                  :src="img.url"
+                  :lazy-src="img.url"
+                  width="60"
+                  aspect-ratio="1"
+                  cover
+                  class="bg-grey-lighten-2"
+                >
+                  <template v-slot:placeholder>
+                    <v-row
+                      class="fill-height ma-0"
+                      align="center"
+                      justify="center"
+                    >
+                      <v-progress-circular
+                        indeterminate
+                        color="grey-lighten-5"
+                      ></v-progress-circular>
+                    </v-row>
+                  </template>
+                </v-img>
+              </v-col>
             </v-row>
-          </v-col>
-        </v-card>
-      </v-row>
+          </td>
+          <td>
+            <v-btn
+              icon
+              @click.capture="addFavorite(pro)"
+              color="lime"
+              variant="plain"
+            >
+              <v-icon :icon="checkFavIcon(pro)" color="hemhalcolor"></v-icon>
+            </v-btn>
+          </td>
+        </tr>
+      </tbody>
+    </v-table>
+    <!-- <v-row class="mb-2 d-flex text-center">
+      <v-col> <strong>PRODUCT</strong></v-col>
+      <v-col> <strong>DETAIL</strong> </v-col>
+      <v-col> <strong>Favoriler</strong></v-col>
+      <v-col> <strong>IMAGE</strong></v-col>
+    </v-row>
+    <v-divider class="mb-5"></v-divider>
+    <v-row
+      class="mb-2 d-flex text-start"
+      v-for="(pro, index) in getFavoritesState"
+      :key="index"
+    >
+      <v-col>{{ pro.name }} </v-col>
+      <v-col> {{ pro.title }} </v-col>
+      <v-col class="">
+        <v-btn
+          icon
+          @click.capture="addFavorite(pro)"
+          color="lime"
+          variant="plain"
+        >
+          <v-icon :icon="checkFavIcon(pro)" color="hemhalcolor"></v-icon>
+        </v-btn>
+      </v-col>
+      <v-col v-for="(img, i) in pro.images" :key="i" class="resmmm">
+        <v-img :src="img.url" max-height="50" max-width="50"></v-img> </v-col
+      ><v-divider></v-divider>
+    </v-row> -->
+  </v-col>
 
-      <v-row  class="d-flex d-md-none">
+  <!-- <v-row>
         <v-col v-for="(pro, i) in getFavoritesState" :key="i">
           <v-hover v-slot="{ isHovering, props }">
             <v-card
@@ -36,8 +100,9 @@
               :class="{ 'on-hover': isHovering }"
               v-bind="props"
               class="cardClass"
-              max-width="200"
+              max-width="500"
             >
+            <v-card-title>{{ pro.title}}</v-card-title>
               <v-img
                 @click="
                   this.$router.push({
@@ -46,37 +111,17 @@
                   })
                 "
                 class="align-end font-weight-light text-white ma-3 imgFAvori"
-                :src="pro.images[1]"
+                :src="pro.images[0].url"
+                width="200"
                 cover
-              ><v-card-title>{{ pro.title.slice(0, 5) }}</v-card-title>
+              >
               </v-img>
-              <v-row class="bg-brown-lighten-3">
-                <v-col>
-                   <v-btn icon @click.capture="addFavorite(pro)" variant="plain">
-                <v-icon :icon="checkFavIcon(pro)" color="hemhalcolor"></v-icon>
-              </v-btn>
-                </v-col>
-                <v-col>
-                   <v-card-text>{{ pro.description.slice(0, 10) }}</v-card-text>
-                </v-col>
-              </v-row>
-             
-             
-
-              <!-- <v-card-actions>
-                <button-group
-                  class="mt-5 mx-10"
-                  :pro="pro"
-                  :actions="actions"
-                ></button-group>
-              </v-card-actions> -->
             </v-card>
           </v-hover>
         </v-col>
+      </v-row> -->
 
-      </v-row>
-       
-      </v-col>
+
 </template>
 <script lang="ts">
 import { defineComponent, inject, PropType } from "vue";
@@ -91,7 +136,6 @@ import type {
   TitleObjectType,
 } from "../models/entities/Icontype";
 
-
 export default defineComponent({
   components: {
     AgGridVue,
@@ -100,8 +144,8 @@ export default defineComponent({
   },
   data() {
     return {
-    products: inject("products"),
-    actions: inject("actions"),
+      products: inject("products"),
+      actions: inject("actions"),
       columnDefs: [
         {
           headerName: "image",
@@ -142,11 +186,11 @@ export default defineComponent({
       "getFilterCategory",
     ]),
 
-    arrayUnic(): Product[] {
-      return this.getBasketGetters.filter(
-        (v, i, a) => a.findIndex((t) => t.id == v.id) === i
-      );
-    },
+    // arrayUnic(): Product[] {
+    //   return this.getBasketGetters.filter(
+    //     (v, i, a) => a.findIndex((t) => t.id == v.id) === i
+    //   );
+    // },
   },
   updated() {
     this.getBasketGetters;
@@ -171,7 +215,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-
 .container {
   display: flex;
   justify-content: center;
@@ -184,9 +227,25 @@ export default defineComponent({
   flex-direction: column;
   align-items: center;
 }
+.color5 {
+  background-color: #847577;
+}
 
+.color4 {
+  background-color: #e3d5ca;
+}
 
+.color3 {
+  background-color: #d6ccc2;
+}
 
+.color2 {
+  background-color: rgb(236, 218, 193);
+}
+
+.color1 {
+  background-color: rgb(192, 174, 150);
+}
 @media screen and (max-width: 2500px) {
   body .container {
     margin-left: 150px;
@@ -227,11 +286,11 @@ export default defineComponent({
 }
 @media screen and (max-width: 500px) {
   body .cardClass {
-   width: 20rem;
-   height: 15rem;
+    width: 20rem;
+    height: 15rem;
   }
-  body.imgFAvori{
-/* max-width: 40rem; */
+  body.imgFAvori {
+    /* max-width: 40rem; */
   }
 }
 </style>
