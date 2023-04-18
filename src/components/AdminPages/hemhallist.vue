@@ -16,7 +16,7 @@
         <tr v-for="(pro, index) in getProductHemhal" :key="index">
           <td>{{ pro.name }}</td>
           <td>{{ pro.title }}</td>
-          <td>{{ pro.category.name }}</td>
+          <!-- <td>{{ pro.category.name }}</td> -->
           <td>{{ pro.price }}</td>
           <td>{{ pro.quantity }}</td>
           <td>{{ pro.rating }}</td>
@@ -75,7 +75,16 @@
         </v-btn>
       </v-toolbar>
       <v-card-text>
-      
+        <v-row>
+        <v-col v-if="loading">
+          <p>{{ uploadValue.toFixed() + "%" }}</p>
+          <v-progress-linear
+            color="lime-darken-2"
+            :value="uploadValue"
+            v-model="uploadValue"
+          ></v-progress-linear>
+        </v-col>
+      </v-row>
         <v-row>
         <v-col
           cols="2"
@@ -235,7 +244,7 @@ export default defineComponent({
     openEditDialog: false,
     updateBody: [] as any,
     updateBodyValidate: [] as any,
-
+    loading: true,
     uploadValue: 0,
     categoryArray: [
       { name: "Cilt bakım", id: 0 },
@@ -248,12 +257,7 @@ export default defineComponent({
       { name: "Masaj Taşı & Tütsü", id: 7 },
       { name: "At Kılı Fırçalar & Fırça", id: 8 },
     ],
-
   }),
-  mounted() {},
-  created() {
-    //this.getAdmin();
-  },
   computed: {
     ...mapState(useProductStore, ["getProductHemhal"]),
   },

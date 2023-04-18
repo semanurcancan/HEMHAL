@@ -14,7 +14,7 @@ import {
   getDocs,
   where,
   setDoc,
- updateDoc
+  updateDoc,
   //Firestore,
 } from "firebase/firestore";
 import db from "../firebase";
@@ -154,10 +154,7 @@ export const useProductStore = defineStore("product", {
     },
     async updateProductHemhal(updateHemdal: Product) {
       console.log(updateHemdal.id, "STORE UPDATE BODY");
-
-      const docRef = doc(db, "product", "updateHemdal.id");
-
-      const UpdateData = {
+     await setDoc(doc(db, "product", updateHemdal.id), {
         name: updateHemdal.name,
         price: updateHemdal.price,
         title: updateHemdal.title,
@@ -167,25 +164,8 @@ export const useProductStore = defineStore("product", {
         rating: updateHemdal.rating,
         images: updateHemdal.images,
         count: updateHemdal.count,
-      };
-      updateDoc(docRef, UpdateData)
-        .then((docRef) => {
-          console.log(docRef, "AAAAAA");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-      // await setDoc(doc(db, "product", updateHemdal.id), {
-      //   name: updateHemdal.name,
-      //   price: updateHemdal.price,
-      //   title: updateHemdal.title,
-      //   description: updateHemdal.description,
-      //   category: updateHemdal.category,
-      //   quantity: updateHemdal.quantity,
-      //   rating: updateHemdal.rating,
-      //   images: updateHemdal.images,
-      //   count: updateHemdal.count,
-      // });
+        id: updateHemdal.id
+      });
     },
     async deleteHemhalProduct(item: Product) {
       console.log(item, "DELETE NE GELDİ STORE");

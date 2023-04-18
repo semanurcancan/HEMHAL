@@ -61,7 +61,7 @@
                       <v-icon
                         v-if="isSelected"
                         color="white"
-                        size="48"
+                        size="28"
                         icon="mdi-close-circle-outline"
                       ></v-icon>
                     </v-scale-transition>

@@ -1,6 +1,7 @@
 <template>
   <v-col class="mb-16 mt-10">
-    <v-table class="bg-grey-lighten-4">
+    <h1 class="title">HEMHAL</h1>
+    <!-- <v-table class="bg-grey-lighten-4">
       <thead>
         <tr>
           <th class="text-left text-h6 text-disabled">Name</th>
@@ -61,7 +62,7 @@
           </td>
         </tr>
       </tbody>
-    </v-table>
+    </v-table> -->
     <!-- <v-row class="mb-2 d-flex text-center">
       <v-col> <strong>PRODUCT</strong></v-col>
       <v-col> <strong>DETAIL</strong> </v-col>
@@ -215,6 +216,18 @@ export default defineComponent({
 </script>
 
 <style scoped>
+
+.title {
+  background-image: url(https://img.freepik.com/free-vector/hand-drawn-flat-groovy-psychedelic-background_23-2149074391.jpg);
+	font-size: 8.8em;
+	font-weight: 800;
+	color: #fff;
+	text-shadow: 2px 2px 30px rgba(0, 0, 0, 0.3);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-webkit-font-smoothing: antialiased;
+	text-transform: uppercase;
+}
 .container {
   display: flex;
   justify-content: center;

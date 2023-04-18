@@ -227,7 +227,6 @@ export default defineComponent({
       "setNewToken"
     ]),
     registerAlreadyUser(user: any) {
-      debugger
       this.admin = this.getAdminInfo;
       console.log(this.getUserList, "TÜM fgvfgfg");
       this.currentUser = this.getUserList.filter(
