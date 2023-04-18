@@ -1,12 +1,12 @@
 <template>
   <router-view v-slot="{ Component }">
-    <kayanyazi  v-if="$route.meta.isHeaderShow"  class="w-100"></kayanyazi>
+    <kayanyazi v-if="$route.meta.isHeaderShow" class="w-100"></kayanyazi>
     <v-layout v-bind:class="getContainer()">
       <v-col>
         <v-row>
           <v-main style="height: auto">
-            <NavbarComp  v-if="$route.meta.isHeaderShow" />
-            <keep-alive >
+            <NavbarComp v-if="$route.meta.isHeaderShow" />
+            <keep-alive>
               <component :is="Component" />
             </keep-alive>
             <footerr v-if="$route.meta.isFooterShow"></footerr>
@@ -20,8 +20,7 @@
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
 import { useProductStore } from "./store/useProductStore";
-import { mapActions, mapState, } from "pinia";
-
+import { mapActions, mapState } from "pinia";
 
 //componentler
 import loginPage from "./components/AdminPages/loginPage.vue";
@@ -45,7 +44,7 @@ export default defineComponent({
     burgerMenu,
     LoginPage,
     dashboard,
-    AdminSideNav
+    AdminSideNav,
   },
   data() {
     return {
@@ -55,26 +54,30 @@ export default defineComponent({
     };
   },
   computed: {
-    ...mapState(useProductStore, ["getUserTokenStatus", "getUserList"]),
+    ...mapState(useProductStore, [
+      "getUserTokenStatus",
+      "getUserList",
+      "getProductHemhal",
+      "getAdminInfo",
+    ]),
   },
-  created(){
+  created() {
     this.getAdmin();
     this.getProduct();
   },
-  methods:{
-getContainer(){
-  return  {
-    'container' : this.$route.meta.isHeaderShow,
-    'adminPages': !this.$route.meta.isHeaderShow
-  }
-},
-...mapActions(useProductStore, [
+  methods: {
+    getContainer() {
+      return {
+        container: this.$route.meta.isHeaderShow,
+        adminPages: !this.$route.meta.isHeaderShow,
+      };
+    },
+    ...mapActions(useProductStore, [
       "createUser",
       "getAdmin",
       "getProduct",
       "setNewTokenStatus",
       "setNewToken",
-
     ]),
   },
 
@@ -84,13 +87,15 @@ getContainer(){
         console.log(newVal, oldVal);
       }
     },
+    // getAdminInfo() {
+    //   console.log(this.getAdminInfo, "APP ADMİN LİST");
+    // },
+    // getProductHemhal() {
+    //   console.log(this.getProductHemhal, "APP PRODUCT LİST");
+    // },
   },
 });
 </script>
-
-
-
-
 
 <style lang="css">
 .fade-enter-active,
@@ -102,9 +107,9 @@ getContainer(){
 .fade-leave-to {
   opacity: 0;
 }
-.adminPages{
-margin: 0px;
-padding: 0px;
+.adminPages {
+  margin: 0px;
+  padding: 0px;
 }
 @media screen and (min-width: 1280px) {
   body .leftBar {

@@ -71,6 +71,16 @@
           >
           </v-text-field>
         </v-col>
+        <v-col>
+          <v-text-field
+            v-model="hemhalProduct.description"
+            label="description"
+            name="description"
+            type="text"
+            variant="underlined"
+          >
+          </v-text-field>
+        </v-col>
       </v-row>
       <v-row>
         <v-col>
@@ -120,8 +130,14 @@
       </v-row>
 
       <v-row>
+        <v-col class=" font-weight-bold text-lime-darken-3">
+          {{ message }}
+        </v-col>
+      
         <v-spacer></v-spacer>
-        <v-btn class="color3" @click="addProduct"> yeni ürün </v-btn>
+        <v-col>
+          <v-btn class="color3" @click="addProduct"> yeni ürün </v-btn>
+        </v-col>
       </v-row>
     </v-col>
   </v-col>
@@ -170,9 +186,10 @@ export default defineComponent({
     picture: null,
     imageData: null as any,
     loading: true,
+    message : '',
   }),
   computed: {
-    ...mapState(useProductStore, ["getProductHemhal"]),
+   // ...mapState(useProductStore, ["getProductHemhal"]),
   },
   methods: {
     ...mapActions(useProductStore, ["setProductHemdal"]),
@@ -211,8 +228,14 @@ export default defineComponent({
           this.hemhalProduct.category.name = "Categori Bulunamadı";
       }
 
-      (this.hemhalProduct.id = new Date().getUTCMilliseconds()),
+       //(this.hemhalProduct.id = new Date().getUTCMilliseconds()),
         this.setProductHemdal(this.hemhalProduct);
+        this.message = 'ÜRÜN EKLENDİ :)'
+        this.hemhalProduct = new Product();
+        setTimeout(() => {
+          this.uploadValue = 0;
+          this.message = '';
+        }, 3000);
     },
 
     onFileSelect(e: any) {

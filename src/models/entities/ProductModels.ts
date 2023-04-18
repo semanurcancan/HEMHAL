@@ -23,6 +23,7 @@ export interface FavoriteObjectType {
 export class Product implements IEntityBase {
   constructor() {
     this.id = 0;
+    this.key = 0
     this.title = "";
     this.price = 0;
     this.description = "";
@@ -36,8 +37,10 @@ export class Product implements IEntityBase {
     this.quantity = 0;
     this.icon = "";
     this.name = "";
+    this.count = 0;
   }
   id: number | string;
+  key: number;
   title: string;
   price: number;
   description: string;
@@ -51,6 +54,7 @@ export class Product implements IEntityBase {
   quantity: number;
   icon: string;
   name: string;
+  count:number | null
 }
 
 export class ProductImage implements IEntityBase {

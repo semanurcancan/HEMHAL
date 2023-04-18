@@ -1,7 +1,5 @@
 import { initializeApp } from "firebase/app";
 import {getFirestore, collection } from 'firebase/firestore'
-
-
 import {getStorage, ref } from 'firebase/storage'
 
 

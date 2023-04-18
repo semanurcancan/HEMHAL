@@ -1,5 +1,10 @@
 <template> 
 <v-btn class="ml-3 mt-3" to="/">back</v-btn>
+<v-container>
+  <v-col>
+    
+  </v-col>
+</v-container>
     <v-card class="w-100 mt-5 ml-15 elevation-3">
       <v-col v-for="(item, index) in idData" :key="index">
         <v-row class="mb-2 text-center">

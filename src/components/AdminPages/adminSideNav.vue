@@ -42,8 +42,8 @@ export default defineComponent({
       drawer: true,
       rail: true,
       items: [
-        { title: "PRODUCT", icon: "mdi-home-city", name: "hemhallist" },
-        { title: "EDİT PAGE", icon: "mdi-account", name: "editproduct" },
+        { title: "PRODUCT LİST", icon: "mdi-home-city", name: "hemhallist" },
+        { title: "PRODUCT ACTİON", icon: "mdi-account", name: "editproduct" },
         { title: "MEMBERS", icon: "mdi-account-group-outline", name: "userspage" },
       ],
       filterItem: [

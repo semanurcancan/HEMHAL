@@ -44,18 +44,14 @@ export default defineComponent({
     ...mapState(useProductStore, ["getUserList"]),
   },
   mounted() {
-    console.log(this.getUserList, "USERLIST");
   },
   methods: {
     ...mapActions(useProductStore, ["setProductHemdal"]),
-    // userGet(index:any){
-    //   this.userList = this.getUserList[index]
-    // }
   },
   watch: {
-    getUserList() {
-      console.log(this.getUserList, "aaa");
-    },
+    // getUserList() {
+    //   console.log(this.getUserList, "aaa");
+    // },
   },
 });
 </script>

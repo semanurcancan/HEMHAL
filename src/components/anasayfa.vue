@@ -7,14 +7,14 @@
             class="ımg"
             src="/public/assets/anasayfaIMG.jpeg"
             alt="HEMHAL"
-            max-height="%100"
+            max-height="600"
             max-width="auto"
             cover
           ></v-img>
         </v-col>
       </v-row>
     </v-col>
-    <h3 id="hakkimizda">HAKKIMIZDA</h3>
+    <h3 id="hakkimizda">HEMHAL</h3>
     <v-col class="containerAna pa-15">
       <v-row>
         <div>
@@ -34,23 +34,42 @@
         </div>
       </v-row>
     </v-col>
-    <h3 id="SECTİON">HEMHAL</h3>
+    <h3 id="SECTİON">BLOG</h3>
     <v-col>
-      <v-row>
-        <div class="containerAna pa-15 my-5">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus
-          aut asperiores inventore porro dicta laborum corporis atque ipsam
-          reprehenderit molestias exercitationem, odio ipsa deleniti nisi eaque
-          dolorum reiciendis quasi delectus? Labore, minus eaque. Illo,
-          excepturi facere a praesentium cupiditate pariatur dignissimos eius
-          nesciunt dolorem nostrum natus libero iusto ad asperiores odio
-          reprehenderit rerum iste aspernatur? Neque porro quae facilis quos.
-          Assumenda et voluptatem, ad vitae excepturi porro quibusdam dolores,
-          rem, voluptatibus dolorum modi enim perferendis nisi esse debitis
-          repudiandae est laudantium praesentium ab atque provident fugiat
-          nesciunt facere! Nulla, iusto! Aut error aperiam, rerum officiis
-          eligendi harum. Suscipit et adipisci deserunt nihil eveniet placeat
-        </div>
+      <v-row class="containerAna pa-15 my-5">
+          <v-sheet class="mx-auto"  max-width="1600">
+            <v-slide-group
+              v-model="model"
+              class="pa-4"
+              center-active
+              show-arrows
+            >
+              <v-slide-group-item
+                v-for="n in 15"
+                :key="n"
+                v-slot="{ isSelected, toggle }"
+              >
+                <v-card
+                  :color="isSelected ? 'primary' : 'grey-lighten-1'"
+                  class="ma-4"
+                  height="200"
+                  width="200"
+                  @click="toggle"
+                >
+                  <div class="d-flex fill-height align-center justify-center">
+                    <v-scale-transition>
+                      <v-icon
+                        v-if="isSelected"
+                        color="white"
+                        size="48"
+                        icon="mdi-close-circle-outline"
+                      ></v-icon>
+                    </v-scale-transition>
+                  </div>
+                </v-card>
+              </v-slide-group-item>
+            </v-slide-group>
+          </v-sheet>
       </v-row>
     </v-col>
   </v-col>
@@ -86,6 +105,7 @@ export default defineComponent({
     return {
       scTimer: Number() as any,
       scY: Number() as any,
+      model: null,
     };
   },
   mounted() {

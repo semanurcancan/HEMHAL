@@ -13,6 +13,8 @@ import {
   query,
   getDocs,
   where,
+  setDoc,
+ updateDoc
   //Firestore,
 } from "firebase/firestore";
 import db from "../firebase";
@@ -118,62 +120,90 @@ export const useProductStore = defineStore("product", {
     //get product
     async getProduct() {
       const querySnap = await getDocs(query(collection(db, "product")));
-      let keys = [] as any;
+      let a = [] as any;
+      let docId = [] as any;
       querySnap.forEach((doc) => {
-        // keys = [...keys, doc.id];
-        // console.log(keys, "KEYSSS");
-        //   this.productHemhal.map((pro:any, i:any) => {
-            
-        //      pro.id = keys[i].id
-        //      console.log(this.productHemhal, "ÜRÜN::İİSSDKD")
-        //   })
+        docId = [...docId, doc.id];
         this.productHemhal.push(doc.data());
+      });
+      this.productHemhal.map((x: any, i: any) => {
+        this.productHemhal[i].id = docId[i];
       });
       console.log(this.productHemhal, "STORA ÜRÜN LİSTESİ");
     },
 
     //post Product
     async setProductHemdal(hemhalProduct: Product) {
-      console.log(hemhalProduct, "ne geldi STORAAA");
       const colRef = collection(db, "product");
       const dataObj = {
         name: hemhalProduct.name,
         price: hemhalProduct.price,
         title: hemhalProduct.title,
+        description: hemhalProduct.description,
         category: hemhalProduct.category,
         quantity: hemhalProduct.quantity,
         rating: hemhalProduct.rating,
         images: hemhalProduct.images,
+        count: hemhalProduct.count,
+        key: hemhalProduct.key,
         id: hemhalProduct.id,
       };
       const docRef = await addDoc(colRef, dataObj);
       console.log("STORE CREATED USAR ID:", docRef.id);
       console.log(docRef, "DOC REF");
     },
+    async updateProductHemhal(updateHemdal: Product) {
+      console.log(updateHemdal.id, "STORE UPDATE BODY");
 
+      const docRef = doc(db, "product", "updateHemdal.id");
+
+      const UpdateData = {
+        name: updateHemdal.name,
+        price: updateHemdal.price,
+        title: updateHemdal.title,
+        description: updateHemdal.description,
+        category: updateHemdal.category,
+        quantity: updateHemdal.quantity,
+        rating: updateHemdal.rating,
+        images: updateHemdal.images,
+        count: updateHemdal.count,
+      };
+      updateDoc(docRef, UpdateData)
+        .then((docRef) => {
+          console.log(docRef, "AAAAAA");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      // await setDoc(doc(db, "product", updateHemdal.id), {
+      //   name: updateHemdal.name,
+      //   price: updateHemdal.price,
+      //   title: updateHemdal.title,
+      //   description: updateHemdal.description,
+      //   category: updateHemdal.category,
+      //   quantity: updateHemdal.quantity,
+      //   rating: updateHemdal.rating,
+      //   images: updateHemdal.images,
+      //   count: updateHemdal.count,
+      // });
+    },
     async deleteHemhalProduct(item: Product) {
       console.log(item, "DELETE NE GELDİ STORE");
-      //deleteDoc(doc(db, "product", item));
-      await deleteDoc(doc(db, "product", "IpEOfpl7t96v3vtnTs1a"));
+      await deleteDoc(doc(db, "product", item.id));
+      //listeden her item sildiğimde eski listeye eklenerek geliyordu yeni liste. oncesinde boşalttım o yuzden
+      this.productHemhal = [];
+      this.getProduct();
     },
 
     //USERR LİSTESİNİ ÇEKER
     async getAdmin() {
-      //const docSnap = await getDoc(doc(db, "admin", "27n5F5jC8z9Pf0v59eLw"));
-      //tek collection u cekiyor
-      // if (docSnap.exists()) {
-      //   this.admin = docSnap.data();
-      //   console.log(docSnap.data(), "ADMİN COLLECTİON");
-      // } else {
-      //   console.log("user not found");
-      // }
+      this.userList = [];
       const querySnap = await getDocs(query(collection(db, "users")));
       querySnap.forEach((doc) => {
         this.userList.push(doc.data());
       });
       //ilki js şkinci filtreleme firebase methodu
       this.admin = this.userList.filter((admin: any) => admin.isAdmin == true);
-      console.log(this.admin, "ADMİN");
       //       const filterAdmin = query(collection(db, 'users'), where('isAdmin', '==', 'true'))
       //       const querySnapp = await getDocs(filterAdmin)
       //       querySnapp.forEach((doc) => {
@@ -193,7 +223,6 @@ export const useProductStore = defineStore("product", {
         isAdmin: false,
       };
       const docRef = await addDoc(colRef, dataObj);
-      //console.log("STORE CREATED USAR ID:", docRef.id);
     },
     //data apı aul ile cekildi!!!
 
