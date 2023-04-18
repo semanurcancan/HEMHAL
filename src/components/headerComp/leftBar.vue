@@ -40,7 +40,7 @@
             <v-list-item-title>{{ categori.name }}</v-list-item-title>
           </v-list-item>
 
-          <v-list-item>
+          <!-- <v-list-item>
             <router-link
               class="route"
               active-class="routeChildren"
@@ -68,7 +68,7 @@
                 </v-menu>
               </div>
             </router-link>
-          </v-list-item>
+          </v-list-item> -->
           <v-list-item>
             <router-link
               class="route"
@@ -102,20 +102,20 @@ export default defineComponent({
       drawer: false,
       navOpen: false,
       item: false,
-      filterItem: [
-        { name: "All Product", icon: "mdi-map" },
-        { name: "Electronics", icon: "mdi-tablet" },
-        { name: "Furniture", icon: "mdi-table-furniture" },
-        { name: "Clothes", icon: "mdi-tshirt-crew-outline" },
-        { name: "Shoes", icon: "mdi-shoe-heel" },
-        { name: "Others", icon: "mdi-gift-outline" },
-      ],
+      filterItem: null as any,
     };
   },
-
+  mounted() {
+    this.filterItemName();
+  },
+  computed: {
+    ...mapState(useProductStore, [ "getCategory"]),
+  },
   methods: {
     ...mapActions(useProductStore, ["setfilter"]),
-
+    filterItemName() {
+      this.filterItem = this.getCategory;
+    },
     filterClouds(catName: any) {
       this.$router.push({ name: "ProductList", path: "/" });
       console.log("click =>", catName);

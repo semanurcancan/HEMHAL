@@ -29,7 +29,6 @@ export default defineComponent({
   },
   //MOUNTED DA CAGIRILDIĞINDA SAYFA RENDER DAN SORNA VERİ GELMEKTE SIKINTISI YASIYOR O YUZDEN CREATED DA GETİR.
   created() {
-    console.log("XXX", this.$route)
     if (!this.get()) {
       return this.get();
     }

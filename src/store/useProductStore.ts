@@ -51,6 +51,17 @@ export const useProductStore = defineStore("product", {
       tokenStatus: localStorage.getItem("pm2tokenstatus") ?? (false as any),
 
       productHemhal: [] as any,
+      categoryArray : [
+        { name: "Cilt bakım", id: 0 },
+        { name: "Aroma Terapi", id: 1 },
+        { name: "Saç Bakım", id: 2 },
+        { name: "Onarıcı Merhem", id: 3 },
+        { name: "Besleyici Merhem", id: 4 },
+        { name: "Ruj & Allık ", id: 5 },
+        { name: "Mum & Tütsü", id: 6 },
+        { name: "Masaj Taşı & Tütsü", id: 7 },
+        { name: "At Kılı Fırçalar & Fırça", id: 8 },
+      ],
       admin: [] as any,
       currentAdmin: {} as any,
       userList: [] as any,
@@ -75,6 +86,9 @@ export const useProductStore = defineStore("product", {
     },
     getProductHemhal: (state) => {
       return state.productHemhal;
+    },
+    getCategory: (state) => {
+      return state.categoryArray;
     },
     getAdminInfo: (state) => {
       return state.admin;
@@ -218,10 +232,10 @@ export const useProductStore = defineStore("product", {
         });
     },
     setfilter(catName: string) {
-      this.filterCategory = this.getProductGetters.filter(
-        (x) => x.category.name == catName
+      this.filterCategory = this.getProductHemhal.filter(
+        (x:any) => x.category.name == catName
       );
-      console.log("actions girdi");
+      console.log(this.filterCategory, "SJJSISJISJISJS")
     },
     //set addl ile actıons component içine cagırıldığında parametle oalrak "pro" alacak.
     setAddBasket(pro: Product) {

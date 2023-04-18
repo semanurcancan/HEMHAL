@@ -171,17 +171,7 @@ export default defineComponent({
     //fileList: [] as any,
     ProfilePhoto: "" as any,
     hemhalProduct: new Product() as any,
-    categoryArray: [
-      { name: "Cilt bakım", id: 0 },
-      { name: "Aroma Terapi", id: 1 },
-      { name: "Saç Bakım", id: 2 },
-      { name: "Onarıcı Merhem", id: 3 },
-      { name: "Besleyici Merhem", id: 4 },
-      { name: "Ruj & Allık ", id: 5 },
-      { name: "Mum & Tütsü", id: 6 },
-      { name: "Masaj Taşı & Tütsü", id: 7 },
-      { name: "At Kılı Fırçalar & Fırça", id: 8 },
-    ],
+    categoryArray: null as any,
     uploadValue: 0,
     picture: null,
     imageData: null as any,
@@ -189,7 +179,10 @@ export default defineComponent({
     message : '',
   }),
   computed: {
-   // ...mapState(useProductStore, ["getProductHemhal"]),
+   ...mapState(useProductStore, ["getCategory"]),
+  },
+  created(){
+    this.categoryArray = this.getCategory
   },
   methods: {
     ...mapActions(useProductStore, ["setProductHemdal"]),

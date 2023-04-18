@@ -125,27 +125,30 @@ export default defineComponent({
       item: false,
       navOpen: false,
       drawer: true,
-      filterItem: [
-        { name: "Tüm Ürünler", icon: "mdi-map" },
-        { name: "Cilt Bakım", icon: "mdi-map" },
-        { name: "Saç Bakım", icon: "mdi-tablet" },
-        { name: "Tütsü", icon: "mdi-table-furniture" },
-        { name: "Doğal Taşlar", icon: "mdi-tshirt-crew-outline" },
-      ],
-      // open: false,
-
+      filterItem: null as any,
       basketGetters: this.getBasketGetters,
     };
   },
+  mounted() {
+    this.filterItemName();
+  },
   computed: {
-    ...mapState(useProductStore, ["getBasketGetters", "getProductGetters"]),
+    ...mapState(useProductStore, [
+      "getBasketGetters",
+      "getProductGetters",
+      "getProductHemhal",
+      "getCategory",
+    ]),
   },
   methods: {
     ...mapActions(useProductStore, ["setfilter"]),
+    filterItemName() {
+      this.filterItem = this.getCategory;
+    },
     filterClouds(catName: any) {
-      this.$router.push({ name: "ProductList", path: "/product" });
       console.log("click =>", catName);
       this.setfilter(catName);
+      this.$router.push({ name: "ProductList", path: "/product" });
     },
   },
 });
