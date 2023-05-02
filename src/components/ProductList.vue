@@ -17,14 +17,16 @@
   <v-app class="container">
     <v-col class="containerProduct">
       <v-row v-if="getwarningMsj">
-        <v-col>
+         <v-divider class=" bg-lime"></v-divider>
+        <v-col class="my-3 text-lime-darken-3" align="center">
           {{ getFilteredCategoryName }} {{ getwarningMsj }}</v-col
         >
+        <v-divider class="bg-lime"></v-divider>
       </v-row>
       <v-row>
         <v-col v-if="getFilterCategory.length > 0">
           <v-row>
-            <v-col align="center" class="font-weight-bold">
+            <v-col align="center" class="font-weight-bold pt-0">
               {{ getFilteredCategoryName }}
             </v-col>
           </v-row>
@@ -55,7 +57,7 @@
                     <v-expand-transition>
                       <div
                         v-if="isHovering"
-                        class="d-flex transition-fast-in-fast-out bg-brown-lighten-4 v-card--reveal text-h4"
+                        class="d-flex transition-fast-in-fast-out  bg-grey-lighten-3 v-card--reveal text-h4"
                         style="height: 100%"
                       >
                         {{ pro.name }}
@@ -94,7 +96,7 @@
                 <v-expand-transition>
                   <div
                     v-if="isHovering"
-                    class="d-flex transition-fast-in-fast-out bg-brown-lighten-4 v-card--reveal text-h4"
+                    class="d-flex transition-fast-in-fast-out bg-grey-lighten-3 v-card--reveal text-h4"
                     style="height: 100%"
                   >
                     {{ pro.name }}
@@ -152,7 +154,8 @@
       </v-row>
     </v-col>
   </v-app>
-</template>
+  
+  </template>
 
 <script lang="ts">
 import { defineComponent, inject, PropType } from "vue";
@@ -228,7 +231,7 @@ export default defineComponent({
   align-items: center;
   bottom: 0;
   justify-content: center;
-  opacity: 0.5;
+  opacity: 0.4;
   position: absolute;
   width: 100%;
 }
@@ -255,5 +258,24 @@ export default defineComponent({
 }
 .listItem {
   list-style: none;
+}
+.color5 {
+  background-color: #847577;
+}
+
+.color4 {
+  background-color: #e3d5ca;
+}
+
+.color3 {
+  background-color: #d6ccc2;
+}
+
+.color2 {
+  background-color: rgb(236, 218, 193);
+}
+
+.color1 {
+  background-color: rgb(192, 174, 150);
 }
 </style>

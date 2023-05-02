@@ -22,7 +22,7 @@
           <v-expand-transition>
             <div
               v-if="isHovering"
-              class="d-flex transition-fast-in-fast-out bg-brown-lighten-4 v-card--reveal text-h2"
+              class="d-flex transition-fast-in-fast-out  bg-grey-lighten-3 v-card--reveal text-h2"
               style="height: 100%"
             >
               İDA
