@@ -4,7 +4,7 @@
       <thead>
         <tr>
           <th class="text-left text-h6 text-disabled">Name</th>
-          <th class="text-left text-disabled text-h6">Title</th>
+          <!-- <th class="text-left text-disabled text-h6">Title</th> -->
           <th class="text-left text-disabled text-h6">Category</th>
           <th class="text-left text-h6 text-disabled">Price</th>
           <th class="text-left text-h6 text-disabled">Quantity</th>
@@ -15,8 +15,8 @@
       <tbody>
         <tr v-for="(pro, index) in getProductHemhal" :key="index">
           <td>{{ pro.name }}</td>
-          <td>{{ pro.title }}</td>
-          <!-- <td>{{ pro.category.name }}</td> -->
+          <!-- <td>{{ pro.title }}</td> -->
+          <td>{{ pro.categoryName }}</td>
           <td>{{ pro.price }}</td>
           <td>{{ pro.quantity }}</td>
           <td>{{ pro.rating }}</td>

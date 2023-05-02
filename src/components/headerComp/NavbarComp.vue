@@ -71,7 +71,7 @@
               </div>
             </router-link>
           </v-col>
-          <v-col>
+          <!-- <v-col>
             <router-link
               class="route d-lg-flex justify-end"
               active-class="routeChildren"
@@ -79,7 +79,7 @@
             >
               <span>BEĞENDİKLERİNİZ</span>
             </router-link>
-          </v-col>
+          </v-col> -->
           <v-col>
             <router-link
               class="route d-lg-flex justify-end"
@@ -125,7 +125,7 @@ export default defineComponent({
       item: false,
       navOpen: false,
       drawer: true,
-      filterItem: null as any,
+      filterItem: [] as any,
       basketGetters: this.getBasketGetters,
     };
   },
@@ -138,17 +138,20 @@ export default defineComponent({
       "getProductGetters",
       "getProductHemhal",
       "getCategory",
+      "filterCategoryResult"
     ]),
   },
   methods: {
     ...mapActions(useProductStore, ["setfilter"]),
     filterItemName() {
-      this.filterItem = this.getCategory;
+      this.filterItem= this.getCategory;
+      console.log(this.filterItem, "NE GELDİ FİLTRELİ")
     },
     filterClouds(catName: any) {
-      console.log("click =>", catName);
       this.setfilter(catName);
-      this.$router.push({ name: "ProductList", path: "/product" });
+      setTimeout(() => {
+        this.$router.push({ name: "ProductList", path: "/product" });
+      }, 5);
     },
   },
 });

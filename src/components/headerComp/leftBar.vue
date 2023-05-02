@@ -74,12 +74,13 @@
               class="route"
               active-class="routeChildren"
               to="/favorite"
+              @click="drawer=false"
             >
               BEĞENDİKLERİNİZ
             </router-link>
           </v-list-item>
           <v-list-item>
-            <router-link class="route" active-class="routeChildren" to="/hello">
+            <router-link class="route" active-class="routeChildren" to="/hello" @click="drawer=false">
               SEPETİM</router-link
             >
           </v-list-item>
@@ -117,9 +118,10 @@ export default defineComponent({
       this.filterItem = this.getCategory;
     },
     filterClouds(catName: any) {
-      this.$router.push({ name: "ProductList", path: "/" });
-      console.log("click =>", catName);
       this.setfilter(catName);
+      setTimeout(() => {
+        this.$router.push({ name: "ProductList", path: "/product" });
+      }, 5);
       this.item = false
     },
   },

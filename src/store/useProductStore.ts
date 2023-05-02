@@ -43,15 +43,17 @@ export const useProductStore = defineStore("product", {
       product: [] as Array<Product>,
       basket: [] as Array<Product>,
       basketLength: 0,
-      filterCategory: [] as Array<Product>,
       favorites: loadFromStorage("userFavorites", [] as Array<Product>),
       loading: false,
 
       token: localStorage.getItem("pm2token") ?? (false as any),
       tokenStatus: localStorage.getItem("pm2tokenstatus") ?? (false as any),
 
+      filterCategoryResult: [] as any,
+      filteredCategoryName: null as any,
+      warningMsj:null as any,
       productHemhal: [] as any,
-      categoryArray : [
+      categoryArray: [
         { name: "Cilt bakım", id: 0 },
         { name: "Aroma Terapi", id: 1 },
         { name: "Saç Bakım", id: 2 },
@@ -115,7 +117,13 @@ export const useProductStore = defineStore("product", {
       return state.basketLength;
     },
     getFilterCategory: (state) => {
-      return state.filterCategory;
+      return state.filterCategoryResult;
+    },
+    getFilteredCategoryName: (state) => {
+      return state.filteredCategoryName;
+    },
+    getwarningMsj:(state) => {
+return state.warningMsj
     },
     getFavoritesState(state) {
       return state.favorites;
@@ -155,6 +163,7 @@ export const useProductStore = defineStore("product", {
         title: hemhalProduct.title,
         description: hemhalProduct.description,
         category: hemhalProduct.category,
+        categoryName: hemhalProduct.category.name,
         quantity: hemhalProduct.quantity,
         rating: hemhalProduct.rating,
         images: hemhalProduct.images,
@@ -167,18 +176,19 @@ export const useProductStore = defineStore("product", {
       console.log(docRef, "DOC REF");
     },
     async updateProductHemhal(updateHemdal: Product) {
-      console.log(updateHemdal.id, "STORE UPDATE BODY");
-     await setDoc(doc(db, "product", updateHemdal.id), {
+      console.log(updateHemdal, "STORE UPDATE BODY");
+      await setDoc(doc(db, "product", updateHemdal.id), {
         name: updateHemdal.name,
         price: updateHemdal.price,
         title: updateHemdal.title,
         description: updateHemdal.description,
         category: updateHemdal.category,
+        categoryName: updateHemdal.categoryName,
         quantity: updateHemdal.quantity,
         rating: updateHemdal.rating,
         images: updateHemdal.images,
         count: updateHemdal.count,
-        id: updateHemdal.id
+        id: updateHemdal.id,
       });
     },
     async deleteHemhalProduct(item: Product) {
@@ -231,12 +241,27 @@ export const useProductStore = defineStore("product", {
           });
         });
     },
-    setfilter(catName: string) {
-      this.filterCategory = this.getProductHemhal.filter(
-        (x:any) => x.category.name == catName
-      );
-      console.log(this.filterCategory, "SJJSISJISJISJS")
+    async setfilter(catName: string) {
+      console.log(catName, "CATNAME");
+      this.filteredCategoryName = catName;
+      this.filterCategoryResult = [];
+      this.warningMsj = "";
+      const filterCategory = query(
+        collection(db, "product"),
+        where("categoryName", "==", catName)
+        );
+        const querySnapp = await getDocs(filterCategory);
+        querySnapp.forEach((doc) => {
+          console.log(doc.data(), "OLOLO")
+          // this.filterCategoryResult.push(doc.data());
+          this.filterCategoryResult = [...this.filterCategoryResult, doc.data()]
+      });
+      if(this.filterCategoryResult.length == 0){
+        this.warningMsj = "Kategorisine Ait Stok Bulunmamaktadır.. Diğer Ürünlere Göz Atabilirsiniz :)"
+      }
+      console.log(this.filterCategoryResult, "RESULT")
     },
+
     //set addl ile actıons component içine cagırıldığında parametle oalrak "pro" alacak.
     setAddBasket(pro: Product) {
       this.basket = [...this.basket, pro];

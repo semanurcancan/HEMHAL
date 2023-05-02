@@ -27,6 +27,7 @@ export class Product implements IEntityBase {
     this.title = "";
     this.price = 0;
     this.description = "";
+    this.categoryName = "";
     this.category = {
       id: 0,
       name: "",
@@ -44,6 +45,7 @@ export class Product implements IEntityBase {
   title: string;
   price: number;
   description: string;
+  categoryName:string;
   category: {
     id: number;
     name: string;

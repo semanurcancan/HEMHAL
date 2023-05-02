@@ -16,47 +16,18 @@
 <template>
   <v-app class="container">
     <v-col class="containerProduct">
-      <v-row>
-        <v-col v-for="(pro, i) in getProductHemhal" :key="i">
-          <v-hover v-slot="{ isHovering, props }">
-            <v-card
-              flat
-              :border="false"
-              class="cardClass"
-              max-width="250"
-              max-height="250"
-              v-bind="props"
-            >
-              <v-img
-                @click="
-                  this.$router.push({
-                    name: 'Detail',
-                    params: { id: pro.id },
-                  })
-                "
-                class="align-end text-white mt-3"
-                height="200"
-                width="250"
-                :src="pro.images[0].url"
-                cover
-              >
-                <v-expand-transition>
-                  <div
-                    v-if="isHovering"
-                    class="d-flex transition-fast-in-fast-out bg-brown-lighten-4 v-card--reveal text-h4"
-                    style="height: 100%"
-                  >
-                    {{ pro.name }}
-                  </div>
-                </v-expand-transition>
-              </v-img>
-            </v-card>
-          </v-hover>
-        </v-col>
+      <v-row v-if="getwarningMsj">
+        <v-col>
+          {{ getFilteredCategoryName }} {{ getwarningMsj }}</v-col
+        >
       </v-row>
-
       <v-row>
         <v-col v-if="getFilterCategory.length > 0">
+          <v-row>
+            <v-col align="center" class="font-weight-bold">
+              {{ getFilteredCategoryName }}
+            </v-col>
+          </v-row>
           <v-row>
             <v-col v-for="(pro, index) in getFilterCategory" :key="index">
               <v-hover v-slot="{ isHovering, props }">
@@ -207,12 +178,12 @@ export default defineComponent({
     this.getHEMHAL();
   },
   methods: {
-    addFavorite(pro: FavoriteObjectType) {
-      this.addOrRemoveFavorite(pro);
-    },
+    // addFavorite(pro: FavoriteObjectType) {
+    //   this.addOrRemoveFavorite(pro);
+    // },
     getHEMHAL() {
-      console.log(this.getProductHemhal, "Product List");
-      console.log(this.getFilterCategory, "FİLTRELİ PRODUCTgsdfg");
+      console.log(this.getFilteredCategoryName, "NAME CATEGORİ");
+      console.log(this.getFilterCategory, "FİLTRELİ PRODUCT LİST");
     },
     // clickItem(e: any) {
     //   console.log(e);
@@ -232,11 +203,16 @@ export default defineComponent({
   },
 
   computed: {
+    fintered() {
+      console.log(this.getFilterCategory, "COMPUTEDDDDDDDDD");
+    },
     ...mapState(useProductStore, [
       "getFilterCategory",
       "getBasketGetters",
       "getFavoritesState",
       "getProductHemhal",
+      "getFilteredCategoryName",
+      "getwarningMsj",
     ]),
   },
   watch: {
