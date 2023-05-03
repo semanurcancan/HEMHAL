@@ -111,6 +111,29 @@ export default defineComponent({
   margin: 0px;
   padding: 0px;
 }
+.navigation {
+  background-color: rgb(192, 174, 150);
+}
+
+.color5 {
+  background-color: #847577;
+}
+
+.color4 {
+  background-color: #e3d5ca;
+}
+
+.color3 {
+  background-color: #d6ccc2;
+}
+
+.color2 {
+  background-color: rgb(236, 218, 193);
+}
+
+.color1 {
+  background-color: rgb(192, 174, 150);
+}
 @media screen and (min-width: 1280px) {
   body .leftBar {
     display: none;
