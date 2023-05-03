@@ -5,6 +5,7 @@ import vuetify from './plugins/vuetify'
 import router from './Router/Router'
 import 'vue-universal-modal/dist/index.css'
 import VueUniversalModal from 'vue-universal-modal'
+
 const pinia = createPinia()
 const app = createApp(App)
 

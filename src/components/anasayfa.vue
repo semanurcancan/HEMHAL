@@ -37,46 +37,14 @@
     <h3 id="SECTİON">BLOG</h3>
     <v-col>
       <v-row class="containerAna pa-15 my-5">
-          <v-sheet class="mx-auto"  max-width="1600">
-            <v-slide-group
-              v-model="model"
-              class="pa-4"
-              center-active
-              show-arrows
-            >
-              <v-slide-group-item
-                v-for="n in 15"
-                :key="n"
-                v-slot="{ isSelected, toggle }"
-              >
-                <v-card
-                  :color="isSelected ? 'primary' : 'grey-lighten-1'"
-                  class="ma-4"
-                  height="200"
-                  width="200"
-                  @click="toggle"
-                >
-                  <div class="d-flex fill-height align-center justify-center">
-                    <v-scale-transition>
-                      <v-icon
-                        v-if="isSelected"
-                        color="white"
-                        size="28"
-                        icon="mdi-close-circle-outline"
-                      ></v-icon>
-                    </v-scale-transition>
-                  </div>
-                </v-card>
-              </v-slide-group-item>
-            </v-slide-group>
-          </v-sheet>
+        <animateimage/>
       </v-row>
     </v-col>
   </v-col>
   <v-spacer></v-spacer>
   <!-- en başa scrool iconu -->
-  <transition name="fade" class="aaa">
-    <div id="pagetop" v-show="scY > 500" @click="toTop">
+  <transition name="fade">
+    <div id="pagetop" class="upArrowIcon" v-show="scY > 500" @click="toTop">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="75"
@@ -96,11 +64,12 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-
 //components
+import animateimage from "./AnimateImage/AnimateImage.vue"
 
 export default defineComponent({
   name: "anasayfa",
+  components: {animateimage},
   data() {
     return {
       scTimer: Number() as any,
@@ -133,7 +102,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.aaa {
+.upArrowIcon {
   position: fixed;
   bottom: 0;
   right: 0;

@@ -17,11 +17,11 @@
   <v-app class="container">
     <v-col class="containerProduct">
       <v-row v-if="getwarningMsj">
-         <v-divider class=" bg-lime"></v-divider>
-        <v-col class="my-3 text-lime-darken-3" align="center">
+         <v-divider class=" bg-lime-darken-4"></v-divider>
+        <v-col class="my-3 text-lime-darken-4" align="center">
           {{ getFilteredCategoryName }} {{ getwarningMsj }}</v-col
         >
-        <v-divider class="bg-lime"></v-divider>
+        <v-divider class="bg-lime-darken-4"></v-divider>
       </v-row>
       <v-row>
         <v-col v-if="getFilterCategory.length > 0">
